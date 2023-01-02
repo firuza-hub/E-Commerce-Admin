@@ -1,8 +1,8 @@
 package az.red.e_commerce_admin_android.di
 
 import az.red.e_commerce_admin_android.data.remote.HeaderInterceptor
-import az.red.e_commerce_admin_android.data.remote.NetworkRepository
-import az.red.e_commerce_admin_android.data.remote.NetworkService
+import az.red.e_commerce_admin_android.data.remote.auth.AuthRepository
+import az.red.e_commerce_admin_android.data.remote.auth.AuthService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.BuildConfig
@@ -29,7 +29,7 @@ val dataModule = module {
         client.build()
     }
 
-    factory<NetworkService> { get<Retrofit>().create(NetworkService::class.java) }
+    factory<AuthService> { get<Retrofit>().create(AuthService::class.java) }
 
     single {
         Retrofit.Builder()
@@ -39,5 +39,5 @@ val dataModule = module {
             .build()
     }
 
-    factory { NetworkRepository(get()) }
+    factory { AuthRepository(get()) }
 }
