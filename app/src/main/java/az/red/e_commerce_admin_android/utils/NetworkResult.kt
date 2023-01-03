@@ -8,11 +8,11 @@ import retrofit2.Response
 sealed class NetworkResult<T>(
     val data: T? = null, val message: String? = null
 ) {
-    class Success<T>(data: T?) : NetworkResult<T>(data)
-    class Error<T>(message: String?, data: T? = null) : NetworkResult<T>(data, message)
-    class Loading<T> : NetworkResult<T>()
     class Empty<T> : NetworkResult<T>()
-    class Unknown<T>(exception: String) : NetworkResult<T>(message = exception)
+    class Loading<T> : NetworkResult<T>()
+    class Success<T>(data: T?) : NetworkResult<T>(data)
+    class Error<T>(message: String?, code: Int, data: T? = null) : NetworkResult<T>(data, message)
+    class Exception<T>(exception: String) : NetworkResult<T>(message = exception)
 }
 
 suspend fun <T : Any> handleApi(
@@ -23,21 +23,17 @@ suspend fun <T : Any> handleApi(
         val response = execute()
         val body = response.body()
         apiState.emit(NetworkResult.Loading())
+
         if (response.isSuccessful && body != null) {
             apiState.emit(NetworkResult.Success(body))
-        } else if (response.message().toString().contains("timeout")) {
-            NetworkResult.Error<T>(message = "Timeout")
+
         } else {
-            apiState.emit(
-                NetworkResult.Error(
-                    message = response.message()
-                )
-            )
+            apiState.emit(NetworkResult.Error(code = response.code(), message = response.message()))
         }
     } catch (e: HttpException) {
-        NetworkResult.Error<T>(message = e.message())
+        apiState.emit(NetworkResult.Error<T>(message = e.message(), code = e.code()))
     } catch (e: Throwable) {
-        NetworkResult.Unknown<T>(exception = e.message!!)
+        apiState.emit(NetworkResult.Exception<T>(exception = e.message!!))
     }
     return apiState
 }
