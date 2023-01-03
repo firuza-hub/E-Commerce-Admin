@@ -3,7 +3,7 @@ package az.red.e_commerce_admin_android.data.remote.auth.dto.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterResponseDto(
+data class RegisterResponse(
     @SerializedName("_id")
     val id: String,
     val isAdmin: Boolean,

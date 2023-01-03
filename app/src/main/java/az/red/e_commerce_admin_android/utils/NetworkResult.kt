@@ -1,29 +1,44 @@
 package az.red.e_commerce_admin_android.utils
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import retrofit2.HttpException
 import retrofit2.Response
 
-sealed class NetworkResult<T : Any> {
-    class Success<T: Any>(val data: T) : NetworkResult<T>()
-    class Error<T: Any>(val code: Int, val message: String?) : NetworkResult<T>()
-    class Exception<T: Any>(val e: Throwable) : NetworkResult<T>()
+sealed class NetworkResult<T>(
+    val data: T? = null, val message: String? = null
+) {
+    class Success<T>(data: T?) : NetworkResult<T>(data)
+    class Error<T>(message: String?, data: T? = null) : NetworkResult<T>(data, message)
+    class Loading<T> : NetworkResult<T>()
+    class Empty<T> : NetworkResult<T>()
+    class Unknown<T>(exception: String) : NetworkResult<T>(message = exception)
 }
 
 suspend fun <T : Any> handleApi(
     execute: suspend () -> Response<T>
-): NetworkResult<T> {
-    return try {
+): StateFlow<NetworkResult<T>> {
+    val apiState = MutableStateFlow<NetworkResult<T>>(NetworkResult.Empty())
+    try {
         val response = execute()
         val body = response.body()
+        apiState.emit(NetworkResult.Loading())
         if (response.isSuccessful && body != null) {
-            NetworkResult.Success(body)
+            apiState.emit(NetworkResult.Success(body))
+        } else if (response.message().toString().contains("timeout")) {
+            NetworkResult.Error<T>(message = "Timeout")
         } else {
-            NetworkResult.Error(code = response.code(), message = response.message())
+            apiState.emit(
+                NetworkResult.Error(
+                    message = response.message()
+                )
+            )
         }
     } catch (e: HttpException) {
-        NetworkResult.Error(code = e.code(), message = e.message())
+        NetworkResult.Error<T>(message = e.message())
     } catch (e: Throwable) {
-        NetworkResult.Exception(e)
+        NetworkResult.Unknown<T>(exception = e.message!!)
     }
+    return apiState
 }
 

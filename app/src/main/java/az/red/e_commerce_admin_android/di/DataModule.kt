@@ -2,6 +2,7 @@ package az.red.e_commerce_admin_android.di
 
 import az.red.e_commerce_admin_android.data.remote.HeaderInterceptor
 import az.red.e_commerce_admin_android.data.remote.auth.AuthRepository
+import az.red.e_commerce_admin_android.data.remote.auth.AuthRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.auth.AuthService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,8 +30,6 @@ val dataModule = module {
         client.build()
     }
 
-    factory<AuthService> { get<Retrofit>().create(AuthService::class.java) }
-
     single {
         Retrofit.Builder()
             .baseUrl(getProperty("base_url"))
@@ -39,5 +38,7 @@ val dataModule = module {
             .build()
     }
 
-    factory { AuthRepository(get()) }
+    /////////////////////////////////////////////////////////// Auth ///////////////////////////////////////////////////////////
+    factory<AuthService> { get<Retrofit>().create(AuthService::class.java) }
+    factory<AuthRepository> { AuthRepositoryImpl(get()) }
 }
