@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="colors">
+        <attr name="background_color" format="color" />
+        <attr name="text_color" format="color" />
+        <attr name="hint_text_color" format="color" />
+        <attr name="card_color" format="color" />
+        <attr name="input_icon_color" format="color" />
+        <attr name="input_hint_icon_color" format="color" />
+    </declare-styleable>
+
+
+    <style name="Header" >
+        <item name="android:textSize">@dimen/text_size_header</item>
+        <item name="android:textColor">?attr/text_color</item>
+        <item name="android:fontFamily">@font/barlow_medium</item>
+<!--  TODO: Xeyal baxacaq       <item name="android:fontWeight">700</item>-->
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="InputText">
+        <item name="fontFamily">@font/nunito</item>
+        <item name="singleLine">true</item>
+        <item name="hintTextColor">?attr/hint_text_color</item>
+        <item name="android:background">@null</item>
+        <item name="android:textSize">@dimen/text_size_input</item>
+        <item name="android:drawablePadding">@dimen/dimen_10dp</item>
+    </style>
+
+    <style name="InputCard">
+        <item name="elevation">0dp</item>
+        <item  name="android:layout_height">@dimen/input_card_height</item>
+        <item name="strokeColor">?attr/card_color</item>
+        <item name="strokeWidth">@dimen/card_border_width</item>
+        <item name="cardCornerRadius">@dimen/corner_radius_input_card</item>
+    </style>
+
+
+</resources>
