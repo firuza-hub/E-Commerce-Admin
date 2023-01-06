@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.data.remote.user
 
+import az.red.e_commerce_admin_android.data.remote.EndPoints
 import az.red.e_commerce_admin_android.data.remote.user.dto.request.UpdatePasswordRequest
 import az.red.e_commerce_admin_android.data.remote.user.dto.request.UpdateUserRequest
 import az.red.e_commerce_admin_android.data.remote.user.dto.response.PasswordUpdateResponse
@@ -9,12 +10,12 @@ import retrofit2.http.GET
 import retrofit2.http.PUT
 
 interface UserService  {
-    @GET("/customers/customer")
+    @GET(EndPoints.CURRENT_USER)
     suspend fun getCurrentUser(): Response<UserResponse>
 
-    @PUT("/customers")
+    @PUT(EndPoints.UPDATE_USER)
     suspend fun updateUser(dto: UpdateUserRequest): Response<UserResponse>
 
-    @PUT("/customers/password")
+    @PUT(EndPoints.UPDATE_USER_PASSWORD)
     suspend fun updatePassword(dto: UpdatePasswordRequest): Response<PasswordUpdateResponse>
 }
