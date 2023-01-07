@@ -1,20 +1,19 @@
 package az.red.e_commerce_admin_android.content.register
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.base.BaseFragment
+import az.red.e_commerce_admin_android.databinding.FragmentRegisterBinding
+import kotlin.reflect.KClass
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+    override val bindingCallBack: (LayoutInflater, ViewGroup?, Boolean) -> FragmentRegisterBinding
+        get() = FragmentRegisterBinding::inflate
+    override val kClass: KClass<RegisterViewModel>
+        get() = RegisterViewModel::class
+
+    override val bindViews: FragmentRegisterBinding.() -> Unit = {
+
     }
-
 }
