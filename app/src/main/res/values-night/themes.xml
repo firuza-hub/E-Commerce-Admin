@@ -1,16 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.ECommerceAdminAndroid" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.ECommerceAdminAndroid" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/background_dark</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/input_card_background_dark </item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:fontFamily">@font/nunito</item>
+
+        <item name="card_border_color">@color/input_card_border_dark</item>
+        <item name="card_background_color">@color/input_card_background_dark</item>
+        <item name="text_color">@color/white</item>
+        <item name="hint_text_color">@color/input_hint_color_dark</item>
+        <item name="input_hint_icon_color">@color/input_hint_color_dark</item>
+        <item name="btn_inactive_color">@color/input_hint_color_dark</item>
+        <item name="btn_active_color">@color/white</item>
     </style>
 </resources>
