@@ -1,21 +1,20 @@
 package az.red.e_commerce_admin_android.content.otp
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.base.BaseFragment
+import az.red.e_commerce_admin_android.databinding.FragmentOtpBinding
+import kotlin.reflect.KClass
 
-class OtpFragment : Fragment() {
+class OtpFragment : BaseFragment<FragmentOtpBinding, OtpVIewModel>() {
 
+    override val bindingCallBack: (LayoutInflater, ViewGroup?, Boolean) -> FragmentOtpBinding
+        get() = FragmentOtpBinding::inflate
+    override val kClass: KClass<OtpVIewModel>
+        get() = OtpVIewModel::class
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_otp, container, false)
+    override val bindViews: FragmentOtpBinding.() -> Unit = {
+
     }
 
 }
