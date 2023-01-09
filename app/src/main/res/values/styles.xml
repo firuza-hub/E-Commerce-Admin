@@ -10,6 +10,7 @@
         <attr name="input_hint_icon_color" format="color" />
         <attr name="btn_inactive_color" format="color" />
         <attr name="btn_active_color" format="color" />
+        <attr name="btn_text_color" format="color" />
     </declare-styleable>
 
 
@@ -34,6 +35,14 @@
         <item  name="android:padding">@dimen/dimen_7dp</item>
         <item  name="android:layout_height">@dimen/dimen_44dp</item>
         <item  name="android:layout_width">@dimen/dimen_44dp</item>
+    </style>
+    <style name="btnLong">
+        <item name="android:textSize">@dimen/dimean_16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <!--  TODO: Xeyal baxacaq       <item name="android:fontWeight">600</item>-->
+        <item name="backgroundTint">?attr/btn_active_color</item>
+        <item name="android:textColor">?attr/btn_text_color</item>
+        <item name="cornerRadius">@dimen/button_corner_radius_28</item>
     </style>
     <style name="InputCard">
         <item name="elevation">0dp</item>

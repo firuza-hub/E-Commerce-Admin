@@ -85,17 +85,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cvPassword" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignIn"
             android:layout_width="0dp"
             android:enabled="true"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_separator_58"
             android:layout_marginEnd="@dimen/margin_normal"
-            android:background="@drawable/btn_rounded"
+            style="@style/btnLong"
             android:text="@string/sign_in"
-            android:textColor="?attr/text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox" />
@@ -156,7 +155,7 @@
             android:layout_marginTop="@dimen/margin_separator_45"
             android:layout_marginBottom="10dp"
             android:text="@string/don_t_have_account"
-            android:textColor="?attr/hint_text_color"
+            android:textColor="?attr/text_color"
             android:textSize="@dimen/dimen_18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvSignUp"
@@ -173,7 +172,7 @@
             android:text="@string/sign_up"
             android:textColor="@color/accent_carrot"
             android:textSize="@dimen/dimen_18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvNoAccount"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvNoAccount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/tvNoAccount" />

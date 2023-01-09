@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -64,5 +65,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.5'
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.5"
+
+    //DataBinding
+    implementation 'androidx.databinding:databinding-common:7.1.2'
 
 }
