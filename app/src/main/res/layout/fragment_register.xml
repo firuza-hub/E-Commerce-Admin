@@ -60,16 +60,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cvEmail">
 
-            <EditText
-                android:id="@+id/etPassword"
-                style="@style/InputText"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etPasswordLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableStart="@drawable/ic_password"
-                android:drawableEnd="@drawable/ic_not_visible"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:padding="@dimen/dimen_10dp" />
+                android:layout_height="wrap_content"
+                app:endIconTint="@color/password_toggle"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    style="@style/InputText"
+                    android:padding="@dimen/dimen_10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_password"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -88,7 +96,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignIn"
             android:layout_width="0dp"
-            android:enabled="true"
+            android:enabled="false"
+            android:backgroundTint="@xml/btn_color_state_list"
             android:layout_height="50dp"
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_separator_58"
