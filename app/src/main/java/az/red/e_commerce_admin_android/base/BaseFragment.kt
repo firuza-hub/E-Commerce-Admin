@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -12,7 +13,8 @@ import kotlin.reflect.KClass
 
 abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
     Fragment() {
-    protected abstract val bindingCallBack: (LayoutInflater, ViewGroup?, Boolean) -> Binding
+
+    protected abstract val layoutId: Int
 
     private lateinit var binding: Binding
 
@@ -24,7 +26,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = bindingCallBack.invoke(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         return binding.root
     }
 
