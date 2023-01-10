@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.base.BaseFragment
+import az.red.e_commerce_admin_android.content.login.LoginFragmentDirections
 import az.red.e_commerce_admin_android.databinding.FragmentRegisterBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
@@ -37,6 +39,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
         _email.addTextChangedListener(textWatcher)
         _password.addTextChangedListener(textWatcher)
 
+        tvSignIn.setOnClickListener{findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())}
     }
 
     private val textWatcher = object : TextWatcher {

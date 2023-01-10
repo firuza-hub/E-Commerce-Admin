@@ -20,7 +20,7 @@
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_top_header"
             android:layout_marginEnd="@dimen/margin_normal"
-            android:text="@string/sing_in_to_account"
+            android:text="@string/create_your_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -103,21 +103,11 @@
             android:layout_marginTop="@dimen/margin_separator_58"
             android:layout_marginEnd="@dimen/margin_normal"
             style="@style/btnLong"
-            android:text="@string/sign_in"
+            android:text="@string/sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
-        <TextView
-            android:id="@+id/tvForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20dp"
-            android:text="@string/forgot_the_password"
-            android:textSize="@dimen/dimen_18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
         <ImageView
             android:id="@+id/ivSep1"
@@ -152,7 +142,7 @@
             android:textSize="@dimen/dimen_18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
         <ImageView
             android:id="@+id/btnFacebook"
@@ -182,33 +172,33 @@
             app:layout_constraintStart_toEndOf="@+id/btnGoogle" />
 
         <TextView
-            android:id="@+id/tvNoAccount"
+            android:id="@+id/tvHasAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_separator_45"
             android:layout_marginBottom="10dp"
-            android:text="@string/don_t_have_account"
+            android:text="@string/already_have_an_account"
             android:textColor="?attr/text_color"
             android:textSize="@dimen/dimen_18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvSignUp"
+            app:layout_constraintEnd_toStartOf="@+id/tvSignIn"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnFacebook"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/tvSignUp"
+            android:id="@+id/tvSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_10dp"
-            android:text="@string/sign_up"
+            android:text="@string/sign_in"
             android:textColor="@color/accent_carrot"
             android:textSize="@dimen/dimen_18sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvNoAccount"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvHasAccount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tvNoAccount" />
+            app:layout_constraintStart_toEndOf="@+id/tvHasAccount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

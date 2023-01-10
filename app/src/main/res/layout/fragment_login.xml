@@ -1,16 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".content.login.LoginFragment">
+        tools:context=".content.register.RegisterFragment">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            style="@style/Header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_top_header"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:text="@string/sing_in_to_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvEmail"
+            style="@style/InputCard"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_separator_45"
+            android:layout_marginEnd="@dimen/margin_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeader">
+
+            <EditText
+                android:id="@+id/etEmail"
+                style="@style/InputText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_email"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/dimen_10dp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
 
-    </FrameLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvPassword"
+            style="@style/InputCard"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvEmail">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etPasswordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconTint="@color/password_toggle"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    style="@style/InputText"
+                    android:padding="@dimen/dimen_10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_password"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_separator_58"
+            android:buttonTint="@color/accent_carrot"
+            android:text="@string/remember_me"
+            android:textSize="@dimen/dimean_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvPassword" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="0dp"
+            android:enabled="false"
+            android:backgroundTint="@xml/btn_color_state_list"
+            android:layout_height="50dp"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_separator_58"
+            android:layout_marginEnd="@dimen/margin_normal"
+            style="@style/btnLong"
+            android:text="@string/sign_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:text="@string/forgot_the_password"
+            android:textSize="@dimen/dimen_18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
+
+        <ImageView
+            android:id="@+id/ivSep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/separator_line"
+            app:layout_constraintBottom_toBottomOf="@+id/tvContinue"
+            app:layout_constraintEnd_toStartOf="@+id/tvContinue"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvContinue" />
+
+        <ImageView
+            android:id="@+id/ivSep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/separator_line"
+            app:layout_constraintBottom_toBottomOf="@+id/tvContinue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/tvContinue"
+            app:layout_constraintTop_toTopOf="@+id/tvContinue" />
+
+        <TextView
+            android:id="@+id/tvContinue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_separator_58"
+            android:text="@string/or_continue_with"
+            android:textSize="@dimen/dimen_18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword" />
+
+        <ImageView
+            android:id="@+id/btnFacebook"
+            style="@style/btnAuth"
+            android:layout_marginTop="56dp"
+            android:src="@drawable/ic_facebook"
+            app:layout_constraintEnd_toStartOf="@+id/btnGoogle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvContinue" />
+
+        <ImageView
+            android:id="@+id/btnGoogle"
+            style="@style/btnAuth"
+            android:src="@drawable/ic_google"
+            app:layout_constraintBottom_toBottomOf="@+id/btnFacebook"
+            app:layout_constraintEnd_toStartOf="@+id/btnApple"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnFacebook" />
+
+        <ImageView
+            android:id="@+id/btnApple"
+            style="@style/btnAuth"
+            android:src="@drawable/ic_apple"
+            app:layout_constraintBottom_toBottomOf="@+id/btnGoogle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnGoogle" />
+
+        <TextView
+            android:id="@+id/tvNoAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_separator_45"
+            android:layout_marginBottom="10dp"
+            android:text="@string/don_t_have_account"
+            android:textColor="?attr/text_color"
+            android:textSize="@dimen/dimen_18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvSignUp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnFacebook"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tvSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_10dp"
+            android:text="@string/sign_up"
+            android:textColor="@color/accent_carrot"
+            android:textSize="@dimen/dimen_18sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvNoAccount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tvNoAccount" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
