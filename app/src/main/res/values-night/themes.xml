@@ -4,12 +4,14 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/background_dark</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/input_card_background_dark </item>
+        <item name="colorSecondary">@color/input_card_background_dark</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/background_dark</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/background_dark</item>
         <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 
         <item name="card_border_color">@color/input_card_border_dark</item>
         <item name="card_background_color">@color/input_card_background_dark</item>

@@ -14,7 +14,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     Fragment() {
     protected abstract val bindingCallBack: (LayoutInflater, ViewGroup?, Boolean) -> Binding
 
-    private lateinit var binding: Binding
+    lateinit var binding: Binding
 
     protected abstract val kClass: KClass<ViewModel>
     val viewModel: ViewModel by lazy { getViewModel(kClass) { parametersOf(arguments) } }
