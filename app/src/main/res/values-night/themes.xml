@@ -18,7 +18,7 @@
         <item name="text_color">@color/white</item>
         <item name="hint_text_color">@color/input_hint_color_dark</item>
         <item name="input_hint_icon_color">@color/input_hint_color_dark</item>
-        <item name="btn_inactive_color">@color/input_hint_color_dark</item>
+        <item name="btn_inactive_color">@color/input_hint_color_light</item>
         <item name="btn_active_color">@color/white</item>
         <item name="btn_text_color">@color/black</item>
         <item name="accent_color">@color/accent_carrot</item>
