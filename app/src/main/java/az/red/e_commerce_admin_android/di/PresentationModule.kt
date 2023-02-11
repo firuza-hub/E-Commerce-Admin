@@ -8,8 +8,8 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val presentationModule = module {
-    viewModel { LoginViewModel() }
+    viewModel { LoginViewModel(get(),get()) }
     viewModel { OnBoardingViewModel() }
     viewModel { OtpVIewModel() }
-    viewModel { RegisterViewModel() }
+    viewModel { RegisterViewModel(get()) }
 }

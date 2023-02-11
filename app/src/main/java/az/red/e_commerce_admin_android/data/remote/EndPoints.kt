@@ -1,7 +1,7 @@
 package az.red.e_commerce_admin_android.data.remote
 
 object EndPoints {
-    private const val USER_BASE = "/customers"
+    private const val USER_BASE = "customers"
 
     const val LOGIN = "$USER_BASE/login"
     const val REGISTER = USER_BASE

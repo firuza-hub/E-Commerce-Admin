@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.utils
 
+import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import retrofit2.HttpException
@@ -10,7 +11,7 @@ sealed class NetworkResult<T>(
 ) {
     class Empty<T> : NetworkResult<T>()
     class Loading<T> : NetworkResult<T>()
-    class Success<T>(data: T?) : NetworkResult<T>(data)
+    class Success<T>(data: T) : NetworkResult<T>(data)
     class Error<T>(message: String?, code: Int, data: T? = null) : NetworkResult<T>(data, message)
     class Exception<T>(exception: String) : NetworkResult<T>(message = exception)
 }
@@ -20,11 +21,14 @@ suspend fun <T : Any> handleApi(
 ): StateFlow<NetworkResult<T>> {
     val apiState = MutableStateFlow<NetworkResult<T>>(NetworkResult.Empty())
     try {
+        Log.i("LOGIN_REQUEST","handleApi - > start")
         val response = execute()
         val body = response.body()
         apiState.emit(NetworkResult.Loading())
 
         if (response.isSuccessful && body != null) {
+
+            Log.i("LOGIN_REQUEST","handleApi - > success")
             apiState.emit(NetworkResult.Success(body))
 
         } else {

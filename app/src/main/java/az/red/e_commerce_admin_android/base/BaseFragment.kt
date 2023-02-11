@@ -19,7 +19,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     lateinit var binding: Binding
 
     protected abstract val kClass: KClass<ViewModel>
-    val viewModel: ViewModel by lazy { getViewModel(kClass) { parametersOf(arguments) } }
+    val viewModel: ViewModel by lazy { getViewModel(kClass) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

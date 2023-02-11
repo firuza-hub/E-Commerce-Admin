@@ -6,15 +6,15 @@ import az.red.e_commerce_admin_android.data.remote.auth.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.BuildConfig
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val dataModule = module {
-
     single {
-        val interceptor = HeaderInterceptor()
+        val interceptor = HeaderInterceptor(get())
         val client = OkHttpClient.Builder()
             .readTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
@@ -31,10 +31,14 @@ val dataModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl(getProperty("base_url"))
+            .baseUrl("https://mobile.test-danit.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
+    }
+
+    single {
+        SessionManager(androidContext())
     }
 
     /////////////////////////////////////////////////////////// Auth ///////////////////////////////////////////////////////////
