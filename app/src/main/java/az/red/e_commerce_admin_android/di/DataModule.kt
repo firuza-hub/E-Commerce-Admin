@@ -31,7 +31,7 @@ val dataModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl("https://mobile.test-danit.com/api/")
+            .baseUrl(getProperty("base_url"))
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()

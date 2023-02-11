@@ -1,8 +1,10 @@
 package az.red.e_commerce_admin_android.utils
 
 import android.util.Log
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -16,29 +18,28 @@ sealed class NetworkResult<T>(
     class Exception<T>(exception: String) : NetworkResult<T>(message = exception)
 }
 
-suspend fun <T : Any> handleApi(
+
+
+fun <T : Any> handleApi(
     execute: suspend () -> Response<T>
-): StateFlow<NetworkResult<T>> {
-    val apiState = MutableStateFlow<NetworkResult<T>>(NetworkResult.Empty())
+): Flow<NetworkResult<T>> = flow{
     try {
         Log.i("LOGIN_REQUEST","handleApi - > start")
         val response = execute()
         val body = response.body()
-        apiState.emit(NetworkResult.Loading())
+      emit(NetworkResult.Loading())
 
         if (response.isSuccessful && body != null) {
 
             Log.i("LOGIN_REQUEST","handleApi - > success")
-            apiState.emit(NetworkResult.Success(body))
+            emit(NetworkResult.Success(body))
 
         } else {
-            apiState.emit(NetworkResult.Error(code = response.code(), message = response.message()))
+           emit(NetworkResult.Error(code = response.code(), message = response.message()))
         }
     } catch (e: HttpException) {
-        apiState.emit(NetworkResult.Error<T>(message = e.message(), code = e.code()))
+        emit(NetworkResult.Error<T>(message = e.message(), code = e.code()))
     } catch (e: Throwable) {
-        apiState.emit(NetworkResult.Exception<T>(exception = e.message!!))
+        emit(NetworkResult.Exception<T>(exception = e.message!!))
     }
-    return apiState
 }
-

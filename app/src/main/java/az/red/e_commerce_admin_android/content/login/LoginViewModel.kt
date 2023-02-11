@@ -20,7 +20,7 @@ class LoginViewModel(
                 when (it) {
                     is NetworkResult.Success -> sessionManager.saveAuthToken(it.data!!.token)
                     is NetworkResult.Empty -> Log.i("LOGIN_REQUEST","Empty")
-                    is NetworkResult.Error -> Log.i("LOGIN_REQUEST","Error")
+                    is NetworkResult.Error -> Log.i("LOGIN_REQUEST","Error:  ${it.message}")
                     is NetworkResult.Exception -> Log.i("LOGIN_REQUEST","Exception: ${it.message}")
                     is NetworkResult.Loading -> Log.i("LOGIN_REQUEST","Loading")
                 }

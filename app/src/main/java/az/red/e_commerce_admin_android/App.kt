@@ -12,7 +12,7 @@ class App : Application() {
         startKoin {
 
             properties(
-                mapOf("base_url" to "Add base url in this")
+                mapOf("base_url" to "https://mobile.test-danit.com/api/")
             )
 
             androidContext(this@App)
