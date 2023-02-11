@@ -6,18 +6,19 @@ import az.red.e_commerce_admin_android.data.remote.user.dto.response.PasswordUpd
 import az.red.e_commerce_admin_android.data.remote.user.dto.response.UserResponse
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.handleApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 class UserRepositoryImpl(val service:UserService): UserRepository {
-    override suspend fun getCurrentUser(): StateFlow<NetworkResult<UserResponse>> {
+    override  fun getCurrentUser(): Flow<NetworkResult<UserResponse>> {
         return handleApi{service.getCurrentUser()}
     }
 
-    override suspend fun updateUser(dto:UpdateUserRequest): StateFlow<NetworkResult<UserResponse>> {
+    override  fun updateUser(dto:UpdateUserRequest): Flow<NetworkResult<UserResponse>> {
         return handleApi{service.updateUser(dto)}
     }
 
-    override suspend fun updatePassword(dto: UpdatePasswordRequest): StateFlow<NetworkResult<PasswordUpdateResponse>> {
+    override  fun updatePassword(dto: UpdatePasswordRequest): Flow<NetworkResult<PasswordUpdateResponse>> {
         return handleApi{service.updatePassword(dto)}
     }
 }

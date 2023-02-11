@@ -5,10 +5,11 @@ import az.red.e_commerce_admin_android.data.remote.user.dto.request.UpdateUserRe
 import az.red.e_commerce_admin_android.data.remote.user.dto.response.PasswordUpdateResponse
 import az.red.e_commerce_admin_android.data.remote.user.dto.response.UserResponse
 import az.red.e_commerce_admin_android.utils.NetworkResult
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface UserRepository {
-    suspend fun getCurrentUser(): StateFlow<NetworkResult<UserResponse>>
-    suspend fun updateUser(dto: UpdateUserRequest): StateFlow<NetworkResult<UserResponse>>
-    suspend fun updatePassword(dto: UpdatePasswordRequest): StateFlow<NetworkResult<PasswordUpdateResponse>>
+     fun getCurrentUser(): Flow<NetworkResult<UserResponse>>
+     fun updateUser(dto: UpdateUserRequest): Flow<NetworkResult<UserResponse>>
+     fun updatePassword(dto: UpdatePasswordRequest): Flow<NetworkResult<PasswordUpdateResponse>>
 }

@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.content.register
 
+import androidx.navigation.fragment.findNavController
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.base.BaseFragment
 import az.red.e_commerce_admin_android.databinding.FragmentRegisterBinding
@@ -13,7 +14,9 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
         get() = RegisterViewModel::class
 
     override val bindViews: FragmentRegisterBinding.() -> Unit = {
-
+        tvSignIn.setOnClickListener {
+            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+        }
     }
 
 }
