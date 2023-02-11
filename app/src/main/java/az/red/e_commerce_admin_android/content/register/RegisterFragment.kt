@@ -15,4 +15,5 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel
     override val bindViews: FragmentRegisterBinding.() -> Unit = {
 
     }
+
 }

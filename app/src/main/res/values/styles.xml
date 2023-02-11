@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="colors">
+        <attr name="background_color" format="color" />
+        <attr name="text_color" format="color" />
+        <attr name="hint_text_color" format="color" />
+        <attr name="card_background_color" format="color" />
+        <attr name="card_border_color" format="color" />
+        <attr name="input_icon_color" format="color" />
+        <attr name="input_hint_icon_color" format="color" />
+        <attr name="btn_inactive_color" format="color" />
+        <attr name="btn_active_color" format="color" />
+        <attr name="btn_text_color" format="color" />
+        <attr name="accent_color" format="color" />
+    </declare-styleable>
+
+    <style name="Header">
+        <item name="android:textSize">@dimen/text_size_header</item>
+        <item name="android:textColor">?attr/text_color</item>
+        <item name="android:fontFamily">@font/barlow_bold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="btnLong">
+        <item name="android:textSize">@dimen/dimen_16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/nunito_semibold</item>
+        <item name="backgroundTint">@xml/btn_color_state_list</item>
+        <item name="android:textColor">?attr/btn_text_color</item>
+        <item name="cornerRadius">@dimen/button_corner_radius_28</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:fontFamily">@font/nunito_regular</item>
+        <item name="android:textSize">@dimen/text_size_input</item>
+        <item name="android:drawablePadding">@dimen/dimen_10dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">?attr/card_background_color</item>
+        <item name="android:textColorHint">?attr/hint_text_color</item>
+        <item name="android:background">@drawable/shape_edit_text</item>
+    </style>
+
+</resources>

@@ -1,0 +1,10 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:color="?attr/btn_active_color"
+
+    android:state_enabled="true"  />
+    <item
+        android:color="?attr/btn_inactive_color"
+
+        android:state_enabled="false"  />
+</selector>

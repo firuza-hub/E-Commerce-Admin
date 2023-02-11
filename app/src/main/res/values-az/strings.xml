@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">E-Commerce-Admin-Android</string>
+    <string name="sing_in_to_account">Akkaunta daxil ol</string>
+    <string name="email">E-Poçt</string>
+    <string name="password">Şifrə</string>
+    <string name="remember_me">Məni Xatırla</string>
+    <string name="sign_in">Daxil ol</string>
+    <string name="forgot_the_password">Şifrəni unutdum</string>
+    <string name="or_continue_with">və ya aşağıdakilardan seç</string>
+    <string name="don_t_have_account">Akkauntun yoxdur?</string>
+    <string name="sign_up">Yarat</string>
+    <string name="create_your_account">Hesabınızı yaradın</string>
+    <string name="already_have_an_account">Artıq bir hesabınız var mı?</string>
+</resources>

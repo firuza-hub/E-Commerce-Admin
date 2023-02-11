@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -9,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "az.red.e_commerce_admin_android"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -64,5 +66,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.5'
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.5"
+
+    //DataBinding
+    implementation 'androidx.databinding:databinding-common:7.1.2'
 
 }
