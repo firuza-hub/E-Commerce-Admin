@@ -58,7 +58,6 @@ dependencies {
 
     // DI
     implementation "io.insert-koin:koin-android:2.1.6"
-    implementation "io.insert-koin:koin-core:2.1.6"
     implementation "io.insert-koin:koin-androidx-viewmodel:2.1.6"
 
     //Network
