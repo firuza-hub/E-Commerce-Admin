@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.ui
+package az.red.e_commerce_admin_android.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

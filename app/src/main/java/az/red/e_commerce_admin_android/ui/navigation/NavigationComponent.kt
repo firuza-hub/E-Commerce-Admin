@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import az.red.e_commerce_admin_android.ui.login.LoginScreen
-import az.red.e_commerce_admin_android.ui.register.RegisterScreen
+import az.red.e_commerce_admin_android.ui.screens.login.LoginScreen
+import az.red.e_commerce_admin_android.ui.screens.register.RegisterScreen
 
 @Composable
 fun NavigationComponent() {

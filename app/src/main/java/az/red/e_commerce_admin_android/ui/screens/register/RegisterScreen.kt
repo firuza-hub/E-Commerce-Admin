@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.ui.register
+package az.red.e_commerce_admin_android.ui.screens.register
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button

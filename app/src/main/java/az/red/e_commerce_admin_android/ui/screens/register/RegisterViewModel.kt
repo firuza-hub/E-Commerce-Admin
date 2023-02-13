@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.ui.register
+package az.red.e_commerce_admin_android.ui.screens.register
 
 import androidx.lifecycle.viewModelScope
 import az.red.e_commerce_admin_android.base.BaseViewModel

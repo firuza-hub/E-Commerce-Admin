@@ -11,9 +11,6 @@ class SessionManager (context: Context) {
         const val USER_TOKEN = "user_token"
     }
 
-    /**
-     * Function to save auth token
-     */
     fun saveAuthToken(token: String) {
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
@@ -21,9 +18,13 @@ class SessionManager (context: Context) {
         println("Token Saved: $token")
     }
 
-    /**
-     * Function to fetch auth token
-     */
+    fun removeAuthToken(token: String) {
+        val editor = prefs.edit()
+        editor.putString(USER_TOKEN, null)
+        editor.apply()
+        println("Token Removed")
+    }
+
     fun fetchAuthToken(): String? {
         return prefs.getString(USER_TOKEN, null)
     }
