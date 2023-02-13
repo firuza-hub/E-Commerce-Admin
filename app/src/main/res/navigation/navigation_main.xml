@@ -6,7 +6,7 @@
     app:startDestination="@id/registerFragment">
     <fragment
         android:id="@+id/onBoardingFragment"
-        android:name="az.red.e_commerce_admin_android.content.onBoarding.OnBoardingFragment"
+        android:name="az.red.e_commerce_admin_android.ui.onBoarding.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding">
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="az.red.e_commerce_admin_android.content.register.RegisterFragment"
+        android:name="az.red.e_commerce_admin_android.ui.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register">
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="az.red.e_commerce_admin_android.content.login.LoginFragment"
+        android:name="az.red.e_commerce_admin_android.ui.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/otpFragment"
-        android:name="az.red.e_commerce_admin_android.content.otp.OtpFragment"
+        android:name="az.red.e_commerce_admin_android.ui.otp.OtpFragment"
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp" />
 </navigation>

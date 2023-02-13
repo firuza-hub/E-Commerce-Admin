@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.content.login
+package az.red.e_commerce_admin_android.ui.login
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
