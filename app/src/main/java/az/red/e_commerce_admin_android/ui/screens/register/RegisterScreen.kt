@@ -5,7 +5,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import az.red.e_commerce_admin_android.ui.navigation.Screen
+import az.red.e_commerce_admin_android.ui.screens.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

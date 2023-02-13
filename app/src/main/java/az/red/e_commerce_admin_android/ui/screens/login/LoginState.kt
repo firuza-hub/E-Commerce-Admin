@@ -1,8 +1,7 @@
 package az.red.e_commerce_admin_android.ui.screens.login
 
-import androidx.annotation.StringRes
-import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.data.remote.auth.dto.request.LoginRequest
+import az.red.e_commerce_admin_android.ui.common.state.ErrorState
 
 data class LoginState(
     val email: String,
@@ -20,9 +19,4 @@ data class LoginState(
 data class LoginErrorState(
     val emailOrMobileErrorState: ErrorState = ErrorState(),
     val passwordErrorState: ErrorState = ErrorState()
-)
-
-data class ErrorState(
-    val hasError: Boolean = false,
-    @StringRes val errorMessageStringResource: Int = R.string.empty_string
 )

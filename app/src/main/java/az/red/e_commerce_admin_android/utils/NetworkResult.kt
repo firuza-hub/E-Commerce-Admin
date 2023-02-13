@@ -19,23 +19,22 @@ sealed class NetworkResult<T>(
 }
 
 
-
 fun <T : Any> handleApi(
     execute: suspend () -> Response<T>
-): Flow<NetworkResult<T>> = flow{
+): Flow<NetworkResult<T>> = flow {
     try {
-        Log.i("LOGIN_REQUEST","handleApi - > start")
+        Log.i("LOGIN_REQUEST", "handleApi - > start")
         val response = execute()
         val body = response.body()
-      emit(NetworkResult.Loading())
+        emit(NetworkResult.Loading())
 
         if (response.isSuccessful && body != null) {
 
-            Log.i("LOGIN_REQUEST","handleApi - > success")
+            Log.i("LOGIN_REQUEST", "handleApi - > success")
             emit(NetworkResult.Success(body))
 
         } else {
-           emit(NetworkResult.Error(code = response.code(), message = response.message()))
+            emit(NetworkResult.Error(code = response.code(), message = response.message()))
         }
     } catch (e: HttpException) {
         emit(NetworkResult.Error<T>(message = e.message(), code = e.code()))

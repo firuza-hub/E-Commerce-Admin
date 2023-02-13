@@ -15,4 +15,6 @@
     <string name="empty_string" />
     <string name="login_error_msg_empty_email_mobile">Please enter email</string>
     <string name="login_error_msg_empty_password">Please enter password</string>
+    <string name="icon_password_visible">Password Visible</string>
+    <string name="icon_password_hidden">Password Hidden</string>
 </resources>

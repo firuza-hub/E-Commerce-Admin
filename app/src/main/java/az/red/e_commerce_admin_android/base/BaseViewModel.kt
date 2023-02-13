@@ -19,14 +19,4 @@ abstract class BaseViewModel : ViewModel() {
     fun triggerEvent(event: UIEvent) = viewModelScope.launch {
         uiEventChannel.send(event)
     }
-
-    //TODO: Call this method on the home screen
-    protected fun authorizationCheck() {
-        sessionManager.fetchAuthToken().let {
-            if (it.isNullOrEmpty()) {
-                Log.i("BASE_VIEW_MODEL", "Token is empty. Redirect to login")
-                triggerEvent(UIEvent.Navigate(R.id.loginFragment))
-            }
-        }
-    }
 }

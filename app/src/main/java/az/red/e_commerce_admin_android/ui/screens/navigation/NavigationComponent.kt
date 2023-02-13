@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.ui.navigation
+package az.red.e_commerce_admin_android.ui.screens.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
