@@ -31,7 +31,7 @@ val dataModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl(getProperty("base_url"))
+            .baseUrl(getProperty("base_url") as String)
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()

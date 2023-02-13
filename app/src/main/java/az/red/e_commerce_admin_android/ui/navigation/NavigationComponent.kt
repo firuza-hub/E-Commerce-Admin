@@ -15,12 +15,12 @@ fun NavigationComponent() {
         startDestination = Screen.LoginScreen.route
     ) {
         composable(route = Screen.LoginScreen.route) {
-            LoginScreen()
+            LoginScreen(navController = navController)
         }
         composable(
             route = Screen.RegisterScreen.route
         ) {
-            RegisterScreen()
+            RegisterScreen(navController = navController)
         }
     }
 }
