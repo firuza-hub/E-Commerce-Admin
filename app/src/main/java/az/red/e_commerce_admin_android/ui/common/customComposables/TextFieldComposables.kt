@@ -1,21 +1,32 @@
 package az.red.e_commerce_admin_android.ui.common.customComposables
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -24,12 +35,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.ui.themes.inputHintIconColor
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PasswordTextField(
     modifier: Modifier = Modifier,
@@ -46,12 +58,8 @@ fun PasswordTextField(
         mutableStateOf(false)
     }
 
-    TextField(
-        modifier = modifier.border(
-            width = 1.dp, shape = RoundedCornerShape(8.dp), color = colorResource(
-                id = R.color.input_card_border_light
-            )
-        ),
+    CustomTextField(
+        modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         placeholder = {
@@ -82,7 +90,6 @@ fun PasswordTextField(
                 )
             }
         },
-        singleLine = true,
         visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
@@ -91,8 +98,8 @@ fun PasswordTextField(
         keyboardActions = KeyboardActions(onDone = {
             keyboardController?.hide()
         }),
-        isError = isError,
-        supportingText = {
+        hasError = isError,
+        errorText = {
             if (isError) {
                 ErrorTextInputField(text = errorText)
             }
@@ -100,18 +107,13 @@ fun PasswordTextField(
         leadingIcon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_password),
+                tint = MaterialTheme.colors.inputHintIconColor,
                 contentDescription = "Email Icon"
             )
-        },
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
-            )
+        }
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailTextField(
     modifier: Modifier = Modifier,
@@ -122,27 +124,19 @@ fun EmailTextField(
     errorText: String = "",
     imeAction: ImeAction = ImeAction.Next
 ) {
-
-    TextField(
-        modifier = modifier
-            .border(
-                width = 1.dp, shape = RoundedCornerShape(8.dp), color = colorResource(
-                    id = R.color.input_card_border_light
-                )
-            ),
+    CustomTextField(
+        modifier = modifier,
         value = value,
-        label = null,
         onValueChange = onValueChange,
         placeholder = {
             Text(text = label, fontSize = 18.sp)
         },
-        singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
-            imeAction = imeAction
+            imeAction = imeAction,
         ),
-        isError = isError,
-        supportingText = {
+        hasError = isError,
+        errorText = {
             if (isError) {
                 ErrorTextInputField(text = errorText)
             }
@@ -150,17 +144,10 @@ fun EmailTextField(
         leadingIcon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_email),
+                tint = MaterialTheme.colors.inputHintIconColor,
                 contentDescription = "Email Icon"
             )
-        },
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-
-        ),
-
-    )
+        })
 
 }
 
@@ -171,9 +158,117 @@ fun ErrorTextInputField(
     text: String
 ) {
     Text(
-        modifier = modifier,
+        modifier = modifier.padding(horizontal = 16.dp, vertical = 4.dp),
         text = text,
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.error
+        style = MaterialTheme.typography.body2,
+        color = MaterialTheme.colors.error
     )
 }
+
+@Composable
+private fun CustomTextField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    leadingIcon: @Composable() (() -> Unit)? = null,
+    trailingIcon: @Composable() (() -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions? = null,
+    keyboardActions: KeyboardActions? = null,
+    placeholder: @Composable() (() -> Unit)? = null,
+    hasError: Boolean,
+    errorText: @Composable() (() -> Unit)? = null,
+) {
+    var errorBorderWidth by remember { mutableStateOf(1.dp) }
+    var errorVisibilityState by remember { mutableStateOf(false) }
+    errorVisibilityState = hasError
+    BasicTextField(
+        modifier = modifier
+            .onFocusChanged {
+                errorBorderWidth =
+                    if (it.hasFocus) 2.dp else 1.dp
+            }
+            .border(
+                width = 1.dp, shape = RoundedCornerShape(8.dp), color = colorResource(
+                    id = R.color.input_card_border_light
+                )
+            ),
+        value = value,
+        onValueChange = onValueChange,
+        singleLine = true,
+        cursorBrush = SolidColor(MaterialTheme.colors.primary),
+        decorationBox = { innerTextField ->
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier.height(44.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if (leadingIcon != null) Column(modifier = Modifier.padding(8.dp)) { leadingIcon() }
+                    Box(
+                        Modifier.weight(1f)
+                    ) {
+                        if (value.isEmpty() && placeholder != null)
+                            placeholder()
+
+                        innerTextField()
+                    }
+                    if (trailingIcon != null) trailingIcon()
+                }
+
+                AnimatedVisibility(
+                    visible = errorVisibilityState,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .bottomTop(errorBorderWidth, MaterialTheme.colors.error)
+                    ) {
+                        errorText!!()
+                    }
+                }
+            }
+        },
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions ?: KeyboardOptions.Default,
+        keyboardActions = keyboardActions ?: KeyboardActions.Default
+    )
+}
+
+fun Modifier.bottomBorder(strokeWidth: Dp, color: Color) = composed(
+    factory = {
+        val density = LocalDensity.current
+        val strokeWidthPx = density.run { strokeWidth.toPx() }
+
+        Modifier.drawBehind {
+            val width = size.width
+            val height = size.height - strokeWidthPx / 2
+
+            drawLine(
+                color = color,
+                start = Offset(x = 0f, y = height),
+                end = Offset(x = width, y = height),
+                strokeWidth = strokeWidthPx
+            )
+        }
+    }
+)
+
+fun Modifier.bottomTop(strokeWidth: Dp, color: Color) = composed(
+    factory = {
+        val density = LocalDensity.current
+        val strokeWidthPx = density.run { strokeWidth.toPx() }
+
+        Modifier.drawBehind {
+            val width = size.width
+
+            drawLine(
+                color = color,
+                start = Offset(x = 0f, y = strokeWidthPx),
+                end = Offset(x = width, y = strokeWidthPx),
+                strokeWidth = strokeWidthPx,
+                pathEffect = null)
+        }
+    }
+)

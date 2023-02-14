@@ -15,7 +15,7 @@
 
         <item name="card_border_color">@color/input_card_border_dark</item>
         <item name="card_background_color">@color/input_card_background_dark</item>
-        <item name="text_color">@color/white</item>
+
         <item name="hint_text_color">@color/input_hint_color_dark</item>
         <item name="input_hint_icon_color">@color/input_hint_color_dark</item>
         <item name="btn_inactive_color">@color/input_hint_color_light</item>

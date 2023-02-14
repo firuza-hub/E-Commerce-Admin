@@ -45,14 +45,12 @@ fun LoginScreen(
                 is UIEvent.Error -> {
                     Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                 }
-
                 is UIEvent.Message -> {
                     Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                 }
                 is UIEvent.Navigate -> {
                     navController.navigate(event.path)
                 }
-                else -> {}
             }
         }
 
@@ -66,7 +64,7 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Sign in to account", fontSize = 32.sp,
+            text = stringResource(id = R.string.sing_in_to_account), fontSize = 32.sp,
             fontFamily = barlowFamily,
             fontWeight = FontWeight.Bold
         )
@@ -86,16 +84,18 @@ fun LoginScreen(
             )
         })
         Spacer(modifier = Modifier.height(45.dp))
-        Button(modifier = Modifier.fillMaxWidth().height(42.dp),
+        Button(modifier = Modifier
+            .fillMaxWidth()
+            .height(42.dp),
             onClick = { loginViewModel.onUiEvent(LoginUIEvent.Submit) }) {
-            Text(text = "Sign in", fontSize = 16.sp)
+            Text(text = stringResource(id = R.string.sign_in), fontSize = 16.sp)
         }
 
         Spacer(modifier = Modifier.height(45.dp))
         Row {
-            Text(text = "Don't have an account? ")
+            Text(text = stringResource(id = R.string.don_t_have_account))
             Text(
-                text = "Sign up",
+                text = stringResource(id = R.string.sign_up),
                 modifier = Modifier.clickable {
                     navController.navigate(Screen.RegisterScreen.route)
                 },
@@ -115,7 +115,7 @@ fun InputSection(
     EmailTextField(
         modifier = Modifier.fillMaxWidth(),
         state.email, { onEmailChange(it) },
-        "Email",
+        stringResource(id = R.string.email),
         state.errorState.emailOrMobileErrorState.hasError,
         stringResource(id = state.errorState.emailOrMobileErrorState.errorMessageStringResource)
     )
@@ -125,7 +125,7 @@ fun InputSection(
     PasswordTextField(
         modifier = Modifier.fillMaxWidth(),
         state.password, { onPasswordChange(it) },
-        "Password",
+        stringResource(id = R.string.password),
         state.errorState.passwordErrorState.hasError,
         stringResource(id = state.errorState.passwordErrorState.errorMessageStringResource),
         ImeAction.Done
