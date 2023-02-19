@@ -1,46 +1,73 @@
 package az.red.e_commerce_admin_android.ui.screens.login
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.data.remote.auth.AuthRepository
-import az.red.e_commerce_admin_android.data.remote.auth.SessionManager
+import az.red.e_commerce_admin_android.ui.common.state.ErrorState
+import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.utils.NetworkResult
+import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val authRepo: AuthRepository,
-    private val sessionManager: SessionManager
+    private val authRepo: AuthRepository
 ) : BaseViewModel() {
 
-    val loginState =  MutableStateFlow(LoginState.NULL)
-    fun login() {
+
+    val isLoggedIn = MutableStateFlow(false)
+    val loginState = MutableStateFlow(LoginState.NULL)
+    init {
+        authorizationCheck()
+    }
+    private fun authorizationCheck() {
+        sessionManager.fetchAuthToken().let {
+            if (it.isNullOrEmpty()) {
+                isLoggedIn.value = true
+            } else {
+                Log.i("BASE_VIEW_MODEL", "Token is empty. Redirect to login")
+                triggerEvent(UIEvent.Navigate(Graph.MAIN))
+            }
+        }
+    }
+
+    private fun login() {
         viewModelScope.launch(Dispatchers.IO) {
             authRepo.login(loginState.value.toLoginRequest()).collect {
                 when (it) {
-                    is NetworkResult.Success -> sessionManager.saveAuthToken(it.data!!.token)
-                    is NetworkResult.Empty -> Log.i("LOGIN_REQUEST","Empty")
-                    is NetworkResult.Error -> Log.i("LOGIN_REQUEST","Error:  ${it.message}")
-                    is NetworkResult.Exception -> Log.i("LOGIN_REQUEST","Exception: ${it.message}")
-                    is NetworkResult.Loading -> Log.i("LOGIN_REQUEST","Loading")
+                    is NetworkResult.Success -> {
+                        sessionManager.saveAuthToken(it.data!!.token)
+                        triggerEvent(UIEvent.Message("Success!"))
+                        triggerEvent(UIEvent.Navigate(Graph.MAIN))
+                        Log.i("LOGIN_REQUEST", "Success: ${it.data.token}")
+                    }
+                    is NetworkResult.Empty -> Log.i("LOGIN_REQUEST", "Empty")
+                    is NetworkResult.Error -> {
+                        Log.i("LOGIN_REQUEST", "Error: ${it.message}")
+                        it.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
+                    }
+                    is NetworkResult.Exception -> {
+                        Log.e("LOGIN_REQUEST", "Exception: ${it.message}")
+                        it.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
+                    }
+                    is NetworkResult.Loading -> Log.i("LOGIN_REQUEST", "Loading")
                 }
             }
         }
     }
 
-    fun onUiEvent(loginUiEvent: LoginUiEvent) {
+    fun onUiEvent(loginUiEvent: LoginUIEvent) {
         when (loginUiEvent) {
 
             // Email/Mobile changed
-            is LoginUiEvent.EmailChanged -> {
+            is LoginUIEvent.EmailChanged -> {
                 loginState.value = loginState.value.copy(
                     email = loginUiEvent.inputValue,
                     errorState = loginState.value.errorState.copy(
-                        emailOrMobileErrorState = if (loginUiEvent.inputValue.trim().isNotEmpty())
+                        emailOrMobileErrorState =
+                        if (loginUiEvent.inputValue.trim().isNotEmpty())
                             ErrorState()
                         else
                             emailOrMobileEmptyErrorState
@@ -49,11 +76,12 @@ class LoginViewModel(
             }
 
             // Password changed
-            is LoginUiEvent.PasswordChanged -> {
+            is LoginUIEvent.PasswordChanged -> {
                 loginState.value = loginState.value.copy(
                     password = loginUiEvent.inputValue,
                     errorState = loginState.value.errorState.copy(
-                        passwordErrorState = if (loginUiEvent.inputValue.trim().isNotEmpty())
+                        passwordErrorState =
+                        if (loginUiEvent.inputValue.trim().isNotEmpty())
                             ErrorState()
                         else
                             passwordEmptyErrorState
@@ -62,10 +90,10 @@ class LoginViewModel(
             }
 
             // Submit Login
-            is LoginUiEvent.Submit -> {
+            is LoginUIEvent.Submit -> {
                 val inputsValidated = validateInputs()
                 if (inputsValidated) {
-                    // TODO Trigger login in authentication flow
+                    login()
                     loginState.value = loginState.value.copy(isLoginSuccessful = true)
                 }
             }
@@ -108,19 +136,3 @@ class LoginViewModel(
 
 }
 
-
-sealed class LoginUiEvent {
-    data class EmailChanged(val inputValue: String) : LoginUiEvent()
-    data class PasswordChanged(val inputValue: String) : LoginUiEvent()
-    object Submit : LoginUiEvent()
-}
-
-val emailOrMobileEmptyErrorState = ErrorState(
-    hasError = true,
-    errorMessageStringResource = R.string.login_error_msg_empty_email_mobile
-)
-
-val passwordEmptyErrorState = ErrorState(
-    hasError = true,
-    errorMessageStringResource = R.string.login_error_msg_empty_password
-)

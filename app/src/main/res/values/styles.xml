@@ -34,7 +34,7 @@
         <item name="android:fontFamily">@font/nunito_regular</item>
         <item name="android:textSize">@dimen/text_size_input</item>
         <item name="android:drawablePadding">@dimen/dimen_10dp</item>
-        <item name="android:textColor">@color/black</item>
+<!--        <item name="android:textColor">@color/black</item>-->
         <item name="backgroundTint">?attr/card_background_color</item>
         <item name="android:textColorHint">?attr/hint_text_color</item>
         <item name="android:background">@drawable/shape_edit_text</item>
