@@ -23,6 +23,23 @@ data class CustomTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     ),
+
+    val nunitoNormal12 : TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp
+    ),
+
+    val nunitoNormal18 : TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp
+    ),
+    val nunitoBold : TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
+    )
 )
 
 val LocalTypography = staticCompositionLocalOf {

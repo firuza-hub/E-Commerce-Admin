@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import az.red.e_commerce_admin_android.ui.themes.nunitoFamily
 
 @Composable
@@ -22,8 +23,11 @@ fun HomeTopAppBar() {
     TopAppBar(
         elevation = 0.dp,
         title = {
-            Text("My products", fontSize = 16.sp, fontFamily = nunitoFamily,
-                fontWeight = FontWeight.Normal, modifier = Modifier.offset(x= (-16).dp))
+            Text(
+                "My products",
+                style = CustomTheme.typography.nunitoNormal18,
+                modifier = Modifier.offset(x = (-16).dp)
+            )
         },
         backgroundColor = Color.White,
         navigationIcon = {

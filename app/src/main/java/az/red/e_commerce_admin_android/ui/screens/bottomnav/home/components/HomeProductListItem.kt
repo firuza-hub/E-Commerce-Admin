@@ -16,17 +16,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.ui.themes.nunitoFamily
+import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
 fun ProductListItem() {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 12.dp, horizontal = 16.dp)) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp, horizontal = 16.dp)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -40,7 +40,7 @@ fun ProductListItem() {
 }
 
 @Composable
-fun ProductListImage(){
+fun ProductListImage() {
     Box(
         modifier = Modifier
             .size(width = 97.dp, height = 97.dp)
@@ -58,7 +58,7 @@ fun ProductListImage(){
 }
 
 @Composable
-fun ProductListInfo(){
+fun ProductListInfo() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,8 +72,7 @@ fun ProductListInfo(){
                 .weight(1f),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Iphone 13 pro max",fontFamily = nunitoFamily,
-                fontWeight = FontWeight.Normal,)
+            Text(text = "Iphone 13 pro max", style = CustomTheme.typography.nunitoNormal12)
 
             Icon(
                 painter = painterResource(id = R.drawable.ic_settings),
@@ -82,12 +81,17 @@ fun ProductListInfo(){
             )
         }
 
-        Text(text = "US $540.00", fontFamily = nunitoFamily,
-            fontWeight = FontWeight.Bold,modifier = Modifier.weight(1f))
+        Text(
+            text = "US $540.00",
+            style = CustomTheme.typography.nunitoBold,
+            modifier = Modifier.weight(1f)
+        )
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
             Button(
                 modifier = Modifier
                     .padding(0.dp, 0.dp, 8.dp, 2.dp)
@@ -102,9 +106,7 @@ fun ProductListInfo(){
             ) {
                 Text(
                     text = "Deactivate",
-                    fontFamily = nunitoFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp,
+                    style = CustomTheme.typography.nunitoNormal12,
                     color = colorResource(id = R.color.input_card_background_dark)
                 )
             }
@@ -125,9 +127,7 @@ fun ProductListInfo(){
             ) {
                 Text(
                     text = "Statistics",
-                    fontFamily = nunitoFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp,
+                    style = CustomTheme.typography.nunitoNormal12,
                     color = colorResource(id = R.color.bottom_navigation_unselected)
                 )
             }
