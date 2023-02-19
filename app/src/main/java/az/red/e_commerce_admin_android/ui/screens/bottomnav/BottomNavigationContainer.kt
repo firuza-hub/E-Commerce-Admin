@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.ui.navigation.bottomnav.BottomNavItem
+import az.red.e_commerce_admin_android.ui.navigation.main.BottomNavItem
 
 @Composable
 fun BottomNavigationContainer(navController: NavController) {
@@ -30,46 +30,53 @@ fun BottomNavigationContainer(navController: NavController) {
         BottomNavItem.Cart,
         BottomNavItem.Profile,
     )
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val bottomBarDestination = items.any { it.screen_route == currentRoute }
+    if(bottomBarDestination) {
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.accent_carrot),
         modifier = Modifier.fillMaxWidth().height(82.dp)
             .clip(RoundedCornerShape(16.dp, 16.dp, 0.dp, 0.dp)),
         contentColor = Color.Black
     ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        items.forEach { item ->
-            BottomNavigationItem(
-                modifier = Modifier.padding(0.dp,0.dp,0.dp,10.dp),
-                icon = {
-                    Icon(
-                        painterResource(id = item.icon),
-                        contentDescription = item.title
-                    )
-                },
-                label = {
-                    Text(
-                        text = item.title,
-                        fontSize = 9.sp
-                    )
-                },
-                selectedContentColor = Color.White,
-                unselectedContentColor = colorResource(id = R.color.bottom_navigation_unselected).copy(0.5f),
-                alwaysShowLabel = true,
-                selected = currentRoute == item.screen_route,
-                onClick = {
-                    navController.navigate(item.screen_route) {
 
-                        navController.graph.startDestinationRoute?.let { screen_route ->
-                            popUpTo(screen_route) {
-                                saveState = true
+            items.forEach { item ->
+                BottomNavigationItem(
+                    modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 10.dp),
+                    icon = {
+                        Icon(
+                            painterResource(id = item.icon),
+                            contentDescription = item.title
+                        )
+                    },
+                    label = {
+                        Text(
+                            text = item.title,
+                            fontSize = 9.sp
+                        )
+                    },
+                    selectedContentColor = Color.White,
+                    unselectedContentColor = colorResource(id = R.color.bottom_navigation_unselected).copy(
+                        0.5f
+                    ),
+                    alwaysShowLabel = true,
+                    selected = currentRoute == item.screen_route,
+                    onClick = {
+                        navController.navigate(item.screen_route) {
+
+                            navController.graph.startDestinationRoute?.let { screen_route ->
+                                popUpTo(screen_route) {
+                                    saveState = true
+                                }
                             }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
-                }
-            )
+                )
+            }
         }
     }
 }

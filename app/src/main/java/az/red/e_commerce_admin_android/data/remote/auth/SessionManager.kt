@@ -18,9 +18,9 @@ class SessionManager (context: Context) {
         println("Token Saved: $token")
     }
 
-    fun removeAuthToken(token: String) {
+    fun removeAuthToken() {
         val editor = prefs.edit()
-        editor.putString(USER_TOKEN, null)
+        editor.putString(USER_TOKEN, "")
         editor.apply()
         println("Token Removed")
     }

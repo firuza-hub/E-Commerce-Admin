@@ -5,7 +5,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import az.red.e_commerce_admin_android.ui.screens.navigation.Screen
+import az.red.e_commerce_admin_android.ui.navigation.auth.AuthScreens
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -15,7 +15,7 @@ fun RegisterScreen(
 ) {
     Column {
         Text(text = "REGISTER")
-        Button(onClick = { navController.navigate(Screen.LoginScreen.route) }) {
+        Button(onClick = { navController.navigate(AuthScreens.LoginAuthScreens.route) }) {
             Text(text = "LOGIN")
         }
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.data.remote.auth.AuthRepository
 import az.red.e_commerce_admin_android.ui.common.state.ErrorState
+import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,23 @@ class LoginViewModel(
     private val authRepo: AuthRepository
 ) : BaseViewModel() {
 
+
+    val isLoggedIn = MutableStateFlow(false)
     val loginState = MutableStateFlow(LoginState.NULL)
+    init {
+        authorizationCheck()
+    }
+    private fun authorizationCheck() {
+        sessionManager.fetchAuthToken().let {
+            if (it.isNullOrEmpty()) {
+                isLoggedIn.value = true
+            } else {
+                Log.i("BASE_VIEW_MODEL", "Token is empty. Redirect to login")
+                triggerEvent(UIEvent.Navigate(Graph.MAIN))
+            }
+        }
+    }
+
     private fun login() {
         viewModelScope.launch(Dispatchers.IO) {
             authRepo.login(loginState.value.toLoginRequest()).collect {
@@ -23,6 +40,7 @@ class LoginViewModel(
                     is NetworkResult.Success -> {
                         sessionManager.saveAuthToken(it.data!!.token)
                         triggerEvent(UIEvent.Message("Success!"))
+                        triggerEvent(UIEvent.Navigate(Graph.MAIN))
                         Log.i("LOGIN_REQUEST", "Success: ${it.data.token}")
                     }
                     is NetworkResult.Empty -> Log.i("LOGIN_REQUEST", "Empty")

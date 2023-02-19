@@ -1,9 +1,7 @@
 package az.red.e_commerce_admin_android.base
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.data.remote.auth.SessionManager
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.channels.Channel
@@ -19,4 +17,5 @@ abstract class BaseViewModel : ViewModel() {
     fun triggerEvent(event: UIEvent) = viewModelScope.launch {
         uiEventChannel.send(event)
     }
+
 }

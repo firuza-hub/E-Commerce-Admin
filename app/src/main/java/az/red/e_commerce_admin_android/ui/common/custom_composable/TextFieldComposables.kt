@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.ui.common.customComposables
+package az.red.e_commerce_admin_android.ui.common.custom_composable
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
