@@ -20,15 +20,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.ui.navigation.main.BottomNavItem
+import az.red.e_commerce_admin_android.ui.navigation.main.BottomNavScreen
 
 @Composable
 fun BottomNavigationContainer(navController: NavController) {
     val items = listOf(
-        BottomNavItem.Home,
-        BottomNavItem.Orders,
-        BottomNavItem.Cart,
-        BottomNavItem.Profile,
+        BottomNavScreen.Home,
+        BottomNavScreen.Orders,
+        BottomNavScreen.Cart,
+        BottomNavScreen.Profile,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route

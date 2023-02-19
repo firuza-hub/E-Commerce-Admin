@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.common.custom_composable.EmailTextField
 import az.red.e_commerce_admin_android.ui.common.custom_composable.PasswordTextField
-import az.red.e_commerce_admin_android.ui.navigation.auth.AuthScreens
+import az.red.e_commerce_admin_android.ui.navigation.auth.AuthScreen
 import az.red.e_commerce_admin_android.ui.themes.barlowFamily
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.launch
@@ -93,7 +93,7 @@ fun LoginScreen(
                 Text(
                     text = stringResource(id = R.string.sign_up),
                     modifier = Modifier.clickable {
-                        navController.navigate(AuthScreens.RegisterAuthScreens.route)
+                        navController.navigate(AuthScreen.RegisterAuthScreen.route)
                     },
                     color = Color.Red
                 )

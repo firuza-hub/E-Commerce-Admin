@@ -12,13 +12,13 @@ import az.red.e_commerce_admin_android.ui.screens.register.RegisterScreen
 fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
     navigation(
         route = Graph.AUTH,
-        startDestination = AuthScreens.LoginAuthScreens.route
+        startDestination = AuthScreen.LoginAuthScreen.route
     ) {
-        composable(route = AuthScreens.LoginAuthScreens.route) {
+        composable(route = AuthScreen.LoginAuthScreen.route) {
             LoginScreen(navController = navController)
         }
         composable(
-            route = AuthScreens.RegisterAuthScreens.route
+            route = AuthScreen.RegisterAuthScreen.route
         ) {
             RegisterScreen(navController = navController)
         }
