@@ -33,27 +33,32 @@ fun ProductListItem() {
                 .height(97.dp)
         ) {
 
-            Box(
-                modifier = Modifier
-                    .size(width = 97.dp, height = 97.dp)
-                    .clip(RoundedCornerShape(size = 8.dp))
-                    .background(Color.White)
-            ) {
-
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(id = R.drawable.productlist_item_image),
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit
-                )
-            }
-            ProductListItemRightSide()
+            ProductListImage()
+            ProductListInfo()
         }
     }
 }
 
 @Composable
-fun ProductListItemRightSide(){
+fun ProductListImage(){
+    Box(
+        modifier = Modifier
+            .size(width = 97.dp, height = 97.dp)
+            .clip(RoundedCornerShape(size = 8.dp))
+            .background(Color.White)
+    ) {
+
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(id = R.drawable.productlist_item_image),
+            contentDescription = "productListItemImage",
+            contentScale = ContentScale.Fit
+        )
+    }
+}
+
+@Composable
+fun ProductListInfo(){
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,7 +77,7 @@ fun ProductListItemRightSide(){
 
             Icon(
                 painter = painterResource(id = R.drawable.ic_settings),
-                contentDescription = null,
+                contentDescription = "productListItemIconSettings",
                 tint = colorResource(id = R.color.accent_carrot)
             )
         }
