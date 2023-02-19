@@ -34,13 +34,15 @@ fun BottomNavigationContainer(navController: NavController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     val bottomBarDestination = items.any { it.screen_route == currentRoute }
-    if(bottomBarDestination) {
-    BottomNavigation(
-        backgroundColor = colorResource(id = R.color.accent_carrot),
-        modifier = Modifier.fillMaxWidth().height(82.dp)
-            .clip(RoundedCornerShape(16.dp, 16.dp, 0.dp, 0.dp)),
-        contentColor = Color.Black
-    ) {
+    if (bottomBarDestination) {
+        BottomNavigation(
+            backgroundColor = colorResource(id = R.color.accent_carrot),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(82.dp)
+                .clip(RoundedCornerShape(16.dp, 16.dp, 0.dp, 0.dp)),
+            contentColor = Color.Black
+        ) {
 
             items.forEach { item ->
                 BottomNavigationItem(
@@ -54,7 +56,8 @@ fun BottomNavigationContainer(navController: NavController) {
                     label = {
                         Text(
                             text = item.title,
-                            fontSize = 9.sp
+                            fontSize = 9.sp,
+                            color = colorResource(id = R.color.bottom_navigation_unselected)
                         )
                     },
                     selectedContentColor = Color.White,

@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import az.red.e_commerce_admin_android.ui.navigation.root.RootNavigationGraph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.BottomNavigationContainer
