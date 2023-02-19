@@ -1,51 +1,69 @@
 package az.red.e_commerce_admin_android.ui.themes
 
 
+import CustomSpaces
+import LocalSpaces
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.runtime.Composable
+import androidx.compose.material.ProvideTextStyle
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+
+
+fun lightColors() = CustomColors(
+    primary = Color(0xFFE67E22),
+    text = TextLight,
+    background = Color(0xFFF5F5F5),
+    success = Color(0xFF2ECC71),
+    error = Color(0xFFE74C3C),
+    isLight = true,
+    accent = AccentCarrot,
+    cardBackground = InputCardBackgroundLight,
+    hintText = InputHintColorLight,
+    cardBorder = InputCardBorderLight,
+    inputIcon = TextLight,
+    inputIconHint = InputHintColorLight,
+    btnBackgroundActive = TextLight,
+    btnBackgroundInactive = InputHintColorLight,
+    btnText = BtnTextLight
 )
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+fun darkColors() = CustomColors(
+    primary = Color(0xFFDF6900),
+    text = TextDark,
+    background = BackgroundDark,
+    success = Color(0xFF44BD32),
+    error = Color(0xFFC23616),
+    isLight = false,
+    accent = AccentCarrot,
+    cardBackground = InputCardBackgroundDark,
+    hintText = InputHintColorDark,
+    cardBorder = InputCardBorderDark,
+    inputIcon = TextDark,
+    inputIconHint = InputHintColorDark,
+    btnBackgroundActive = TextDark,
+    btnBackgroundInactive = InputHintColorDark,
+    btnText = BtnTextDark
 )
 
-@get:Composable
-val Colors.inputHintIconColor: Color
-    get() = if (isLight) InputHintColorLight else InputHintColorDark
 @Composable
-fun AdminApp_ComposeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+fun AppTheme(spaces: CustomSpaces = CustomTheme.spaces,
+             typography: CustomTypography = CustomTheme.typography,
+             colors: CustomColors = CustomTheme.colors,
+             darkColors: CustomColors? = null,
+             darkTheme: Boolean = isSystemInDarkTheme(),
+             content: @Composable () -> Unit,) {
+    val currentColor = remember { if (darkColors != null && darkTheme) darkColors else colors }
+    val rememberedColors = remember { currentColor.copy() }.apply { updateColorsFrom(currentColor) }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content,
-    )
+    CompositionLocalProvider(
+        LocalColors provides rememberedColors,
+        LocalSpaces provides spaces,
+        LocalTypography provides typography,
+    ) {
+        ProvideTextStyle(typography.body1.copy(color = CustomTheme.colors.text), content = content)
+    }
 }
+
+
+

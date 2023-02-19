@@ -11,7 +11,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
@@ -39,7 +38,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.ui.themes.inputHintIconColor
+import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -107,7 +106,7 @@ fun PasswordTextField(
         leadingIcon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_password),
-                tint = MaterialTheme.colors.inputHintIconColor,
+                tint = CustomTheme.colors.inputIconHint,
                 contentDescription = "Email Icon"
             )
         }
@@ -144,7 +143,7 @@ fun EmailTextField(
         leadingIcon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_email),
-                tint = MaterialTheme.colors.inputHintIconColor,
+                tint = CustomTheme.colors.inputIconHint,
                 contentDescription = "Email Icon"
             )
         })
@@ -160,8 +159,8 @@ fun ErrorTextInputField(
     Text(
         modifier = modifier.padding(horizontal = 16.dp, vertical = 4.dp),
         text = text,
-        style = MaterialTheme.typography.body2,
-        color = MaterialTheme.colors.error
+        style = CustomTheme.typography.body2,
+        color = CustomTheme.colors.error
     )
 }
 
@@ -196,7 +195,7 @@ private fun CustomTextField(
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
-        cursorBrush = SolidColor(MaterialTheme.colors.primary),
+        cursorBrush = SolidColor(CustomTheme.colors.cardBorder),
         decorationBox = { innerTextField ->
             Column(modifier = Modifier.fillMaxWidth()) {
                 Row(
@@ -223,7 +222,7 @@ private fun CustomTextField(
                     Row(
                         Modifier
                             .fillMaxWidth()
-                            .bottomTop(errorBorderWidth, MaterialTheme.colors.error)
+                            .bottomTop(errorBorderWidth, CustomTheme.colors.error)
                     ) {
                         errorText!!()
                     }
