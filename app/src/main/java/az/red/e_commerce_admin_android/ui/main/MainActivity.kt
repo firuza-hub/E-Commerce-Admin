@@ -2,6 +2,7 @@ package az.red.e_commerce_admin_android.ui.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
@@ -27,7 +28,7 @@ class MainActivity : ComponentActivity() {
                 sessionManager.removeAuthToken()
             }
         } catch (ex: java.lang.Exception) {
-            println("MEOW" + ex)
+            Log.e("MAIN_ACTIVITY_START", ex.stackTraceToString())
         }
         setContent {
             AppTheme(darkColors = darkColors()) {
