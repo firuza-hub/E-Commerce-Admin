@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.data.remote.auth.AuthRepository
+import az.red.e_commerce_admin_android.data.remote.auth.dto.response.LoginResponse
 import az.red.e_commerce_admin_android.ui.common.state.ErrorState
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.utils.NetworkResult
@@ -41,7 +42,7 @@ class LoginViewModel(
             authRepo.login(loginState.value.toLoginRequest()).collect {
                 when (it) {
                     is NetworkResult.Success -> {
-                        sessionManager.saveAuthToken(it.data!!.token, loginState.value.rememberMe)
+                        sessionManager.saveAuthToken(it.data!!.token!!, loginState.value.rememberMe)
                         triggerEvent(UIEvent.Message("Success!"))
                         triggerEvent(UIEvent.Navigate(Graph.MAIN))
                         Log.i("LOGIN_REQUEST", "Success: ${it.data.token}")
@@ -49,6 +50,7 @@ class LoginViewModel(
                     is NetworkResult.Empty -> Log.i("LOGIN_REQUEST", "Empty")
                     is NetworkResult.Error -> {
                         Log.i("LOGIN_REQUEST", "Error: ${it.message}")
+                        handleErrorResponse(it.data!!)
                         it.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
                     }
                     is NetworkResult.Exception -> {
@@ -107,6 +109,22 @@ class LoginViewModel(
         }
     }
 
+    private fun handleErrorResponse(data:LoginResponse){
+        if(data.password != null && data.password.isNotEmpty()){
+            loginState.value = loginState.value.copy(
+                errorState = LoginErrorState(
+                    passwordErrorState = ErrorState(hasError = true, errorMessage = data.password)
+                )
+            )
+        }
+        if(data.loginOrEmail != null && data.loginOrEmail.isNotEmpty()){
+            loginState.value = loginState.value.copy(
+                errorState = LoginErrorState(
+                    emailOrMobileErrorState = ErrorState(hasError = true, errorMessage = data.loginOrEmail)
+                )
+            )
+        }
+    }
     private fun validateInputs(): Boolean {
         val emailOrMobileString = loginState.value.email.trim()
         val passwordString = loginState.value.password

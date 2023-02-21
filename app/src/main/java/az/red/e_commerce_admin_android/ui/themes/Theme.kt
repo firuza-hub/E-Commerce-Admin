@@ -54,7 +54,7 @@ fun AppTheme(
     typography: CustomTypography = CustomTheme.typography,
     colors: CustomColors = CustomTheme.colors,
     darkColors: CustomColors? = null,
-    darkTheme: Boolean = true,//isSystemInDarkTheme(),
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
     val currentColor = remember { if (darkColors != null && darkTheme) darkColors else colors }

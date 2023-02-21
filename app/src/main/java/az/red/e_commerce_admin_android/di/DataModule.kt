@@ -3,6 +3,8 @@ package az.red.e_commerce_admin_android.di
 import az.red.e_commerce_admin_android.data.remote.*
 import az.red.e_commerce_admin_android.data.remote.user.*
 import az.red.e_commerce_admin_android.data.remote.auth.*
+import az.red.e_commerce_admin_android.utils.SessionManager
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.BuildConfig
@@ -39,6 +41,9 @@ val dataModule = module {
 
     single {
         SessionManager(androidContext())
+    }
+    single {
+        Gson()
     }
 
     /////////////////////////////////////////////////////////// Auth ///////////////////////////////////////////////////////////

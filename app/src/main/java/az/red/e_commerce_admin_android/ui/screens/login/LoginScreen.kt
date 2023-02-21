@@ -206,7 +206,8 @@ fun InputSection(
         state.email, { onEmailChange(it) },
         stringResource(id = R.string.email),
         state.errorState.emailOrMobileErrorState.hasError,
-        stringResource(id = state.errorState.emailOrMobileErrorState.errorMessageStringResource)
+        state.errorState.emailOrMobileErrorState.errorMessageStringResource?.let{stringResource(id = it)}
+            ?: state.errorState.emailOrMobileErrorState.errorMessage ,
     )
 
     Spacer(modifier = Modifier.height(16.dp))
@@ -216,7 +217,8 @@ fun InputSection(
         state.password, { onPasswordChange(it) },
         stringResource(id = R.string.password),
         state.errorState.passwordErrorState.hasError,
-        stringResource(id = state.errorState.passwordErrorState.errorMessageStringResource),
+        state.errorState.passwordErrorState.errorMessageStringResource?.let{stringResource(id = it)}
+            ?: state.errorState.passwordErrorState.errorMessage,
         ImeAction.Done
     )
 

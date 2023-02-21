@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.data.remote.auth
+package az.red.e_commerce_admin_android.utils
 
 import android.content.Context
 import android.content.SharedPreferences
