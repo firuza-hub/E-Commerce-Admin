@@ -6,16 +6,29 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.navigation.compose.rememberNavController
+import az.red.e_commerce_admin_android.data.remote.auth.SessionManager
 import az.red.e_commerce_admin_android.ui.navigation.root.RootNavigationGraph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.BottomNavigationContainer
 import az.red.e_commerce_admin_android.ui.themes.AppTheme
 import az.red.e_commerce_admin_android.ui.themes.darkColors
+import org.koin.java.KoinJavaComponent
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        try {
+            val sessionManager: SessionManager by KoinJavaComponent.inject(
+                SessionManager::class.java
+            )
+            if (!sessionManager.fetchRememberMe()) {
+                sessionManager.removeAuthToken()
+            }
+        } catch (ex: java.lang.Exception) {
+            println("MEOW" + ex)
+        }
         setContent {
             AppTheme(darkColors = darkColors()) {
 
@@ -28,4 +41,5 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }

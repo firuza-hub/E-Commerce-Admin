@@ -41,7 +41,7 @@ class LoginViewModel(
             authRepo.login(loginState.value.toLoginRequest()).collect {
                 when (it) {
                     is NetworkResult.Success -> {
-                        sessionManager.saveAuthToken(it.data!!.token)
+                        sessionManager.saveAuthToken(it.data!!.token, loginState.value.rememberMe)
                         triggerEvent(UIEvent.Message("Success!"))
                         triggerEvent(UIEvent.Navigate(Graph.MAIN))
                         Log.i("LOGIN_REQUEST", "Success: ${it.data.token}")
