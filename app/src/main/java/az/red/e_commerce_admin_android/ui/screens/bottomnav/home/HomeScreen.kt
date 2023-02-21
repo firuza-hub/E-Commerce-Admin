@@ -14,8 +14,7 @@ import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components.Prod
 fun HomeScreen() {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
+            .fillMaxSize(),
     ) {
         HomeTopAppBar()
         
