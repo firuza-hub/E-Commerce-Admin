@@ -32,6 +32,7 @@ class CustomColors(
     btnBackgroundInactive: Color,
     btnBackgroundActive: Color,
     btnText: Color,
+    btnTextDisabled: Color,
     accent: Color,
     success: Color,
     error: Color,
@@ -76,6 +77,8 @@ class CustomColors(
         private set
     var btnText by mutableStateOf(btnText)
         private set
+    var btnTextDisabled by mutableStateOf(btnText)
+        private set
 
     fun copy(
         primary: Color = this.primary,
@@ -93,6 +96,7 @@ class CustomColors(
         btnBackgroundInactive: Color = this.btnBackgroundInactive,
         btnBackgroundActive: Color = this.btnBackgroundActive,
         btnText: Color = this.btnText,
+        btnTextDisabled: Color = this.btnText,
     ) = CustomColors(
         primary = primary,
         text = text,
@@ -109,6 +113,7 @@ class CustomColors(
         btnBackgroundInactive = btnBackgroundInactive,
         btnBackgroundActive = btnBackgroundActive,
         btnText = btnText,
+        btnTextDisabled = btnTextDisabled,
     )
 
     fun updateColorsFrom(other: CustomColors) {
@@ -127,6 +132,7 @@ class CustomColors(
         btnBackgroundInactive = other.btnBackgroundInactive
         btnBackgroundActive = other.btnBackgroundActive
         btnText = other.btnText
+        btnTextDisabled = other.btnTextDisabled
     }
 
 

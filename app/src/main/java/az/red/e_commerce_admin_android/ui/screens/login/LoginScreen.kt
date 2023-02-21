@@ -1,26 +1,26 @@
 package az.red.e_commerce_admin_android.ui.screens.login
 
 import android.widget.Toast
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.common.custom_composable.EmailTextField
 import az.red.e_commerce_admin_android.ui.common.custom_composable.PasswordTextField
 import az.red.e_commerce_admin_android.ui.navigation.auth.AuthScreen
-import az.red.e_commerce_admin_android.ui.themes.barlowFamily
+import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -52,17 +52,18 @@ fun LoginScreen(
         }
     }
 
-    if (isLoggedInState) {
+    if (!isLoggedInState) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
         ) {
+            Spacer(modifier = Modifier.height(50.dp))
             Text(
-                text = stringResource(id = R.string.sing_in_to_account), fontSize = 32.sp,
-                fontFamily = barlowFamily,
-                fontWeight = FontWeight.Bold
+                text = stringResource(id = R.string.sing_in_to_account),
+                style = CustomTheme.typography.h1,
+                color = CustomTheme.colors.text
             )
             Spacer(modifier = Modifier.height(45.dp))
 
@@ -79,27 +80,118 @@ fun LoginScreen(
                     )
                 )
             })
-            Spacer(modifier = Modifier.height(45.dp))
-            Button(modifier = Modifier
-                .fillMaxWidth()
-                .height(42.dp),
-                onClick = { loginViewModel.onUiEvent(LoginUIEvent.Submit) }) {
-                Text(text = stringResource(id = R.string.sign_in), fontSize = 16.sp)
+
+            Spacer(modifier = Modifier.height(24.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = state.rememberMe,
+                    onCheckedChange = {
+                        loginViewModel.onUiEvent(
+                            loginUiEvent = LoginUIEvent.RememberMeChanged(
+                                it
+                            )
+                        )
+                    },
+                    colors = CheckBoxColors()
+                )
+                Text(text = stringResource(id = R.string.remember_me))
             }
 
-            Spacer(modifier = Modifier.height(45.dp))
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp)
+                    .clip(RoundedCornerShape(28.dp)),
+                colors = AuthButtonColors(),
+                onClick = { loginViewModel.onUiEvent(LoginUIEvent.Submit) },
+                enabled = state.btnEnabled
+            ) {
+                Text(
+                    text = stringResource(id = R.string.sign_in),
+                    style = CustomTheme.typography.nunitoBold18
+                )
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Text(
+                text = stringResource(id = R.string.forgot_the_password),
+                style = CustomTheme.typography.body3,
+                color = CustomTheme.colors.text
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Divider(
+                    color = CustomTheme.colors.inputIconHint,
+                    thickness = 1.dp,
+                    modifier = Modifier.width(80.dp)
+                )
+                Text(
+                    text = stringResource(id = R.string.or_continue_with),
+                    style = CustomTheme.typography.body3,
+                    color = CustomTheme.colors.text
+                )
+                Divider(
+                    color = CustomTheme.colors.inputIconHint,
+                    thickness = 1.dp,
+                    modifier = Modifier.width(80.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                AuthIcon(painterResource(id = R.drawable.ic_facebook))
+                AuthIcon(painterResource(id = R.drawable.ic_google))
+                AuthIcon(painterResource(id = R.drawable.ic_apple))
+            }
+            Spacer(modifier = Modifier.height(24.dp))
             Row {
-                Text(text = stringResource(id = R.string.don_t_have_account))
+                Text(
+                    text = stringResource(id = R.string.don_t_have_account),
+                    color = CustomTheme.colors.text,
+                    style = CustomTheme.typography.body3
+                )
                 Text(
                     text = stringResource(id = R.string.sign_up),
-                    modifier = Modifier.clickable {
-                        navController.navigate(AuthScreen.RegisterAuthScreen.route)
-                    },
-                    color = Color.Red
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(AuthScreen.RegisterAuthScreen.route)
+                        }
+                        .padding(start = 10.dp),
+                    color = CustomTheme.colors.accent,
+                    style = CustomTheme.typography.body3
                 )
             }
         }
     }
+}
+
+@Composable
+fun CheckBoxColors(): CheckboxColors {
+    return CheckboxDefaults.colors(
+        checkedColor = CustomTheme.colors.accent,
+        uncheckedColor = CustomTheme.colors.accent,
+    )
+}
+
+@Composable
+fun AuthButtonColors(): ButtonColors {
+    return ButtonDefaults.buttonColors(
+        disabledBackgroundColor = CustomTheme.colors.btnBackgroundInactive,
+        backgroundColor = CustomTheme.colors.btnBackgroundActive,
+        contentColor = CustomTheme.colors.btnText,
+        disabledContentColor = CustomTheme.colors.btnTextDisabled
+    )
 }
 
 @Composable
@@ -114,7 +206,8 @@ fun InputSection(
         state.email, { onEmailChange(it) },
         stringResource(id = R.string.email),
         state.errorState.emailOrMobileErrorState.hasError,
-        stringResource(id = state.errorState.emailOrMobileErrorState.errorMessageStringResource)
+        state.errorState.emailOrMobileErrorState.errorMessageStringResource?.let{stringResource(id = it)}
+            ?: state.errorState.emailOrMobileErrorState.errorMessage ,
     )
 
     Spacer(modifier = Modifier.height(16.dp))
@@ -124,10 +217,30 @@ fun InputSection(
         state.password, { onPasswordChange(it) },
         stringResource(id = R.string.password),
         state.errorState.passwordErrorState.hasError,
-        stringResource(id = state.errorState.passwordErrorState.errorMessageStringResource),
+        state.errorState.passwordErrorState.errorMessageStringResource?.let{stringResource(id = it)}
+            ?: state.errorState.passwordErrorState.errorMessage,
         ImeAction.Done
     )
 
+}
+
+@Composable
+fun AuthIcon(iconPainter: Painter) {
+    Box(
+        modifier = Modifier
+            .border(
+                width = 1.dp, color = CustomTheme.colors.cardBorder,
+                RoundedCornerShape(8.dp)
+            )
+            .size(44.dp), contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = iconPainter,
+            contentDescription = stringResource(R.string.content_description_facebook),
+            modifier = Modifier.height(16.dp),
+            tint = CustomTheme.colors.text
+        )
+    }
 }
 
 

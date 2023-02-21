@@ -29,7 +29,7 @@ fun HomeTopAppBar() {
                 modifier = Modifier.offset(x = (-16).dp)
             )
         },
-        backgroundColor = Color.White,
+        backgroundColor = CustomTheme.colors.background,
         navigationIcon = {
             IconButton(onClick = {/* Do Something*/ }) {
                 Icon(painter = painterResource(id = R.drawable.ic_back), contentDescription = null)

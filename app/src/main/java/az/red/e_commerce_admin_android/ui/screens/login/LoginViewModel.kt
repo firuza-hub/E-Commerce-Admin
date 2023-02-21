@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.data.remote.auth.AuthRepository
+import az.red.e_commerce_admin_android.data.remote.auth.dto.response.LoginResponse
 import az.red.e_commerce_admin_android.ui.common.state.ErrorState
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.utils.NetworkResult
@@ -19,15 +20,18 @@ class LoginViewModel(
 
     val isLoggedIn = MutableStateFlow(false)
     val loginState = MutableStateFlow(LoginState.NULL)
+
     init {
         authorizationCheck()
     }
+
     private fun authorizationCheck() {
         sessionManager.fetchAuthToken().let {
             if (it.isNullOrEmpty()) {
-                isLoggedIn.value = true
+                isLoggedIn.value = false
             } else {
                 Log.i("BASE_VIEW_MODEL", "Token is empty. Redirect to login")
+                isLoggedIn.value = true
                 triggerEvent(UIEvent.Navigate(Graph.MAIN))
             }
         }
@@ -38,7 +42,7 @@ class LoginViewModel(
             authRepo.login(loginState.value.toLoginRequest()).collect {
                 when (it) {
                     is NetworkResult.Success -> {
-                        sessionManager.saveAuthToken(it.data!!.token)
+                        sessionManager.saveAuthToken(it.data!!.token!!, loginState.value.rememberMe)
                         triggerEvent(UIEvent.Message("Success!"))
                         triggerEvent(UIEvent.Navigate(Graph.MAIN))
                         Log.i("LOGIN_REQUEST", "Success: ${it.data.token}")
@@ -46,6 +50,7 @@ class LoginViewModel(
                     is NetworkResult.Empty -> Log.i("LOGIN_REQUEST", "Empty")
                     is NetworkResult.Error -> {
                         Log.i("LOGIN_REQUEST", "Error: ${it.message}")
+                        handleErrorResponse(it.data!!)
                         it.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
                     }
                     is NetworkResult.Exception -> {
@@ -61,7 +66,6 @@ class LoginViewModel(
     fun onUiEvent(loginUiEvent: LoginUIEvent) {
         when (loginUiEvent) {
 
-            // Email/Mobile changed
             is LoginUIEvent.EmailChanged -> {
                 loginState.value = loginState.value.copy(
                     email = loginUiEvent.inputValue,
@@ -71,11 +75,11 @@ class LoginViewModel(
                             ErrorState()
                         else
                             emailOrMobileEmptyErrorState
-                    )
+                    ),
+                    btnEnabled = loginState.value.password.trim().isNotEmpty() && loginUiEvent.inputValue.trim().isNotEmpty()
                 )
             }
 
-            // Password changed
             is LoginUIEvent.PasswordChanged -> {
                 loginState.value = loginState.value.copy(
                     password = loginUiEvent.inputValue,
@@ -85,11 +89,11 @@ class LoginViewModel(
                             ErrorState()
                         else
                             passwordEmptyErrorState
-                    )
+                    ),
+                    btnEnabled = loginState.value.email.trim().isNotEmpty() && loginUiEvent.inputValue.trim().isNotEmpty()
                 )
             }
 
-            // Submit Login
             is LoginUIEvent.Submit -> {
                 val inputsValidated = validateInputs()
                 if (inputsValidated) {
@@ -97,15 +101,34 @@ class LoginViewModel(
                     loginState.value = loginState.value.copy(isLoginSuccessful = true)
                 }
             }
+            is LoginUIEvent.RememberMeChanged -> {
+                loginState.value = loginState.value.copy(
+                    rememberMe = loginUiEvent.inputValue
+                )
+            }
         }
     }
 
+    private fun handleErrorResponse(data:LoginResponse){
+        if(data.password != null && data.password.isNotEmpty()){
+            loginState.value = loginState.value.copy(
+                errorState = LoginErrorState(
+                    passwordErrorState = ErrorState(hasError = true, errorMessage = data.password)
+                )
+            )
+        }
+        if(data.loginOrEmail != null && data.loginOrEmail.isNotEmpty()){
+            loginState.value = loginState.value.copy(
+                errorState = LoginErrorState(
+                    emailOrMobileErrorState = ErrorState(hasError = true, errorMessage = data.loginOrEmail)
+                )
+            )
+        }
+    }
     private fun validateInputs(): Boolean {
         val emailOrMobileString = loginState.value.email.trim()
         val passwordString = loginState.value.password
         return when {
-
-            // Email/Mobile empty
             emailOrMobileString.isEmpty() -> {
                 loginState.value = loginState.value.copy(
                     errorState = LoginErrorState(
@@ -115,7 +138,6 @@ class LoginViewModel(
                 false
             }
 
-            //Password Empty
             passwordString.isEmpty() -> {
                 loginState.value = loginState.value.copy(
                     errorState = LoginErrorState(
@@ -125,9 +147,7 @@ class LoginViewModel(
                 false
             }
 
-            // No errors
             else -> {
-                // Set default error state
                 loginState.value = loginState.value.copy(errorState = LoginErrorState())
                 true
             }
