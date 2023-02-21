@@ -56,7 +56,6 @@ fun PasswordTextField(
     var isPasswordVisible by remember {
         mutableStateOf(false)
     }
-
     CustomTextField(
         modifier = modifier,
         value = value,
@@ -85,7 +84,8 @@ fun PasswordTextField(
                 // Render Icon
                 Icon(
                     imageVector = passwordVisibilityIconAndText.first,
-                    contentDescription = passwordVisibilityIconAndText.second
+                    contentDescription = passwordVisibilityIconAndText.second,
+                    tint = if(value.isNotBlank()) CustomTheme.colors.accent else CustomTheme.colors.hintText
                 )
             }
         },
