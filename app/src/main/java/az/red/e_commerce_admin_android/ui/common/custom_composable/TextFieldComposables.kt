@@ -191,9 +191,7 @@ private fun CustomTextField(
                     if (it.hasFocus) 2.dp else 1.dp
             }
             .border(
-                width = 1.dp, shape = RoundedCornerShape(8.dp), color = colorResource(
-                    id = R.color.input_card_border_light
-                )
+                width = 1.dp, shape = RoundedCornerShape(8.dp), color = CustomTheme.colors.cardBorder
             ),
         value = value,
         onValueChange = onValueChange,

@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 fun lightColors() = CustomColors(
     primary = Color(0xFFE67E22),
     text = TextLight,
-    background = Color(0xFFF5F5F5),
+    background = Color(0xFFFFFFFF),
     success = Color(0xFF2ECC71),
     error = Color(0xFFE74C3C),
     isLight = true,
@@ -49,12 +49,14 @@ fun darkColors() = CustomColors(
 )
 
 @Composable
-fun AppTheme(spaces: CustomSpaces = CustomTheme.spaces,
-             typography: CustomTypography = CustomTheme.typography,
-             colors: CustomColors = CustomTheme.colors,
-             darkColors: CustomColors? = null,
-             darkTheme: Boolean = true,
-             content: @Composable () -> Unit,) {
+fun AppTheme(
+    spaces: CustomSpaces = CustomTheme.spaces,
+    typography: CustomTypography = CustomTheme.typography,
+    colors: CustomColors = CustomTheme.colors,
+    darkColors: CustomColors? = null,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
     val currentColor = remember { if (darkColors != null && darkTheme) darkColors else colors }
     val rememberedColors = remember { currentColor.copy() }.apply { updateColorsFrom(currentColor) }
 
