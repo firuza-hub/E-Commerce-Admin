@@ -56,8 +56,8 @@ fun LoginScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
         ) {
             Spacer(modifier = Modifier.height(50.dp))
             Text(
@@ -81,7 +81,7 @@ fun LoginScreen(
                 )
             })
 
-            Spacer(modifier = Modifier.height(45.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
                     checked = state.rememberMe,
@@ -97,7 +97,7 @@ fun LoginScreen(
                 Text(text = stringResource(id = R.string.remember_me))
             }
 
-            Spacer(modifier = Modifier.height(45.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Button(
                 modifier = Modifier
@@ -114,14 +114,14 @@ fun LoginScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             Text(
                 text = stringResource(id = R.string.forgot_the_password),
                 style = CustomTheme.typography.body3,
                 color = CustomTheme.colors.text
             )
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -145,7 +145,7 @@ fun LoginScreen(
                     modifier = Modifier.width(80.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -154,7 +154,7 @@ fun LoginScreen(
                 AuthIcon(painterResource(id = R.drawable.ic_google))
                 AuthIcon(painterResource(id = R.drawable.ic_apple))
             }
-            Spacer(modifier = Modifier.height(45.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             Row {
                 Text(
                     text = stringResource(id = R.string.don_t_have_account),

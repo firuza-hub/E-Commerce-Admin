@@ -14,29 +14,24 @@ import az.red.e_commerce_admin_android.ui.navigation.root.RootNavigationGraph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.BottomNavigationContainer
 import az.red.e_commerce_admin_android.ui.themes.AppTheme
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
-import az.red.e_commerce_admin_android.ui.themes.darkColors
 import az.red.e_commerce_admin_android.utils.SessionManager
 import org.koin.android.ext.android.inject
 
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 class MainActivity : ComponentActivity() {
+
+    private val sessionManager by inject<SessionManager>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        val sessionManager by inject<SessionManager>()
-        if (!sessionManager.fetchRememberMe()) {
-            sessionManager.removeAuthToken()
-        }
+        if (!sessionManager.fetchRememberMe()) sessionManager.removeAuthToken()
 
         setContent {
-            AppTheme(darkColors = darkColors()) {
+            AppTheme {
 
                 val navController = rememberNavController()
-                Scaffold(
-                    bottomBar = { BottomNavigationContainer(navController = navController) }
-                ) {
+                Scaffold(bottomBar = { BottomNavigationContainer(navController = navController) }) {
                     Box(
                         modifier = Modifier
                             .background(CustomTheme.colors.background)
