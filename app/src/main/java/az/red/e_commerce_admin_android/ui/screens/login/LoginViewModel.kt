@@ -19,15 +19,18 @@ class LoginViewModel(
 
     val isLoggedIn = MutableStateFlow(false)
     val loginState = MutableStateFlow(LoginState.NULL)
+
     init {
         authorizationCheck()
     }
+
     private fun authorizationCheck() {
         sessionManager.fetchAuthToken().let {
             if (it.isNullOrEmpty()) {
-                isLoggedIn.value = true
+                isLoggedIn.value = false
             } else {
                 Log.i("BASE_VIEW_MODEL", "Token is empty. Redirect to login")
+                isLoggedIn.value = true
                 triggerEvent(UIEvent.Navigate(Graph.MAIN))
             }
         }
@@ -61,7 +64,6 @@ class LoginViewModel(
     fun onUiEvent(loginUiEvent: LoginUIEvent) {
         when (loginUiEvent) {
 
-            // Email/Mobile changed
             is LoginUIEvent.EmailChanged -> {
                 loginState.value = loginState.value.copy(
                     email = loginUiEvent.inputValue,
@@ -71,11 +73,11 @@ class LoginViewModel(
                             ErrorState()
                         else
                             emailOrMobileEmptyErrorState
-                    )
+                    ),
+                    btnEnabled = loginState.value.password.trim().isNotEmpty() && loginUiEvent.inputValue.trim().isNotEmpty()
                 )
             }
 
-            // Password changed
             is LoginUIEvent.PasswordChanged -> {
                 loginState.value = loginState.value.copy(
                     password = loginUiEvent.inputValue,
@@ -85,17 +87,22 @@ class LoginViewModel(
                             ErrorState()
                         else
                             passwordEmptyErrorState
-                    )
+                    ),
+                    btnEnabled = loginState.value.email.trim().isNotEmpty() && loginUiEvent.inputValue.trim().isNotEmpty()
                 )
             }
 
-            // Submit Login
             is LoginUIEvent.Submit -> {
                 val inputsValidated = validateInputs()
                 if (inputsValidated) {
                     login()
                     loginState.value = loginState.value.copy(isLoginSuccessful = true)
                 }
+            }
+            is LoginUIEvent.RememberMeChanged -> {
+                loginState.value = loginState.value.copy(
+                    rememberMe = loginUiEvent.inputValue
+                )
             }
         }
     }
@@ -104,8 +111,6 @@ class LoginViewModel(
         val emailOrMobileString = loginState.value.email.trim()
         val passwordString = loginState.value.password
         return when {
-
-            // Email/Mobile empty
             emailOrMobileString.isEmpty() -> {
                 loginState.value = loginState.value.copy(
                     errorState = LoginErrorState(
@@ -115,7 +120,6 @@ class LoginViewModel(
                 false
             }
 
-            //Password Empty
             passwordString.isEmpty() -> {
                 loginState.value = loginState.value.copy(
                     errorState = LoginErrorState(
@@ -125,9 +129,7 @@ class LoginViewModel(
                 false
             }
 
-            // No errors
             else -> {
-                // Set default error state
                 loginState.value = loginState.value.copy(errorState = LoginErrorState())
                 true
             }

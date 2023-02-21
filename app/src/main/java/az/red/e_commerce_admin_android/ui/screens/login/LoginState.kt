@@ -7,8 +7,11 @@ data class LoginState(
     val email: String,
     val password: String,
     val errorState: LoginErrorState = LoginErrorState(),
+    val rememberMe: Boolean = false,
+    val btnEnabled: Boolean = false,
     val isLoginSuccessful: Boolean = false
 ) {
+
     companion object {
         val NULL = LoginState("", "")
     }

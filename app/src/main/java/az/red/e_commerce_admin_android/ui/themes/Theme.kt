@@ -25,7 +25,8 @@ fun lightColors() = CustomColors(
     inputIconHint = InputHintColorLight,
     btnBackgroundActive = TextLight,
     btnBackgroundInactive = InputHintColorLight,
-    btnText = BtnTextLight
+    btnText = BtnTextLight,
+    btnTextDisabled = InputCardBorderLight
 )
 
 fun darkColors() = CustomColors(
@@ -43,7 +44,8 @@ fun darkColors() = CustomColors(
     inputIconHint = InputHintColorDark,
     btnBackgroundActive = TextDark,
     btnBackgroundInactive = InputHintColorDark,
-    btnText = BtnTextDark
+    btnText = BtnTextDark,
+    btnTextDisabled = InputCardBorderLight
 )
 
 @Composable
