@@ -83,7 +83,7 @@ fun ProductListInfo() {
 
         Text(
             text = "US $540.00",
-            style = CustomTheme.typography.nunitoBold,
+            style = CustomTheme.typography.nunitoBold14,
             modifier = Modifier.weight(1f)
         )
 

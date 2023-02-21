@@ -3,6 +3,7 @@ package az.red.e_commerce_admin_android.ui.common.custom_composable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -61,7 +62,8 @@ fun PasswordTextField(
         value = value,
         onValueChange = onValueChange,
         placeholder = {
-            Text(text = label, fontSize = 18.sp)
+            Text(text = label, fontSize = 18.sp,
+                color = CustomTheme.colors.hintText)
         },
         trailingIcon = {
             IconButton(onClick = {
@@ -128,7 +130,8 @@ fun EmailTextField(
         value = value,
         onValueChange = onValueChange,
         placeholder = {
-            Text(text = label, fontSize = 18.sp)
+            Text(text = label, fontSize = 18.sp,
+                    color = CustomTheme.colors.hintText)
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
@@ -182,7 +185,7 @@ private fun CustomTextField(
     var errorVisibilityState by remember { mutableStateOf(false) }
     errorVisibilityState = hasError
     BasicTextField(
-        modifier = modifier
+        modifier = modifier.background(CustomTheme.colors.cardBackground)
             .onFocusChanged {
                 errorBorderWidth =
                     if (it.hasFocus) 2.dp else 1.dp

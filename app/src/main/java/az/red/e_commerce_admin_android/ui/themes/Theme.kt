@@ -43,7 +43,7 @@ fun darkColors() = CustomColors(
     inputIcon = TextDark,
     inputIconHint = InputHintColorDark,
     btnBackgroundActive = TextDark,
-    btnBackgroundInactive = InputHintColorDark,
+    btnBackgroundInactive = InputHintColorLight,
     btnText = BtnTextDark,
     btnTextDisabled = InputCardBorderLight
 )
@@ -53,7 +53,7 @@ fun AppTheme(spaces: CustomSpaces = CustomTheme.spaces,
              typography: CustomTypography = CustomTheme.typography,
              colors: CustomColors = CustomTheme.colors,
              darkColors: CustomColors? = null,
-             darkTheme: Boolean = isSystemInDarkTheme(),
+             darkTheme: Boolean = true,
              content: @Composable () -> Unit,) {
     val currentColor = remember { if (darkColors != null && darkTheme) darkColors else colors }
     val rememberedColors = remember { currentColor.copy() }.apply { updateColorsFrom(currentColor) }

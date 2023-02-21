@@ -9,14 +9,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.common.custom_composable.EmailTextField
@@ -61,10 +59,11 @@ fun LoginScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(108.dp))
+            Spacer(modifier = Modifier.height(50.dp))
             Text(
                 text = stringResource(id = R.string.sing_in_to_account),
-                style = CustomTheme.typography.h1
+                style = CustomTheme.typography.h1,
+                color = CustomTheme.colors.text
             )
             Spacer(modifier = Modifier.height(45.dp))
 
@@ -93,22 +92,25 @@ fun LoginScreen(
                             )
                         )
                     },
-                    colors = myCheckBoxColors()
+                    colors = CheckBoxColors()
                 )
                 Text(text = stringResource(id = R.string.remember_me))
             }
 
             Spacer(modifier = Modifier.height(45.dp))
 
-            Button(modifier = Modifier
-                .fillMaxWidth()
-                .height(45.dp)
-                .clip(RoundedCornerShape(28.dp)),
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp)
+                    .clip(RoundedCornerShape(28.dp)),
                 colors = AuthButtonColors(),
                 onClick = { loginViewModel.onUiEvent(LoginUIEvent.Submit) },
-            enabled = state.btnEnabled) {
+                enabled = state.btnEnabled
+            ) {
                 Text(
-                    text = stringResource(id = R.string.sign_in), style = CustomTheme.typography.body1
+                    text = stringResource(id = R.string.sign_in),
+                    style = CustomTheme.typography.nunitoBold18
                 )
             }
 
@@ -116,7 +118,8 @@ fun LoginScreen(
 
             Text(
                 text = stringResource(id = R.string.forgot_the_password),
-                style = CustomTheme.typography.body3
+                style = CustomTheme.typography.body3,
+                color = CustomTheme.colors.text
             )
             Spacer(modifier = Modifier.height(50.dp))
             Row(
@@ -133,7 +136,8 @@ fun LoginScreen(
                 )
                 Text(
                     text = stringResource(id = R.string.or_continue_with),
-                    style = CustomTheme.typography.body3
+                    style = CustomTheme.typography.body3,
+                    color = CustomTheme.colors.text
                 )
                 Divider(
                     color = CustomTheme.colors.inputIconHint,
@@ -154,7 +158,7 @@ fun LoginScreen(
             Row {
                 Text(
                     text = stringResource(id = R.string.don_t_have_account),
-                    color = CustomTheme.colors.hintText,
+                    color = CustomTheme.colors.text,
                     style = CustomTheme.typography.body3
                 )
                 Text(
@@ -173,7 +177,7 @@ fun LoginScreen(
 }
 
 @Composable
-fun myCheckBoxColors(): CheckboxColors {
+fun CheckBoxColors(): CheckboxColors {
     return CheckboxDefaults.colors(
         checkedColor = CustomTheme.colors.accent,
         uncheckedColor = CustomTheme.colors.accent,
@@ -231,7 +235,8 @@ fun AuthIcon(iconPainter: Painter) {
         Icon(
             painter = iconPainter,
             contentDescription = stringResource(R.string.content_description_facebook),
-            modifier = Modifier.height(16.dp)
+            modifier = Modifier.height(16.dp),
+            tint = CustomTheme.colors.text
         )
     }
 }

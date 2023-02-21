@@ -42,10 +42,16 @@ data class CustomTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp
     ),
-    val nunitoBold : TextStyle = TextStyle(
+    val nunitoBold14 : TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp
+    ),
+
+    val nunitoBold18 : TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp
     )
 )
 
