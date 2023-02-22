@@ -12,10 +12,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
@@ -25,6 +24,7 @@ fun ProductListItem() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .background(CustomTheme.colors.background)
             .padding(vertical = 12.dp, horizontal = 16.dp)
     ) {
         Row(
@@ -45,7 +45,7 @@ fun ProductListImage() {
         modifier = Modifier
             .size(width = 97.dp, height = 97.dp)
             .clip(RoundedCornerShape(size = 8.dp))
-            .background(Color.White)
+            .background(CustomTheme.colors.btnText)
     ) {
 
         Image(
@@ -72,19 +72,25 @@ fun ProductListInfo() {
                 .weight(1f),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Iphone 13 pro max", style = CustomTheme.typography.nunitoNormal12)
+
+            Text(
+                text = "Iphone 13 pro max",
+                style = CustomTheme.typography.nunitoNormal12,
+                color = CustomTheme.colors.text
+            )
 
             Icon(
                 painter = painterResource(id = R.drawable.ic_settings),
                 contentDescription = "productListItemIconSettings",
-                tint = colorResource(id = R.color.accent_carrot)
+                tint = CustomTheme.colors.accent
             )
         }
 
         Text(
             text = "US $540.00",
             style = CustomTheme.typography.nunitoBold,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            color = CustomTheme.colors.text
         )
 
         Row(
@@ -100,14 +106,14 @@ fun ProductListInfo() {
                 onClick = {
                     //your onclick code
                 },
-                border = BorderStroke(1.dp, colorResource(id = R.color.background_dark)),
-                colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.White),
-                shape = RoundedCornerShape(16.dp)
+                border = BorderStroke(1.dp, CustomTheme.colors.cardBorder),
+                colors = ButtonDefaults.outlinedButtonColors(backgroundColor = CustomTheme.colors.btnText),
+                shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
-                    text = "Deactivate",
+                    text = stringResource(R.string.deactivate),
                     style = CustomTheme.typography.nunitoNormal12,
-                    color = colorResource(id = R.color.input_card_background_dark)
+                    color = CustomTheme.colors.text
                 )
             }
 
@@ -119,16 +125,16 @@ fun ProductListInfo() {
                 onClick = {
                     //your onclick code
                 },
-                border = BorderStroke(1.dp, colorResource(id = R.color.background_dark)),
+                border = BorderStroke(1.dp, CustomTheme.colors.cardBorder),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    backgroundColor = colorResource(id = R.color.input_card_background_dark),
+                    backgroundColor = CustomTheme.colors.cardBackground,
                 ),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
-                    text = "Statistics",
+                    text = stringResource(R.string.statistics),
                     style = CustomTheme.typography.nunitoNormal12,
-                    color = colorResource(id = R.color.bottom_navigation_unselected)
+                    color = CustomTheme.colors.text
                 )
             }
         }

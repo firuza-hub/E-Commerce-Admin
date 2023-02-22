@@ -6,18 +6,23 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.navigation.compose.rememberNavController
+import az.red.e_commerce_admin_android.data.remote.auth.SessionManager
 import az.red.e_commerce_admin_android.ui.navigation.root.RootNavigationGraph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.BottomNavigationContainer
 import az.red.e_commerce_admin_android.ui.themes.AppTheme
 import az.red.e_commerce_admin_android.ui.themes.darkColors
+import az.red.e_commerce_admin_android.ui.themes.lightColors
+import org.koin.android.ext.android.inject
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 class MainActivity : ComponentActivity() {
+    private val sessionManager by inject<SessionManager>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val themeMode = sessionManager.fetchDarkMode() ?: false
         setContent {
-            AppTheme(darkColors = darkColors()) {
+            AppTheme(darkColors = darkColors(), darkTheme = themeMode) {
 
                 val navController = rememberNavController()
                 Scaffold(

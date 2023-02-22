@@ -13,7 +13,7 @@ import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileScree
 fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
     navigation( route = Graph.MAIN, startDestination = BottomNavScreen.Home.screen_route) {
         composable(BottomNavScreen.Home.screen_route) {
-            HomeScreen()
+            HomeScreen(navController)
         }
         composable(BottomNavScreen.Orders.screen_route) {
             OrdersScreen()
@@ -22,7 +22,7 @@ fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
             CartScreen()
         }
         composable(BottomNavScreen.Profile.screen_route) {
-            ProfileScreen( navigateToRoot = {navController.navigate(route = Graph.ROOT)})
+            ProfileScreen(navController)
         }
     }
 }

@@ -53,7 +53,7 @@ fun AppTheme(spaces: CustomSpaces = CustomTheme.spaces,
              darkColors: CustomColors? = null,
              darkTheme: Boolean = isSystemInDarkTheme(),
              content: @Composable () -> Unit,) {
-    val currentColor = remember { if (darkColors != null && darkTheme) darkColors else colors }
+    val currentColor = remember { if (darkColors != null && darkTheme) darkColors else lightColors() }
     val rememberedColors = remember { currentColor.copy() }.apply { updateColorsFrom(currentColor) }
 
     CompositionLocalProvider(

@@ -9,6 +9,8 @@ class SessionManager (context: Context) {
 
     companion object {
         const val USER_TOKEN = "user_token"
+        const val CURRENT_LANGUAGE = "current_language"
+        const val DARK_MODE = "dark_mode"
     }
 
     fun saveAuthToken(token: String) {
@@ -16,6 +18,20 @@ class SessionManager (context: Context) {
         editor.putString(USER_TOKEN, token)
         editor.apply()
         println("Token Saved: $token")
+    }
+
+    fun saveCurrentLanguage(language: String) {
+        val editor = prefs.edit()
+        editor.putString(CURRENT_LANGUAGE, language)
+        editor.apply()
+        println("Language Saved: $language")
+    }
+
+    fun saveDarkMode(isDarkMode: Boolean) {
+        val editor = prefs.edit()
+        editor.putBoolean(DARK_MODE, isDarkMode)
+        editor.apply()
+        println("Dark Mode Saved: $isDarkMode")
     }
 
     fun removeAuthToken() {
@@ -28,4 +44,18 @@ class SessionManager (context: Context) {
     fun fetchAuthToken(): String? {
         return prefs.getString(USER_TOKEN, null)
     }
+
+    fun fetchCurrentLanguage(): String? {
+        return prefs.getString(CURRENT_LANGUAGE, null)
+    }
+
+    fun fetchDarkMode(): Boolean? {
+        return prefs.getBoolean(DARK_MODE, false)
+    }
+
+
+
+
+
+
 }
