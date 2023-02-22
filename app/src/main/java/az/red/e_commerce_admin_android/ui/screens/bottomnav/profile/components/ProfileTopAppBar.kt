@@ -25,10 +25,11 @@ fun ProfileTopAppBar() {
             Text(
                 "Profile",
                 style = CustomTheme.typography.nunitoNormal18,
-                modifier = Modifier.offset(x = (-16).dp)
+                modifier = Modifier.offset(x = (-16).dp),
+                color = CustomTheme.colors.text
             )
         },
-        backgroundColor = Color.White,
+        backgroundColor = CustomTheme.colors.background,
         navigationIcon = {
             IconButton(onClick = {/* Do Something*/ }) {
                 Icon(painter = painterResource(id = R.drawable.ic_back), contentDescription = null, tint = CustomTheme.colors.text)
