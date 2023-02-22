@@ -31,7 +31,7 @@ fun ProfileTopAppBar() {
         backgroundColor = Color.White,
         navigationIcon = {
             IconButton(onClick = {/* Do Something*/ }) {
-                Icon(painter = painterResource(id = R.drawable.ic_back), contentDescription = null)
+                Icon(painter = painterResource(id = R.drawable.ic_back), contentDescription = null, tint = CustomTheme.colors.text)
             }
         },
         actions = {
@@ -39,7 +39,7 @@ fun ProfileTopAppBar() {
             Text(
                 text = "Edit profile",
                 style = CustomTheme.typography.nunitoNormal16,
-                color = AccentCarrot,
+                color = CustomTheme.colors.accent,
                 modifier = Modifier.padding(0.dp,0.dp,CustomTheme.spaces.large,0.dp).noRippleClickable {
                     /* Do Something */
                 }

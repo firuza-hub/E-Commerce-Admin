@@ -40,18 +40,19 @@ fun ProfileNavigateOtherScreen(
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = title,
-                    tint = if (isLogOut) AccentCarrot else BackgroundDark
+                    tint = if (isLogOut) CustomTheme.colors.accent else CustomTheme.colors.text
                 )
                 Text(
                     text = title,
                     style = CustomTheme.typography.nunitoNormal16,
                     modifier = Modifier.padding(horizontal = 13.dp),
-                    color = if (isLogOut) AccentCarrot else InputCardBackgroundDark
+                    color = if (isLogOut) CustomTheme.colors.accent else CustomTheme.colors.text
                 )
             }
             Icon(
                 painter = painterResource(id = R.drawable.ic_right),
-                contentDescription = "Right Arrow"
+                contentDescription = "Right Arrow",
+                tint = CustomTheme.colors.text
             )
         }
 
