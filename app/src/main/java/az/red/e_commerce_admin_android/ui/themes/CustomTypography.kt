@@ -8,12 +8,12 @@ import androidx.compose.ui.unit.sp
 
 data class CustomTypography(
     val h1: TextStyle = TextStyle(
-        fontFamily = FontFamily.SansSerif,
+        fontFamily = barlowFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp
+        fontSize = 32.sp
     ),
     val body1: TextStyle = TextStyle(
-        fontFamily = FontFamily.SansSerif,
+        fontFamily = nunitoFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
@@ -23,6 +23,13 @@ data class CustomTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     ),
+
+    val body3: TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp
+    ),
+
 
     val nunitoNormal12 : TextStyle = TextStyle(
         fontFamily = nunitoFamily,
@@ -41,7 +48,7 @@ data class CustomTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp
     ),
-    val nunitoBold : TextStyle = TextStyle(
+    val nunitoBold14 : TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp
@@ -51,6 +58,12 @@ data class CustomTypography(
         fontFamily = montSerratFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp
+    ),
+
+    val nunitoBold18 : TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp
     )
 )
 

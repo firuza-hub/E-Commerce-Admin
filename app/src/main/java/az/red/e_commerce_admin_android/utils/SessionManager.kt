@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.data.remote.auth
+package az.red.e_commerce_admin_android.utils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,11 +11,13 @@ class SessionManager (context: Context) {
         const val USER_TOKEN = "user_token"
         const val CURRENT_LANGUAGE = "current_language"
         const val DARK_MODE = "dark_mode"
+        const val REMEMBER_ME = "remember_me"
     }
 
-    fun saveAuthToken(token: String) {
+    fun saveAuthToken(token: String, rememberMe:Boolean) {
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
+        editor.putBoolean(REMEMBER_ME, rememberMe)
         editor.apply()
         println("Token Saved: $token")
     }
@@ -36,7 +38,8 @@ class SessionManager (context: Context) {
 
     fun removeAuthToken() {
         val editor = prefs.edit()
-        editor.putString(USER_TOKEN, "")
+        editor.remove(USER_TOKEN)
+        editor.remove(REMEMBER_ME)
         editor.apply()
         println("Token Removed")
     }
@@ -58,4 +61,9 @@ class SessionManager (context: Context) {
 
 
 
+
+
+    fun fetchRememberMe(): Boolean {
+        return prefs.getBoolean(REMEMBER_ME, false)
+    }
 }

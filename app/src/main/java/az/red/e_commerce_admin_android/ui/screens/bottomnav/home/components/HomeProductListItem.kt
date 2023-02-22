@@ -88,9 +88,9 @@ fun ProductListInfo() {
 
         Text(
             text = "US $540.00",
-            style = CustomTheme.typography.nunitoBold,
-            modifier = Modifier.weight(1f),
             color = CustomTheme.colors.text
+            style = CustomTheme.typography.nunitoBold14,
+            modifier = Modifier.weight(1f)
         )
 
         Row(

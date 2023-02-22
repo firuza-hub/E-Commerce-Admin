@@ -28,4 +28,7 @@
     <string name="log_out">Log out</string>
     <string name="statistics">Statistics</string>
     <string name="deactivate">Deactivate</string>
+    <string name="content_description_facebook">Sign in with Facebook</string>
+    <string name="content_description_gmail">Sign in with Gmail</string>
+    <string name="content_description_apple">Sign in with Apple</string>
 </resources>
