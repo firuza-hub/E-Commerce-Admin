@@ -66,6 +66,7 @@ fun ProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(bottom = 100.dp)
     ) {
 
         ProfileTopAppBar()
