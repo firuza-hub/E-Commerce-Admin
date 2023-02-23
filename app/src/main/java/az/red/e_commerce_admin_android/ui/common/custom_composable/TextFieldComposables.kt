@@ -28,7 +28,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -62,8 +61,10 @@ fun PasswordTextField(
         value = value,
         onValueChange = onValueChange,
         placeholder = {
-            Text(text = label, fontSize = 18.sp,
-                color = CustomTheme.colors.hintText)
+            Text(
+                text = label, fontSize = 18.sp,
+                color = CustomTheme.colors.hintText
+            )
         },
         trailingIcon = {
             IconButton(onClick = {
@@ -87,7 +88,7 @@ fun PasswordTextField(
                 Icon(
                     imageVector = passwordVisibilityIconAndText.first,
                     contentDescription = passwordVisibilityIconAndText.second,
-                    tint = if(value.isNotBlank()) CustomTheme.colors.accent else CustomTheme.colors.hintText
+                    tint = if (value.isNotBlank()) CustomTheme.colors.accent else CustomTheme.colors.hintText
                 )
             }
         },
@@ -130,8 +131,10 @@ fun EmailTextField(
         value = value,
         onValueChange = onValueChange,
         placeholder = {
-            Text(text = label, fontSize = 18.sp,
-                    color = CustomTheme.colors.hintText)
+            Text(
+                text = label, fontSize = 18.sp,
+                color = CustomTheme.colors.hintText
+            )
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
@@ -185,13 +188,16 @@ private fun CustomTextField(
     var errorVisibilityState by remember { mutableStateOf(false) }
     errorVisibilityState = hasError
     BasicTextField(
-        modifier = modifier.background(CustomTheme.colors.cardBackground)
+        modifier = modifier
+            .background(CustomTheme.colors.cardBackground)
             .onFocusChanged {
                 errorBorderWidth =
                     if (it.hasFocus) 2.dp else 1.dp
             }
             .border(
-                width = 1.dp, shape = RoundedCornerShape(8.dp), color = CustomTheme.colors.cardBorder
+                width = 1.dp,
+                shape = RoundedCornerShape(8.dp),
+                color = CustomTheme.colors.cardBorder
             ),
         value = value,
         onValueChange = onValueChange,
@@ -268,7 +274,48 @@ fun Modifier.bottomTop(strokeWidth: Dp, color: Color) = composed(
                 start = Offset(x = 0f, y = strokeWidthPx),
                 end = Offset(x = width, y = strokeWidthPx),
                 strokeWidth = strokeWidthPx,
-                pathEffect = null)
+                pathEffect = null
+            )
         }
     }
 )
+
+@Composable
+fun StringTextField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    isError: Boolean = false,
+    errorText: String = "",
+    imeAction: ImeAction = ImeAction.Next
+) {
+    CustomTextField(
+        modifier = modifier,
+        value = value,
+        onValueChange = onValueChange,
+        placeholder = {
+            Text(
+                text = label, fontSize = 18.sp,
+                color = CustomTheme.colors.hintText
+            )
+        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Text,
+            imeAction = imeAction,
+        ),
+        hasError = isError,
+        errorText = {
+            if (isError) {
+                ErrorTextInputField(text = errorText)
+            }
+        },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_user),
+                tint = CustomTheme.colors.inputIconHint,
+                contentDescription = "User Icon"
+            )
+        })
+
+}
