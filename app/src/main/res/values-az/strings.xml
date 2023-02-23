@@ -21,4 +21,15 @@
     <string name="content_description_gmail">Gmail il giriş</string>
     <string name="content_description_apple">Apple ilə giriş</string>
     <string name="_continue">Davam et</string>
+    <string name="add_new_product">Yeni məhsul əlavə et</string>
+    <string name="my_products">Mənim məhsullarım</string>
+    <string name="address">Ünvan</string>
+    <string name="payment">Ödəniş</string>
+    <string name="notification">Bildiriş</string>
+    <string name="security">Təhlükəsizlik</string>
+    <string name="privacy_policy">Gizlilik Siyasəti</string>
+    <string name="help_center">Kömək mərkəzi</string>
+    <string name="log_out">Çıxış</string>
+    <string name="statistics">Statistika</string>
+    <string name="deactivate">Deaktiv edin</string>
 </resources>

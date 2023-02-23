@@ -9,5 +9,4 @@ data class CustomSpaces(
     val extraLarge: Dp = 40.dp,
 )
 
-
 val LocalSpaces = staticCompositionLocalOf { CustomSpaces() }

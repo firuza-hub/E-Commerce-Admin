@@ -37,6 +37,12 @@ data class CustomTypography(
         fontSize = 12.sp
     ),
 
+    val nunitoNormal16 : TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+
     val nunitoNormal18 : TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Normal,
@@ -45,6 +51,12 @@ data class CustomTypography(
     val nunitoBold14 : TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
+    ),
+
+    val montSerratSemiBold : TextStyle = TextStyle(
+        fontFamily = montSerratFamily,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp
     ),
 

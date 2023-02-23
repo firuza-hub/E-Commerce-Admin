@@ -17,6 +17,17 @@
     <string name="login_error_msg_empty_password">Please enter password</string>
     <string name="icon_password_visible">Password Visible</string>
     <string name="icon_password_hidden">Password Hidden</string>
+    <string name="add_new_product">Add new product</string>
+    <string name="my_products">My products</string>
+    <string name="address">Address</string>
+    <string name="payment">Payment</string>
+    <string name="notification">Notification</string>
+    <string name="security">Security</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="help_center">Help Center</string>
+    <string name="log_out">Log out</string>
+    <string name="statistics">Statistics</string>
+    <string name="deactivate">Deactivate</string>
     <string name="content_description_facebook">Sign in with Facebook</string>
     <string name="content_description_gmail">Sign in with Gmail</string>
     <string name="content_description_apple">Sign in with Apple</string>
