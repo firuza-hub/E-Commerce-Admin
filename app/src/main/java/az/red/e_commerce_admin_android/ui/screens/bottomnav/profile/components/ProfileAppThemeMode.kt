@@ -1,8 +1,11 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.components
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,21 +14,22 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.ui.main.MainActivity
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileViewModel
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.noRippleClickable
-import az.red.e_commerce_admin_android.ui.themes.AccentCarrot
-import az.red.e_commerce_admin_android.ui.themes.BtnTextLight
-import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import az.red.e_commerce_admin_android.ui.themes.*
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProfileAppThemeMode(profileViewModel: ProfileViewModel) {
+fun ProfileAppThemeMode(profileViewModel: ProfileViewModel,isDarkModeCheck:Boolean = isSystemInDarkTheme()) {
+
     val coroutineScope = rememberCoroutineScope()
     var appThemeMode by remember {
-        mutableStateOf(false)
+        mutableStateOf(isDarkModeCheck)
     }
 
     LaunchedEffect(key1 = true) {
@@ -40,8 +44,10 @@ fun ProfileAppThemeMode(profileViewModel: ProfileViewModel) {
         modifier = Modifier
             .noRippleClickable {
                 appThemeMode = !appThemeMode
+
                 //Save App Theme Mode
                 profileViewModel.saveAppThemeMode(appThemeMode)
+//                refreshActivity(context)
             }
             .size(width = 60.dp, height = 31.dp)
             .border(
@@ -116,4 +122,12 @@ fun ProfileAppThemeMode(profileViewModel: ProfileViewModel) {
         }
 
     }
+}
+
+fun refreshActivity(context:Context){
+    val intent = Intent(context, MainActivity::class.java)
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    context.startActivity(intent)
 }

@@ -1,6 +1,7 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.profile
 
 import android.util.Log
+import androidx.compose.foundation.isSystemInDarkTheme
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.utils.UIEvent
@@ -10,7 +11,6 @@ class ProfileViewModel : BaseViewModel() {
 
     val currentLanguage = MutableStateFlow("")
     val isDarkMode = MutableStateFlow(false)
-
 
     init {
         currentLanguageCheck()
@@ -31,22 +31,18 @@ class ProfileViewModel : BaseViewModel() {
     }
 
     private fun currentLanguageCheck() {
-        sessionManager.fetchCurrentLanguage().let {
-            if (!it.isNullOrEmpty()) {
-                currentLanguage.value = sessionManager.fetchCurrentLanguage().toString()
+        sessionManager.fetchCurrentLanguage().let {language ->
+            if (!language.isNullOrEmpty()) {
+                currentLanguage.value = language.toString()
             } else {
-                Log.i("ProfileViewModel", "Language is empty.")
+                currentLanguage.value = "US"
             }
         }
     }
 
     private fun appThemeModeCheck() {
-        sessionManager.fetchDarkMode().let {
-            if (it == true) {
-                isDarkMode.value = sessionManager.fetchDarkMode() ?: true
-            } else {
-                Log.i("ProfileViewModel", "Light mode is active.")
-            }
+        sessionManager.fetchDarkMode().let {_isDarkMode ->
+                isDarkMode.value = _isDarkMode
         }
     }
 }

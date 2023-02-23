@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.noRippleClickable
+import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
 fun ProfileImage() {
@@ -42,7 +43,8 @@ fun ProfileImage() {
                 contentDescription = "Edit Profile Image",
                 modifier = Modifier.noRippleClickable {
                     //Edit Profile Image
-                }
+                },
+                tint = CustomTheme.colors.text
             )
         }
     }
