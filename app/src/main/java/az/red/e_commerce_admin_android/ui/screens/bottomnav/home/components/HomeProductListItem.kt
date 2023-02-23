@@ -17,10 +17,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductListItemResponse
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
-fun ProductListItem() {
+fun ProductListItem(productListItemResponse: ProductListItemResponse) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,7 +35,7 @@ fun ProductListItem() {
         ) {
 
             ProductListImage()
-            ProductListInfo()
+            ProductListInfo(productListItemResponse)
         }
     }
 }
@@ -58,7 +59,7 @@ fun ProductListImage() {
 }
 
 @Composable
-fun ProductListInfo() {
+fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,9 +73,8 @@ fun ProductListInfo() {
                 .weight(1f),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
             Text(
-                text = "Iphone 13 pro max",
+                text = productListItemResponse.name,
                 style = CustomTheme.typography.nunitoNormal12,
                 color = CustomTheme.colors.text
             )
@@ -87,8 +87,7 @@ fun ProductListInfo() {
         }
 
         Text(
-            text = "US $540.00",
-            color = CustomTheme.colors.text,
+            text = "US $${productListItemResponse.currentPrice}",
             style = CustomTheme.typography.nunitoBold14,
             modifier = Modifier.weight(1f)
         )

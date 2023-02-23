@@ -8,7 +8,6 @@ import retrofit2.HttpException
 import retrofit2.Response
 
 
-
 sealed class NetworkResult<T>(
     val data: T? = null, val message: String? = null
 ) {
@@ -29,13 +28,17 @@ inline fun <reified T : Any> handleApi(
         emit(NetworkResult.Loading())
 
         if (response.isSuccessful && body != null) {
-
             emit(NetworkResult.Success(body))
-
         } else {
-            val gson: Gson by inject( Gson::class.java)
-            val e = response.errorBody()?.let {gson.fromJson(it.string(), T::class.java ) }
-            emit(NetworkResult.Error(code = response.code(), message = response.message(), data = e as T))
+            val gson: Gson by inject(Gson::class.java)
+            val e = response.errorBody()?.let { gson.fromJson(it.string(), T::class.java) }
+            emit(
+                NetworkResult.Error(
+                    code = response.code(),
+                    message = response.message(),
+                    data = e as T
+                )
+            )
         }
     } catch (e: HttpException) {
         emit(NetworkResult.Error<T>(message = e.message(), code = e.code()))
