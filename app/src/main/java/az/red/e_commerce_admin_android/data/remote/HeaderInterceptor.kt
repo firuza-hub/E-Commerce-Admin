@@ -20,7 +20,11 @@ class HeaderInterceptor(private val sessionManager: SessionManager) : Intercepto
             }
 
             Log.i("LOGIN_REQUEST", "interceptor - > ${chain.request().url}")
-            return chain.proceed(request.headers(headers.toHeaders()).build())
+            val response = chain.proceed(request.headers(headers.toHeaders()).build())
+            if (response.code == 401) {
+                sessionManager.removeAuthToken()
+            }
+            return response
         } catch (ex: java.lang.Exception) {
             Log.i("LOGIN_REQUEST", "interceptor - > exception $ex")
             throw ex
