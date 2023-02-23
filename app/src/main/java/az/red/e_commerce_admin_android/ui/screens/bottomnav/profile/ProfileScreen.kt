@@ -1,6 +1,8 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.profile
 
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
@@ -30,6 +32,7 @@ fun ProfileScreen(
 ) {
 
     val coroutineScope = rememberCoroutineScope()
+    val scrollState = rememberScrollState()
 
     val onAddressClick: () -> Unit = { }
     val onNotificationClick: () -> Unit = { }
@@ -69,6 +72,7 @@ fun ProfileScreen(
 
         Column(
             modifier = Modifier
+                .verticalScroll(scrollState)
                 .padding(horizontal = CustomTheme.spaces.large)
         ) {
             //Profile Theme & Image & Language Container
