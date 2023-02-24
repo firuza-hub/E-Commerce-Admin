@@ -1,21 +1,21 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.home
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import androidx.navigation.NavController
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components.HomeTopAppBar
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components.ProductListItem
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen( navController: NavController,productListViewModel:ProductListViewModel = koinViewModel()) {
+fun HomeScreen( navController: NavController, productListViewModel:ProductListViewModel = koinViewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
