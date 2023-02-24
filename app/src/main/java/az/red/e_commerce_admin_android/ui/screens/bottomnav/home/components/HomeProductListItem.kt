@@ -107,14 +107,13 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
         ) {
             Button(
                 modifier = Modifier
-                    .padding(0.dp, 0.dp, 8.dp, 2.dp)
-                    .size(width = 111.dp, height = 30.dp)
+                    .padding(end = 8.dp)
                     .weight(1f),
                 onClick = {
                     //your onclick code
                 },
                 border = BorderStroke(1.dp, CustomTheme.colors.cardBorder),
-                colors = ButtonDefaults.outlinedButtonColors(backgroundColor = CustomTheme.colors.btnText),
+                colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.btnText),
                 shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
@@ -126,14 +125,11 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
 
             Button(
                 modifier = Modifier
-                    .padding(8.dp, 0.dp, 0.dp, 2.dp)
-                    .size(width = 111.dp, height = 30.dp)
                     .weight(1f),
                 onClick = {
                     //your onclick code
                 },
-                border = BorderStroke(1.dp, CustomTheme.colors.cardBorder),
-                colors = ButtonDefaults.outlinedButtonColors(
+                colors = ButtonDefaults.buttonColors(
                     backgroundColor = CustomTheme.colors.darkBtnBackground,
                 ),
                 shape = RoundedCornerShape(CustomTheme.spaces.large)
