@@ -8,4 +8,7 @@ object EndPoints {
     const val CURRENT_USER = "$USER_BASE/customer"
     const val UPDATE_USER = USER_BASE
     const val UPDATE_USER_PASSWORD = "$USER_BASE/password"
+
+    private const val PRODUCT_BASE = "products"
+    const val PRODUCTS_FILTERED = "$PRODUCT_BASE/filter"
 }
