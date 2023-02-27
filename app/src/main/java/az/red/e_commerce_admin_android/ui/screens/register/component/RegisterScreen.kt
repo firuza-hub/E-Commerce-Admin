@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.ui.screens.register.component
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -22,14 +24,33 @@ import az.red.e_commerce_admin_android.ui.screens.register.RegisterState
 import az.red.e_commerce_admin_android.ui.screens.register.RegisterUIEvent
 import az.red.e_commerce_admin_android.ui.screens.register.RegisterViewModel
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import az.red.e_commerce_admin_android.utils.UIEvent
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegisterScreen(
     navController: NavController, viewModel: RegisterViewModel = koinViewModel()
 ) {
+    val context = LocalContext.current
     val state by viewModel.registerState.collectAsState()
-
+    LaunchedEffect(key1 = true) {
+        launch {
+            viewModel.uiEventFlow.collect { event ->
+                when (event) {
+                    is UIEvent.Error -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Message -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Navigate -> {
+                        navController.navigate(route = event.route)
+                    }
+                }
+            }
+        }
+    }
     TopAppBar(
         elevation = 0.dp,
         title = {},

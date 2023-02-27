@@ -47,9 +47,24 @@ class RegisterViewModel(
                             registerState.value.password
                         )
                     ).collect { loginResp ->
-                        sessionManager.saveAuthToken(loginResp.data!!.token!!, true)
-                        triggerEvent(UIEvent.Navigate(Graph.MAIN))
-                        Log.i("REGISTER_REQUEST", "Success: ${loginResp.data.token}")
+                        when (loginResp) {
+                            is NetworkResult.Success -> {
+                                sessionManager.saveAuthToken(loginResp.data!!.token!!, true)
+                                triggerEvent(UIEvent.Message("Success!"))
+                                triggerEvent(UIEvent.Navigate(Graph.MAIN))
+                                Log.i("LOGIN_REQUEST", "Success: ${loginResp.data.token}")
+                            }
+                            is NetworkResult.Empty -> Log.i("LOGIN_REQUEST", "Empty")
+                            is NetworkResult.Error -> {
+                                Log.i("LOGIN_REQUEST", "Error: ${loginResp.message}")
+                                loginResp.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
+                            }
+                            is NetworkResult.Exception -> {
+                                Log.e("LOGIN_REQUEST", "Exception: ${loginResp.message}")
+                                loginResp.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
+                            }
+                            is NetworkResult.Loading -> Log.i("LOGIN_REQUEST", "Loading")
+                        }
                     }
                 }
             }
