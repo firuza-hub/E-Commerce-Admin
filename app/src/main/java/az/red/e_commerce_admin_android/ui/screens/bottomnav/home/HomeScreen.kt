@@ -13,6 +13,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components.HomeTopAppBar
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components.ProductListItem
+import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -30,12 +31,12 @@ fun HomeScreen(
 
 
         if (items.loadState.append == LoadState.Loading || items.loadState.prepend == LoadState.Loading || items.loadState.refresh == LoadState.Loading)
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            LinearProgressIndicator(modifier = Modifier.fillMaxWidth().height(2.dp), color = CustomTheme.colors.accent )
 
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(1.dp, 0.dp, 0.dp, 82.dp)
+                .padding(2.dp, 0.dp, 0.dp, 82.dp)
         ) {
             items(items) {
                 it?.let {

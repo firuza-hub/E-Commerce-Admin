@@ -20,11 +20,9 @@ class ProductListViewModel(private val repo: ProductRepository) : BaseViewModel(
     lateinit var data: Flow<PagingData<ProductListItemResponse>>
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-
             Log.i("CURRENT_THREAD vm", Thread.currentThread().name)
             data = repo.getProductsFiltered(ProductListItemRequest()).cachedIn(viewModelScope)
-        }
+
     }
 
 
