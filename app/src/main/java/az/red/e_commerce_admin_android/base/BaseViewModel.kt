@@ -2,6 +2,8 @@ package az.red.e_commerce_admin_android.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import az.red.e_commerce_admin_android.ui.navigation.root.Graph
+import az.red.e_commerce_admin_android.utils.AuthTracker
 import az.red.e_commerce_admin_android.utils.SessionManager
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.channels.Channel
@@ -16,6 +18,22 @@ abstract class BaseViewModel : ViewModel() {
 
     fun triggerEvent(event: UIEvent) = viewModelScope.launch {
         uiEventChannel.send(event)
+    }
+
+    init {
+        viewModelScope.launch {
+            AuthTracker.authenticationTrackerFlow.collect { authed ->
+
+                if (!authed) {
+                    println("LOGOUT TRIGGERED")
+                    triggerEvent(
+                        UIEvent.Navigate(
+                            Graph.AUTH
+                        )
+                    )
+                }
+            }
+        }
     }
 
 }
