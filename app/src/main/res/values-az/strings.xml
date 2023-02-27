@@ -13,8 +13,8 @@
     <string name="create_your_account">Hesabınızı yaradın</string>
     <string name="already_have_an_account">Artıq bir hesabınız var mı?</string>
     <string name="empty_string" />
-    <string name="login_error_msg_empty_email_mobile">Email-i doldurun</string>
-    <string name="login_error_msg_empty_password">Parolu doldurun</string>
+    <string name="auth_error_msg_empty_email">Email-i doldurun</string>
+    <string name="auth_error_msg_empty_password">Parolu doldurun</string>
     <string name="icon_password_visible">Parol Görünür</string>
     <string name="icon_password_hidden">Parol Görünməzdir</string>
     <string name="content_description_facebook">Facebook ilə giriş</string>
@@ -32,4 +32,6 @@
     <string name="log_out">Çıxış</string>
     <string name="statistics">Statistika</string>
     <string name="deactivate">Deaktiv edin</string>
+    <string name="auth_error_msg_empty_first_name">Adınızı daxil edin</string>
+    <string name="auth_error_msg_empty_last_name">Soyadınızı daxil edin</string>
 </resources>

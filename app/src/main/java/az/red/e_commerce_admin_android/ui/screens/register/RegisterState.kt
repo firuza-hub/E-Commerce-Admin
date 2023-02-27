@@ -9,35 +9,29 @@ data class RegisterState(
     val password: String,
     val firstName: String,
     val lastName: String,
-    val loginName: String,
-    val telephone: String,
-    val gender: String,
+    val login: String,
     val errorState: RegisterErrorState = RegisterErrorState(),
-    val isRegisterSuccessful: Boolean = false
+    val isRegisterSuccessful: Boolean = false,
+    val btnEnabled: Boolean = false
 ) {
     companion object {
-        val NULL = RegisterState("", "", "", "", "", "", "")
+        val NULL = RegisterState("", "", "", "", "")
     }
 
     fun toRegisterRequest() = RegisterRequest(
         email = email,
         firstName = firstName,
         lastName = lastName,
-        login = loginName,
+        login = login,
         password = password,
-        telephone = telephone,
-        gender = gender,
-        avatarUrl = "",
         isAdmin = true
     )
 }
 
 data class RegisterErrorState(
-    val emailOrMobileErrorState: ErrorState = ErrorState(),
+    val emailErrorState: ErrorState = ErrorState(),
     val passwordErrorState: ErrorState = ErrorState(),
     val firstNameErrorState: ErrorState = ErrorState(),
     val lastNameErrorState: ErrorState = ErrorState(),
-    val loginNameErrorState: ErrorState = ErrorState(),
-    val telephoneErrorState: ErrorState = ErrorState(),
-    val genderErrorState: ErrorState = ErrorState(),
+    val loginErrorState: ErrorState = ErrorState(),
 )

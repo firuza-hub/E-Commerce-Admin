@@ -5,8 +5,6 @@ sealed class RegisterUIEvent {
     data class PasswordChanged(val inputValue: String) : RegisterUIEvent()
     data class FirstNameChanged(val inputValue: String) : RegisterUIEvent()
     data class LastNameChanged(val inputValue: String) : RegisterUIEvent()
-    data class LoginNameChanged(val inputValue: String) : RegisterUIEvent()
-    data class TelephoneChanged(val inputValue: String) : RegisterUIEvent()
-    data class GenderChanged(val inputValue: String) : RegisterUIEvent()
+    data class LoginChanged(val inputValue: String) : RegisterUIEvent()
     object Submit : RegisterUIEvent()
 }
