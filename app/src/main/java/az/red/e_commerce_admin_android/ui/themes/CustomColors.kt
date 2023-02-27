@@ -12,6 +12,7 @@ val BtnTextLight = Color(0xFFFFFFFF)
 val BtnTextDark = Color(0xFF000000)
 val TextDark = Color(0xFFFFFFFF)
 val AccentCarrot =  Color(parseColor("#FF725E"))
+val ButtonTextWhite =  Color(parseColor("#F2F2F2"))
 val InputCardBorderLight =  Color(parseColor("#CFCFCF"))
 val InputCardBorderDark =  Color(parseColor("#233447"))
 val InputCardBackgroundDark =  Color(parseColor("#16212D"))
@@ -37,6 +38,8 @@ class CustomColors(
     success: Color,
     error: Color,
     isLight: Boolean,
+    darkBtnBackground: Color,
+    textReverse: Color,
 ) {
     var primary by mutableStateOf(primary)
         private set
@@ -77,7 +80,11 @@ class CustomColors(
         private set
     var btnText by mutableStateOf(btnText)
         private set
-    var btnTextDisabled by mutableStateOf(btnText)
+    var btnTextDisabled by mutableStateOf(btnTextDisabled)
+        private set
+    var darkBtnBackground by mutableStateOf(darkBtnBackground)
+        private set
+    var textReverse by mutableStateOf(textReverse)
         private set
 
     fun copy(
@@ -96,7 +103,9 @@ class CustomColors(
         btnBackgroundInactive: Color = this.btnBackgroundInactive,
         btnBackgroundActive: Color = this.btnBackgroundActive,
         btnText: Color = this.btnText,
-        btnTextDisabled: Color = this.btnText,
+        btnTextDisabled: Color = this.btnTextDisabled,
+        darkBtnBackground: Color = this.darkBtnBackground,
+        textReverse: Color = this.textReverse,
     ) = CustomColors(
         primary = primary,
         text = text,
@@ -114,6 +123,8 @@ class CustomColors(
         btnBackgroundActive = btnBackgroundActive,
         btnText = btnText,
         btnTextDisabled = btnTextDisabled,
+        darkBtnBackground = darkBtnBackground,
+        textReverse = textReverse,
     )
 
     fun updateColorsFrom(other: CustomColors) {
@@ -133,6 +144,8 @@ class CustomColors(
         btnBackgroundActive = other.btnBackgroundActive
         btnText = other.btnText
         btnTextDisabled = other.btnTextDisabled
+        darkBtnBackground = other.darkBtnBackground
+        textReverse = other.textReverse
     }
 
 

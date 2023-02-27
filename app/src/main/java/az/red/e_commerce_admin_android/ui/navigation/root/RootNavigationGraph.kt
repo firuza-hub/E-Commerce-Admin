@@ -9,7 +9,7 @@ import az.red.e_commerce_admin_android.ui.navigation.main.bottomNavGraph
 
 @Composable
 fun RootNavigationGraph(navController: NavHostController) {
-    NavHost(navController, route = Graph.ROOT, startDestination = Graph.AUTH) {
+    NavHost(navController, route = Graph.ROOT, startDestination = Graph.MAIN) {
         authNavGraph(navController)
         bottomNavGraph(navController = navController)
     }

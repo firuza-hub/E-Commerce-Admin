@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.ui.screens.login.LoginScreen
-import az.red.e_commerce_admin_android.ui.screens.register.RegisterScreen
+import az.red.e_commerce_admin_android.ui.screens.register.component.RegisterScreen
 
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController) {

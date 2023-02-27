@@ -1,7 +1,6 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,21 +9,28 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductListItemResponse
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 
 @Composable
-fun ProductListItem() {
+fun ProductListItem(productListItemResponse: ProductListItemResponse) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .background(CustomTheme.colors.background)
             .padding(vertical = 12.dp, horizontal = 16.dp)
     ) {
         Row(
@@ -33,24 +39,27 @@ fun ProductListItem() {
                 .height(97.dp)
         ) {
 
-            ProductListImage()
-            ProductListInfo()
+            productListItemResponse.imageUrls.let { if (it.any()) ProductListImage(it.first()) }
+            ProductListInfo(productListItemResponse)
         }
     }
 }
 
 @Composable
-fun ProductListImage() {
+fun ProductListImage(imgUrl: String) {
     Box(
         modifier = Modifier
             .size(width = 97.dp, height = 97.dp)
             .clip(RoundedCornerShape(size = 8.dp))
-            .background(Color.White)
+            .background(CustomTheme.colors.btnText)
     ) {
 
-        Image(
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imgUrl)
+                .crossfade(true)
+                .build(),
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.productlist_item_image),
             contentDescription = "productListItemImage",
             contentScale = ContentScale.Fit
         )
@@ -58,7 +67,7 @@ fun ProductListImage() {
 }
 
 @Composable
-fun ProductListInfo() {
+fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,17 +81,21 @@ fun ProductListInfo() {
                 .weight(1f),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Iphone 13 pro max", style = CustomTheme.typography.nunitoNormal12)
+            Text(
+                text = productListItemResponse.name,
+                style = CustomTheme.typography.nunitoNormal12,
+                color = CustomTheme.colors.text
+            )
 
             Icon(
                 painter = painterResource(id = R.drawable.ic_settings),
                 contentDescription = "productListItemIconSettings",
-                tint = colorResource(id = R.color.accent_carrot)
+                tint = CustomTheme.colors.accent
             )
         }
 
         Text(
-            text = "US $540.00",
+            text = "US $${productListItemResponse.currentPrice}",
             style = CustomTheme.typography.nunitoBold14,
             modifier = Modifier.weight(1f)
         )
@@ -94,41 +107,37 @@ fun ProductListInfo() {
         ) {
             Button(
                 modifier = Modifier
-                    .padding(0.dp, 0.dp, 8.dp, 2.dp)
-                    .size(width = 111.dp, height = 30.dp)
+                    .padding(end = 8.dp)
                     .weight(1f),
                 onClick = {
                     //your onclick code
                 },
-                border = BorderStroke(1.dp, colorResource(id = R.color.background_dark)),
-                colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.White),
-                shape = RoundedCornerShape(16.dp)
+                border = BorderStroke(1.dp, CustomTheme.colors.cardBorder),
+                colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.btnText),
+                shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
-                    text = "Deactivate",
+                    text = stringResource(R.string.deactivate),
                     style = CustomTheme.typography.nunitoNormal12,
-                    color = colorResource(id = R.color.input_card_background_dark)
+                    color = CustomTheme.colors.text
                 )
             }
 
             Button(
                 modifier = Modifier
-                    .padding(8.dp, 0.dp, 0.dp, 2.dp)
-                    .size(width = 111.dp, height = 30.dp)
                     .weight(1f),
                 onClick = {
                     //your onclick code
                 },
-                border = BorderStroke(1.dp, colorResource(id = R.color.background_dark)),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    backgroundColor = colorResource(id = R.color.input_card_background_dark),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = CustomTheme.colors.darkBtnBackground,
                 ),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
-                    text = "Statistics",
+                    text = stringResource(R.string.statistics),
                     style = CustomTheme.typography.nunitoNormal12,
-                    color = colorResource(id = R.color.bottom_navigation_unselected)
+                    color = CustomTheme.colors.textReverse
                 )
             }
         }

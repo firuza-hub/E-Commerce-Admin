@@ -16,3 +16,9 @@ val nunitoFamily = FontFamily(
     Font(R.font.nunito, FontWeight.Medium),
     Font(R.font.nunito_bold, FontWeight.Bold)
 )
+
+val montSerratFamily = FontFamily(
+    Font(R.font.montserrat_regular, FontWeight.Normal),
+    Font(R.font.montserrat_medium, FontWeight.Medium),
+    Font(R.font.montserrat_semibold, FontWeight.SemiBold)
+)
