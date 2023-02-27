@@ -19,6 +19,7 @@ import az.red.e_commerce_admin_android.ui.common.custom_composable.PasswordTextF
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextField
 import az.red.e_commerce_admin_android.ui.screens.login.AuthButtonColors
 import az.red.e_commerce_admin_android.ui.screens.register.RegisterState
+import az.red.e_commerce_admin_android.ui.screens.register.RegisterUIEvent
 import az.red.e_commerce_admin_android.ui.screens.register.RegisterViewModel
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import org.koin.androidx.compose.koinViewModel
@@ -57,7 +58,37 @@ fun RegisterScreen(
         )
         Spacer(modifier = Modifier.height(24.dp))
 
-        InputSection(state, {}, {}, {}, {}, {}, {})
+        InputSection(state, {
+            viewModel.onUiEvent(
+                registerUiEvent = RegisterUIEvent.EmailChanged(
+                    it
+                )
+            )
+        }, {
+            viewModel.onUiEvent(
+                registerUiEvent = RegisterUIEvent.PasswordChanged(
+                    it
+                )
+            )
+        }, {
+            viewModel.onUiEvent(
+                registerUiEvent = RegisterUIEvent.FirstNameChanged(
+                    it
+                )
+            )
+        }, {
+            viewModel.onUiEvent(
+                registerUiEvent = RegisterUIEvent.LastNameChanged(
+                    it
+                )
+            )
+        }, {
+            viewModel.onUiEvent(
+                registerUiEvent = RegisterUIEvent.LoginChanged(
+                    it
+                )
+            )
+        })
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -67,7 +98,7 @@ fun RegisterScreen(
                 .height(45.dp)
                 .clip(RoundedCornerShape(28.dp)),
             colors = AuthButtonColors(),
-            onClick = { },
+            onClick = { viewModel.onUiEvent(RegisterUIEvent.Submit)},
             enabled = true
         ) {
             Text(
@@ -106,7 +137,6 @@ fun InputSection(
     onPasswordChange: (newValue: String) -> Unit,
     onFirstNameChange: (newValue: String) -> Unit,
     onLastNameChange: (newValue: String) -> Unit,
-    onTelephoneChange: (newValue: String) -> Unit,
     onLoginNameChange: (newValue: String) -> Unit,
 ) {
     Column(
@@ -119,8 +149,9 @@ fun InputSection(
             value = state.email,
             onValueChange = { onEmailChange(it) },
             label = stringResource(id = R.string.email),
-            isError = state.errorState.emailOrMobileErrorState.hasError,
-            errorText = ""
+            isError = state.errorState.emailErrorState.hasError,
+            errorText = state.errorState.emailErrorState.errorMessageStringResource?.let { stringResource(id = it) }
+                ?: state.errorState.emailErrorState.errorMessage
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -131,33 +162,59 @@ fun InputSection(
             onValueChange = { onPasswordChange(it) },
             label = stringResource(id = R.string.password),
             isError = state.errorState.passwordErrorState.hasError,
-            errorText = "",
+            errorText = state.errorState.passwordErrorState.errorMessageStringResource?.let {
+                stringResource(
+                    id = it
+                )
+            }
+                ?: state.errorState.passwordErrorState.errorMessage,
             imeAction = ImeAction.Done
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         StringTextField(
-            value = "", onValueChange = { onFirstNameChange(it) }, label = "First Name"
+            value = state.login,
+            onValueChange = { onLoginNameChange(it) },
+            label = "Login",
+            isError = state.errorState.loginErrorState.hasError,
+            errorText = state.errorState.loginErrorState.errorMessageStringResource?.let {
+                stringResource(
+                    id = it
+                )
+            }
+                ?: state.errorState.loginErrorState.errorMessage
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         StringTextField(
-            value = "", onValueChange = { onLastNameChange(it) }, label = "Last Name"
+            value = state.firstName,
+            onValueChange = { onFirstNameChange(it) },
+            label = "First Name",
+            isError = state.errorState.firstNameErrorState.hasError,
+            errorText = state.errorState.firstNameErrorState.errorMessageStringResource?.let {
+                stringResource(
+                    id = it
+                )
+            }
+                ?: state.errorState.firstNameErrorState.errorMessage
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         StringTextField(
-            value = "", onValueChange = { onLoginNameChange(it) }, label = "Login Name"
+            value = state.lastName, onValueChange = { onLastNameChange(it) }, label = "Last Name",
+            isError = state.errorState.lastNameErrorState.hasError,
+            errorText = state.errorState.lastNameErrorState.errorMessageStringResource?.let {
+                stringResource(
+                    id = it
+                )
+            }
+                ?: state.errorState.lastNameErrorState.errorMessage
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
 
-        StringTextField(
-            value = "", onValueChange = { onTelephoneChange(it) }, label = "Telephone"
-        )
     }
 
 }

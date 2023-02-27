@@ -13,8 +13,9 @@
     <string name="create_your_account">Create your account</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="empty_string" />
-    <string name="login_error_msg_empty_email_mobile">Please enter email</string>
-    <string name="login_error_msg_empty_password">Please enter password</string>
+    <string name="auth_error_msg_empty_email">Please enter email</string>
+    <string name="auth_error_msg_empty_password">Please enter password</string>
+    <string name="auth_error_msg_empty_first_name">Please enter first name</string>
     <string name="icon_password_visible">Password Visible</string>
     <string name="icon_password_hidden">Password Hidden</string>
     <string name="add_new_product">Add new product</string>
@@ -32,4 +33,8 @@
     <string name="content_description_gmail">Sign in with Gmail</string>
     <string name="content_description_apple">Sign in with Apple</string>
     <string name="_continue">Continue</string>
+    <string name="auth_error_msg_empty_last_name">Please enter last name</string>
+    <string name="auth_error_msg_empty_login">Please enter login</string>
+    <string name="auth_error_msg_empty_phone">Please enter phone number</string>
+    <string name="auth_error_msg_empty_gender">Please enter gender</string>
 </resources>
