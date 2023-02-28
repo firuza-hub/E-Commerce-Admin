@@ -1,8 +1,9 @@
 package az.red.e_commerce_admin_android.data.remote
 
 import android.util.Log
-import az.red.e_commerce_admin_android.utils.AuthTracker
+import az.red.e_commerce_admin_android.utils.EventBus
 import az.red.e_commerce_admin_android.utils.SessionManager
+import az.red.e_commerce_admin_android.utils.enums.AuthenticationStatus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.Headers.Companion.toHeaders
@@ -26,7 +27,7 @@ class HeaderInterceptor(private val sessionManager: SessionManager) : Intercepto
             val response = chain.proceed(request.headers(headers.toHeaders()).build())
             if (response.code == 401) {
                 sessionManager.removeAuthToken()
-                GlobalScope.launch { AuthTracker.triggerLogout()}
+                GlobalScope.launch { EventBus.publish(AuthenticationStatus.UNAUTHENTICATED)}
             }
             return response
         } catch (ex: java.lang.Exception) {
