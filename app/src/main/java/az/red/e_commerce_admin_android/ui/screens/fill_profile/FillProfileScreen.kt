@@ -176,7 +176,6 @@ fun FillProfileCustomerInputContainer(
         StringTextFieldWithTrailingIcon(
             onValueChange = onDateOfBirthChange,
             value = fillProfileState.dateOfBirth,
-            label = "Date of birth",
             trailingIcon = R.drawable.ic_date
         )
 

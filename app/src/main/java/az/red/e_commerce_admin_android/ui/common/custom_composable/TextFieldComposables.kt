@@ -382,7 +382,6 @@ fun StringTextFieldWithTrailingIcon(
     modifier: Modifier = Modifier,
     value: String = "",
     onValueChange: (String) -> Unit,
-    label: String,
     trailingIcon: Int,
     imeAction: ImeAction = ImeAction.Next
 ) {
@@ -437,7 +436,6 @@ fun StringTextFieldWithTrailingIcon(
             pickedDate = it
         }
     }
-
 
 }
 
