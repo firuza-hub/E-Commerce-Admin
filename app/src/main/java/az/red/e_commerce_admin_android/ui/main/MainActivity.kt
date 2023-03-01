@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import az.red.e_commerce_admin_android.ui.navigation.root.RootNavigationGraph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.BottomNavigationContainer
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileViewModel
+import az.red.e_commerce_admin_android.ui.screens.fill_profile.FillProfile
 import az.red.e_commerce_admin_android.ui.themes.AppTheme
 import az.red.e_commerce_admin_android.ui.themes.darkColors
 import org.koin.android.ext.android.inject
@@ -43,6 +44,7 @@ class MainActivity : ComponentActivity() {
                             .background(CustomTheme.colors.background)
                             .fillMaxSize()
                     ) {
+//                        FillProfile(navController = navController)
                         RootNavigationGraph(navController = navController)
                     }
                 }
