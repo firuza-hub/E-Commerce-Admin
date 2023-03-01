@@ -11,15 +11,17 @@ val TextLight = Color(0xFF000000)
 val BtnTextLight = Color(0xFFFFFFFF)
 val BtnTextDark = Color(0xFF000000)
 val TextDark = Color(0xFFFFFFFF)
-val AccentCarrot =  Color(parseColor("#FF725E"))
-val ButtonTextWhite =  Color(parseColor("#F2F2F2"))
-val InputCardBorderLight =  Color(parseColor("#CFCFCF"))
-val InputCardBorderDark =  Color(parseColor("#233447"))
-val InputCardBackgroundDark =  Color(parseColor("#16212D"))
-val InputCardBackgroundLight =  Color(parseColor("#FFFFFFFF"))
+val AccentCarrot = Color(parseColor("#FF725E"))
+val ButtonTextWhite = Color(parseColor("#F2F2F2"))
+val InputCardBorderLight = Color(parseColor("#CFCFCF"))
+val InputCardBorderDark = Color(parseColor("#233447"))
+val InputCardBackgroundDark = Color(parseColor("#16212D"))
+val InputCardBackgroundLight = Color(parseColor("#FFFFFFFF"))
 val InputHintColorLight = Color(parseColor("#B7B7B7"))
-val InputHintColorDark=  Color(parseColor("#233447"))
-val BackgroundDark=  Color(parseColor("#131C26"))
+val InputHintColorDark = Color(parseColor("#233447"))
+val BackgroundDark = Color(parseColor("#131C26"))
+val ImageCardBackgroundLight = Color(parseColor("#1A1A262C"))
+val ImageCardBackgroundDark = Color(parseColor("#233447"))
 
 class CustomColors(
     primary: Color,
@@ -40,6 +42,7 @@ class CustomColors(
     isLight: Boolean,
     darkBtnBackground: Color,
     textReverse: Color,
+    imageCardBackground: Color
 ) {
     var primary by mutableStateOf(primary)
         private set
@@ -86,6 +89,8 @@ class CustomColors(
         private set
     var textReverse by mutableStateOf(textReverse)
         private set
+    var imageCardBackground by mutableStateOf(imageCardBackground)
+        private set
 
     fun copy(
         primary: Color = this.primary,
@@ -106,6 +111,7 @@ class CustomColors(
         btnTextDisabled: Color = this.btnTextDisabled,
         darkBtnBackground: Color = this.darkBtnBackground,
         textReverse: Color = this.textReverse,
+        imageCardBackground: Color = this.imageCardBackground
     ) = CustomColors(
         primary = primary,
         text = text,
@@ -125,6 +131,7 @@ class CustomColors(
         btnTextDisabled = btnTextDisabled,
         darkBtnBackground = darkBtnBackground,
         textReverse = textReverse,
+        imageCardBackground = imageCardBackground
     )
 
     fun updateColorsFrom(other: CustomColors) {
@@ -146,6 +153,7 @@ class CustomColors(
         btnTextDisabled = other.btnTextDisabled
         darkBtnBackground = other.darkBtnBackground
         textReverse = other.textReverse
+        imageCardBackground = other.imageCardBackground
     }
 
 

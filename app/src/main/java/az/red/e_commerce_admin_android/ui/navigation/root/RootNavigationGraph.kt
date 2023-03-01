@@ -6,17 +6,25 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import az.red.e_commerce_admin_android.ui.navigation.auth.authNavGraph
 import az.red.e_commerce_admin_android.ui.navigation.main.bottomNavGraph
+import az.red.e_commerce_admin_android.ui.screens.bottomnav.create_product.CreateProduct
 
 @Composable
 fun RootNavigationGraph(navController: NavHostController) {
     NavHost(navController, route = Graph.ROOT, startDestination = Graph.AUTH) {
         authNavGraph(navController)
         bottomNavGraph(navController = navController)
+        composable(route = BottomNavigationScreens.CREATE_PRODUCT) {
+            CreateProduct(navController = navController)
+        }
     }
 }
 
-object Graph{
+object Graph {
     const val ROOT = "root_graph"
     const val MAIN = "main_graph"
     const val AUTH = "auth_graph"
+}
+
+object BottomNavigationScreens {
+    const val CREATE_PRODUCT = "create_product"
 }
