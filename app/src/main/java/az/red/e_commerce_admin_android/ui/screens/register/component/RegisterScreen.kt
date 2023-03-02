@@ -13,12 +13,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.ui.common.custom_composable.EmailTextField
-import az.red.e_commerce_admin_android.ui.common.custom_composable.PasswordTextField
-import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextField
+import az.red.e_commerce_admin_android.ui.common.custom_composable.*
 import az.red.e_commerce_admin_android.ui.screens.login.AuthButtonColors
 import az.red.e_commerce_admin_android.ui.screens.register.RegisterState
 import az.red.e_commerce_admin_android.ui.screens.register.RegisterUIEvent
@@ -204,7 +203,9 @@ fun InputSection(
                     id = it
                 )
             }
-                ?: state.errorState.loginErrorState.errorMessage
+                ?: state.errorState.loginErrorState.errorMessage,
+            leadingIcon = R.drawable.ic_user,
+            keyboardType = KeyboardType.Text
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -219,7 +220,9 @@ fun InputSection(
                     id = it
                 )
             }
-                ?: state.errorState.firstNameErrorState.errorMessage
+                ?: state.errorState.firstNameErrorState.errorMessage,
+            leadingIcon = R.drawable.ic_user,
+            keyboardType = KeyboardType.Text
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -232,7 +235,9 @@ fun InputSection(
                     id = it
                 )
             }
-                ?: state.errorState.lastNameErrorState.errorMessage
+                ?: state.errorState.lastNameErrorState.errorMessage,
+            leadingIcon = R.drawable.ic_user,
+            keyboardType = KeyboardType.Text
         )
 
 

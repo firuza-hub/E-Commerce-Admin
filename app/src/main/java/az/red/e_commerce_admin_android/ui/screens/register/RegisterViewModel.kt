@@ -5,11 +5,9 @@ import androidx.lifecycle.viewModelScope
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.data.remote.auth.AuthRepository
 import az.red.e_commerce_admin_android.data.remote.auth.dto.request.LoginRequest
-import az.red.e_commerce_admin_android.data.remote.auth.dto.response.LoginResponse
 import az.red.e_commerce_admin_android.data.remote.auth.dto.response.RegisterResponse
 import az.red.e_commerce_admin_android.ui.common.state.ErrorState
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
-import az.red.e_commerce_admin_android.ui.screens.login.LoginErrorState
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.flow.Flow

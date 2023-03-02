@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.data.remote.user
 
+import az.red.e_commerce_admin_android.data.remote.user.dto.request.FillProfileRequest
 import az.red.e_commerce_admin_android.data.remote.user.dto.request.UpdatePasswordRequest
 import az.red.e_commerce_admin_android.data.remote.user.dto.request.UpdateUserRequest
 import az.red.e_commerce_admin_android.data.remote.user.dto.response.PasswordUpdateResponse
@@ -20,5 +21,9 @@ class UserRepositoryImpl(val service:UserService): UserRepository {
 
     override  fun updatePassword(dto: UpdatePasswordRequest): Flow<NetworkResult<PasswordUpdateResponse>> {
         return handleApi{service.updatePassword(dto)}
+    }
+
+    override fun fillProfile(dto: FillProfileRequest): Flow<NetworkResult<UserResponse>> {
+        return handleApi { service.fillProfile(dto) }
     }
 }

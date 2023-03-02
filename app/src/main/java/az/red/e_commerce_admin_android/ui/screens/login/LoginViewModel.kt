@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val authRepo: AuthRepository
+    private val authRepo: AuthRepository,
 ) : BaseViewModel() {
 
 

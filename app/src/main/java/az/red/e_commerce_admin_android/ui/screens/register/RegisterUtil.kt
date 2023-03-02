@@ -21,7 +21,28 @@ val lastNameEmptyErrorState = ErrorState(
     hasError = true,
     errorMessageStringResource = R.string.auth_error_msg_empty_last_name
 )
+
 val loginNameEmptyErrorState = ErrorState(
     hasError = true,
     errorMessageStringResource = R.string.auth_error_msg_empty_login
+)
+
+val fullNameEmptyErrorState = ErrorState(
+    hasError = true,
+    errorMessageStringResource = R.string.user_error_msg_empty_full_name
+)
+
+val nickNameEmptyErrorState = ErrorState(
+    hasError = true,
+    errorMessageStringResource = R.string.user_error_msg_empty_nick_name
+)
+
+val phoneNumberEmptyErrorState = ErrorState(
+    hasError = true,
+    errorMessageStringResource = R.string.auth_error_msg_empty_phone
+)
+
+val genderEmptyErrorState = ErrorState(
+    hasError = true,
+    errorMessageStringResource = R.string.auth_error_msg_empty_gender
 )
