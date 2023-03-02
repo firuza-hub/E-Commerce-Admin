@@ -1,5 +1,7 @@
 package az.red.e_commerce_admin_android.ui.common.custom_composable
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -16,6 +18,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -30,15 +35,19 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.noRippleClickable
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import az.red.e_commerce_admin_android.utils.PhoneVisualTransformation
+import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.datetime.date.datepicker
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -288,7 +297,9 @@ fun StringTextField(
     label: String,
     isError: Boolean = false,
     errorText: String = "",
-    imeAction: ImeAction = ImeAction.Next
+    leadingIcon: Int,
+    keyboardType: KeyboardType,
+    imeAction: ImeAction = ImeAction.Next,
 ) {
     CustomTextField(
         modifier = modifier,
@@ -301,7 +312,7 @@ fun StringTextField(
             )
         },
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
+            keyboardType = keyboardType,
             imeAction = imeAction,
         ),
         hasError = isError,
@@ -312,10 +323,119 @@ fun StringTextField(
         },
         leadingIcon = {
             Icon(
-                painter = painterResource(id = R.drawable.ic_user),
-                tint = CustomTheme.colors.inputIconHint,
+                painter = painterResource(id = leadingIcon),
+                tint = Color.Unspecified,
                 contentDescription = "User Icon"
             )
-        })
+        }
+    )
+}
+
+@Composable
+fun StringTextFieldPhoneNumber(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    isError: Boolean = false,
+    errorText: String = "",
+    leadingIcon: Int,
+    keyboardType: KeyboardType,
+    imeAction: ImeAction = ImeAction.Next,
+    mask: String = "+380111111111",
+    maskNumber: Char = '1',
+) {
+    CustomTextField(
+        modifier = modifier,
+        value = value,
+        onValueChange = onValueChange,
+        placeholder = {
+            Text(
+                text = label, fontSize = 18.sp,
+                color = CustomTheme.colors.hintText
+            )
+        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            imeAction = imeAction,
+        ),
+        hasError = isError,
+        errorText = {
+            if (isError) {
+                ErrorTextInputField(text = errorText)
+            }
+        },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = leadingIcon),
+                tint = Color.Unspecified,
+                contentDescription = "UKR Flag Icon"
+            )
+        }, visualTransformation = PhoneVisualTransformation(mask, maskNumber)
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun StringTextFieldWithTrailingIcon(
+    modifier: Modifier = Modifier,
+    value: String = "",
+    onValueChange: (String) -> Unit,
+    trailingIcon: Int,
+    imeAction: ImeAction = ImeAction.Next
+) {
+
+    var pickedDate by remember {
+        mutableStateOf(LocalDate.now())
+    }
+
+    val formattedDate by remember {
+        derivedStateOf {
+            DateTimeFormatter
+                .ofPattern("dd.MM.yyyy")
+                .format(pickedDate)
+        }
+    }
+
+    val dateDialogState = rememberMaterialDialogState()
+    
+    OutlinedTextField(
+        modifier = modifier.height(47.dp).fillMaxWidth(),
+        value = formattedDate, 
+        onValueChange = onValueChange,
+        trailingIcon = {
+            Icon(
+                painter = painterResource(id = trailingIcon),
+                tint = CustomTheme.colors.inputIconHint,
+                contentDescription = "Date Icon",
+                modifier = Modifier.noRippleClickable {
+                    dateDialogState.show()
+                }
+            )
+        },
+        shape = RoundedCornerShape(8.dp),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = CustomTheme.colors.inputIconHint,
+            unfocusedBorderColor = CustomTheme.colors.btnTextDisabled),
+        keyboardOptions = KeyboardOptions(imeAction = imeAction),
+        readOnly = true
+    )
+
+    MaterialDialog(
+        dialogState = dateDialogState,
+        buttons = {
+            positiveButton(text = "Ok")
+            negativeButton(text = "Cancel")
+        }
+    ) {
+        datepicker(
+            initialDate = LocalDate.now(),
+            title = "Pick a date",
+        ) {
+            pickedDate = it
+        }
+    }
 
 }
+

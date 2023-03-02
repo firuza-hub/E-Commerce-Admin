@@ -9,3 +9,7 @@ sealed class BottomNavScreen(val title:String, val icon:Int, val screen_route:St
     object Cart: BottomNavScreen("Cart",R.drawable.ic_cart,"cart")
     object Profile: BottomNavScreen("Profile",R.drawable.ic_profile,"profile")
 }
+
+sealed class FillProfileScreen(val route:String) {
+    object FillProfile : FillProfileScreen("fill_profile")
+}
