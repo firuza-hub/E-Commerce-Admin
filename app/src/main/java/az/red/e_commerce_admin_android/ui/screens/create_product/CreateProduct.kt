@@ -1,10 +1,12 @@
-package az.red.e_commerce_admin_android.ui.screens.bottomnav.create_product
+package az.red.e_commerce_admin_android.ui.screens.create_product
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -13,19 +15,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.ui.screens.bottomnav.create_product.components.AddImageItem
-import az.red.e_commerce_admin_android.ui.screens.bottomnav.create_product.components.CustomSimpleTextField
+import az.red.e_commerce_admin_android.ui.screens.create_product.components.AddImageItem
+import az.red.e_commerce_admin_android.ui.screens.create_product.components.CustomSimpleTextField
+import az.red.e_commerce_admin_android.ui.screens.create_product.components.CustomTextView
 import az.red.e_commerce_admin_android.ui.screens.login.AuthButtonColors
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun CreateProduct(navController: NavController) {
+    SelectImageBottomSheet(navController)
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun MainContent(navController: NavController, bottomSheetState: ModalBottomSheetState) {
+    val scope = rememberCoroutineScope()
+
     val titleText = rememberSaveable { mutableStateOf(value = "") }
     val descriptionText = rememberSaveable { mutableStateOf(value = "") }
     val priceText = rememberSaveable { mutableStateOf(value = "") }
 
     Column {
-
         TopAppBar(
             elevation = 0.dp,
             title = {
@@ -47,7 +58,13 @@ fun CreateProduct(navController: NavController) {
                 }
             })
 
-        AddImageItem(modifier = Modifier.padding(start = 16.dp, top = 16.dp))
+        AddImageItem(modifier = Modifier
+            .padding(start = 16.dp, top = 16.dp)
+            .clickable {
+                scope.launch {
+                    if (bottomSheetState.isVisible) bottomSheetState.hide() else bottomSheetState.show()
+                }
+            })
 
         CustomSimpleTextField(
             modifier = Modifier
@@ -76,6 +93,23 @@ fun CreateProduct(navController: NavController) {
             }, hint = stringResource(id = R.string.price)
         )
 
+        CustomTextView(
+            text = "Brand",
+            R.drawable.ic_brand,
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp)
+        )
+
+        CustomTextView(
+            text = "Category",
+            R.drawable.ic_category,
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp)
+        )
+
+        CustomTextView(
+            text = "Subcategory", R.drawable.ic_sub_category,
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp)
+        )
+
         Button(
             modifier = Modifier
                 .fillMaxWidth()
@@ -91,5 +125,26 @@ fun CreateProduct(navController: NavController) {
                 style = CustomTheme.typography.nunitoBold18
             )
         }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun SelectImageBottomSheet(navController: NavController) {
+    val bottomSheetState =
+        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+
+    ModalBottomSheetLayout(
+        sheetState = bottomSheetState,
+        sheetContent = {
+            Column(modifier = Modifier.padding(12.dp)) {
+                Text(text = "Gallery")
+                Text(text = "Camera")
+            }
+        },
+        sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
+        sheetElevation = 12.dp
+    ) {
+        MainContent(navController, bottomSheetState)
     }
 }

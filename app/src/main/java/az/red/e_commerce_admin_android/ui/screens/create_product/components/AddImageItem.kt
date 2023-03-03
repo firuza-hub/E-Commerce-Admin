@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.ui.screens.bottomnav.create_product.components
+package az.red.e_commerce_admin_android.ui.screens.create_product.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

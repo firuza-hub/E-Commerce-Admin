@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.ui.screens.bottomnav.create_product.components
+package az.red.e_commerce_admin_android.ui.screens.create_product.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +29,8 @@ fun CustomSimpleTextField(
             focusedBorderColor = Color.Black,
             unfocusedBorderColor = CustomTheme.colors.imageCardBackground
         ),
-        placeholder = { Text(hint, color = CustomTheme.colors.hintText) })
+        placeholder = { Text(hint, color = CustomTheme.colors.hintText) },
+        singleLine = true
+    )
 }
 
