@@ -11,7 +11,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import az.red.e_commerce_admin_android.ui.navigation.root.BottomNavigationScreens
+import az.red.e_commerce_admin_android.ui.navigation.main.DetailScreen
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.components.*
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
@@ -52,7 +52,8 @@ fun ProfileScreen(
     }
 
     //Profile Buttons clicks
-    val onAddNewProductClick: () -> Unit = { navController.navigate(BottomNavigationScreens.CREATE_PRODUCT)}
+    val onAddNewProductClick: () -> Unit =
+        { navController.navigate(DetailScreen.CreateProduct.route) }
     val onMyProductsClick: () -> Unit = {
         navController.navigate(route = Graph.MAIN)
     }
