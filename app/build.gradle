@@ -63,14 +63,14 @@ dependencies {
     implementation "io.insert-koin:koin-android:3.2.0"
     implementation "io.insert-koin:koin-androidx-compose:3.2.0"
 
-    //Network
+    // Network
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.5'
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.5"
 
 
-    //Compose
+    // Compose
     implementation "androidx.compose.compiler:compiler:1.3.1"
     implementation "androidx.compose.ui:ui-tooling-preview:1.3.1"
     implementation "androidx.compose.material:material:1.3.1"
@@ -83,14 +83,14 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.0.0")
 
-    //Paging
+    // Paging
     implementation "androidx.paging:paging-runtime:3.1.1"
     implementation("androidx.paging:paging-compose:1.0.0-alpha18")
 
-    //Coil
+    // Coil
     implementation("io.coil-kt:coil-compose:2.2.2")
 
-    //DateTime
+    // DateTime
     implementation "io.github.vanpra.compose-material-dialogs:datetime:0.9.0"
 
 }
