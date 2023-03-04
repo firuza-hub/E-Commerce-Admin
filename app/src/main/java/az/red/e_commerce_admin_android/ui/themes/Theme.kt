@@ -9,7 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 
 
-
 fun lightColors() = CustomColors(
     primary = Color(0xFFE67E22),
     text = TextLight,
@@ -28,7 +27,8 @@ fun lightColors() = CustomColors(
     btnText = BtnTextLight,
     btnTextDisabled = InputCardBorderLight,
     darkBtnBackground = InputCardBackgroundDark,
-    textReverse = TextDark
+    textReverse = TextDark,
+    imageCardBackground = ImageCardBackgroundLight
 )
 
 fun darkColors() = CustomColors(
@@ -49,7 +49,8 @@ fun darkColors() = CustomColors(
     btnText = BtnTextDark,
     btnTextDisabled = InputCardBorderLight,
     darkBtnBackground = InputHintColorDark,
-    textReverse = TextLight)
+    textReverse = TextLight, imageCardBackground = ImageCardBackgroundDark
+)
 
 @Composable
 fun AppTheme(

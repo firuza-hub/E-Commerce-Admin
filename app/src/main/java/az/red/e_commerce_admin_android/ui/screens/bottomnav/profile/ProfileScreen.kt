@@ -1,26 +1,20 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.profile
 
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import az.red.e_commerce_admin_android.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.sp
-import az.red.e_commerce_admin_android.utils.SessionManager
-import org.koin.androidx.compose.inject
 import androidx.compose.ui.composed
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import az.red.e_commerce_admin_android.ui.navigation.main.DetailScreen
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.components.*
-import az.red.e_commerce_admin_android.ui.themes.AppTheme
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
-import az.red.e_commerce_admin_android.ui.themes.darkColors
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -58,7 +52,8 @@ fun ProfileScreen(
     }
 
     //Profile Buttons clicks
-    val onAddNewProductClick: () -> Unit = {}
+    val onAddNewProductClick: () -> Unit =
+        { navController.navigate(DetailScreen.CreateProduct.route) }
     val onMyProductsClick: () -> Unit = {
         navController.navigate(route = Graph.MAIN)
     }

@@ -37,6 +37,9 @@
     <string name="auth_error_msg_empty_login">Please enter login</string>
     <string name="auth_error_msg_empty_phone">Please enter phone number</string>
     <string name="auth_error_msg_empty_gender">Please enter gender</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
     <string name="user_error_msg_empty_full_name">Please enter full name</string>
     <string name="user_error_msg_empty_nick_name">Please enter nickname</string>
     <string name="user_error_msg_empty_gender">Please enter gender</string>

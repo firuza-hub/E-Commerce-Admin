@@ -34,4 +34,15 @@
     <string name="deactivate">Deaktiv edin</string>
     <string name="auth_error_msg_empty_first_name">Adınızı daxil edin</string>
     <string name="auth_error_msg_empty_last_name">Soyadınızı daxil edin</string>
+    <string name="auth_error_msg_empty_login">Zəhmət olmasa giriş daxil edin</string>
+    <string name="auth_error_msg_empty_phone">Zəhmət olmasa telefon nömrəsini daxil edin</string>
+    <string name="auth_error_msg_empty_gender">Zəhmət olmasa cinsini daxil edin</string>
+    <string name="title">Başlıq</string>
+    <string name="description">Əlavə</string>
+    <string name="price">Qiymət</string>
+    <string name="user_error_msg_empty_full_name">Please enter full name</string>
+    <string name="user_error_msg_empty_nick_name">Please enter nickname</string>
+    <string name="user_error_msg_empty_gender">Please enter gender</string>
+    <string name="btn_continue">Continue</string>
+    <string name="skip">Skip</string>
 </resources>
