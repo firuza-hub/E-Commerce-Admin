@@ -6,7 +6,6 @@ import az.red.e_commerce_admin_android.data.remote.auth.dto.response.LoginRespon
 import az.red.e_commerce_admin_android.data.remote.auth.dto.response.RegisterResponse
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 interface AuthRepository {
      fun login(loginData: LoginRequest): Flow<NetworkResult<LoginResponse>>

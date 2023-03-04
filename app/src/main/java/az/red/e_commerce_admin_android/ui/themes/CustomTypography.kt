@@ -31,36 +31,36 @@ data class CustomTypography(
     ),
 
 
-    val nunitoNormal12 : TextStyle = TextStyle(
+    val nunitoNormal12: TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     ),
 
-    val nunitoNormal16 : TextStyle = TextStyle(
+    val nunitoNormal16: TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
 
-    val nunitoNormal18 : TextStyle = TextStyle(
+    val nunitoNormal18: TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp
     ),
-    val nunitoBold14 : TextStyle = TextStyle(
+    val nunitoBold14: TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp
     ),
 
-    val montSerratSemiBold : TextStyle = TextStyle(
+    val montSerratSemiBold: TextStyle = TextStyle(
         fontFamily = montSerratFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp
     ),
 
-    val nunitoBold18 : TextStyle = TextStyle(
+    val nunitoBold18: TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp

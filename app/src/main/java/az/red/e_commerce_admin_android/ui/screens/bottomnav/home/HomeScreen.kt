@@ -2,7 +2,6 @@ package az.red.e_commerce_admin_android.ui.screens.bottomnav.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,20 +17,21 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
-    productListViewModel: ProductListViewModel = koinViewModel()
+    navController: NavController, productListViewModel: ProductListViewModel = koinViewModel()
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
     ) {
         HomeTopAppBar(navController)
         //Bottom 82.dp padding(BottomNav height size) -> LazyColumn last item didn't show because of BottomNav
         val items = productListViewModel.data.collectAsLazyPagingItems()
 
 
-        if (items.loadState.append == LoadState.Loading || items.loadState.prepend == LoadState.Loading || items.loadState.refresh == LoadState.Loading)
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth().height(2.dp), color = CustomTheme.colors.accent )
+        if (items.loadState.append == LoadState.Loading || items.loadState.prepend == LoadState.Loading || items.loadState.refresh == LoadState.Loading) LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp), color = CustomTheme.colors.accent
+        )
 
         LazyColumn(
             modifier = Modifier

@@ -65,14 +65,12 @@ fun PasswordTextField(
     var isPasswordVisible by remember {
         mutableStateOf(false)
     }
-    CustomTextField(
-        modifier = modifier,
+    CustomTextField(modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         placeholder = {
             Text(
-                text = label, fontSize = 18.sp,
-                color = CustomTheme.colors.hintText
+                text = label, fontSize = 18.sp, color = CustomTheme.colors.hintText
             )
         },
         trailingIcon = {
@@ -103,8 +101,7 @@ fun PasswordTextField(
         },
         visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = imeAction
+            keyboardType = KeyboardType.Password, imeAction = imeAction
         ),
         keyboardActions = KeyboardActions(onDone = {
             keyboardController?.hide()
@@ -121,8 +118,7 @@ fun PasswordTextField(
                 tint = CustomTheme.colors.inputIconHint,
                 contentDescription = "Email Icon"
             )
-        }
-    )
+        })
 }
 
 @Composable
@@ -135,14 +131,12 @@ fun EmailTextField(
     errorText: String = "",
     imeAction: ImeAction = ImeAction.Next
 ) {
-    CustomTextField(
-        modifier = modifier,
+    CustomTextField(modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         placeholder = {
             Text(
-                text = label, fontSize = 18.sp,
-                color = CustomTheme.colors.hintText
+                text = label, fontSize = 18.sp, color = CustomTheme.colors.hintText
             )
         },
         keyboardOptions = KeyboardOptions(
@@ -168,8 +162,7 @@ fun EmailTextField(
 
 @Composable
 fun ErrorTextInputField(
-    modifier: Modifier = Modifier,
-    text: String
+    modifier: Modifier = Modifier, text: String
 ) {
     Text(
         modifier = modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -184,30 +177,26 @@ private fun CustomTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    leadingIcon: @Composable() (() -> Unit)? = null,
-    trailingIcon: @Composable() (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions? = null,
     keyboardActions: KeyboardActions? = null,
-    placeholder: @Composable() (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
     hasError: Boolean,
-    errorText: @Composable() (() -> Unit)? = null,
+    errorText: @Composable (() -> Unit)? = null,
 ) {
     var errorBorderWidth by remember { mutableStateOf(1.dp) }
     var errorVisibilityState by remember { mutableStateOf(false) }
     errorVisibilityState = hasError
-    BasicTextField(
-        modifier = modifier
-            .background(CustomTheme.colors.cardBackground)
-            .onFocusChanged {
-                errorBorderWidth =
-                    if (it.hasFocus) 2.dp else 1.dp
-            }
-            .border(
-                width = 1.dp,
-                shape = RoundedCornerShape(8.dp),
-                color = CustomTheme.colors.cardBorder
-            ),
+    BasicTextField(modifier = modifier
+        .background(CustomTheme.colors.cardBackground)
+        .onFocusChanged {
+            errorBorderWidth = if (it.hasFocus) 2.dp else 1.dp
+        }
+        .border(
+            width = 1.dp, shape = RoundedCornerShape(8.dp), color = CustomTheme.colors.cardBorder
+        ),
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
@@ -215,15 +204,13 @@ private fun CustomTextField(
         decorationBox = { innerTextField ->
             Column(modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier.height(44.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier.height(44.dp), verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (leadingIcon != null) Column(modifier = Modifier.padding(8.dp)) { leadingIcon() }
                     Box(
                         Modifier.weight(1f)
                     ) {
-                        if (value.isEmpty() && placeholder != null)
-                            placeholder()
+                        if (value.isEmpty() && placeholder != null) placeholder()
 
                         innerTextField()
                     }
@@ -231,9 +218,7 @@ private fun CustomTextField(
                 }
 
                 AnimatedVisibility(
-                    visible = errorVisibilityState,
-                    enter = fadeIn(),
-                    exit = fadeOut()
+                    visible = errorVisibilityState, enter = fadeIn(), exit = fadeOut()
                 ) {
                     Row(
                         Modifier
@@ -251,43 +236,39 @@ private fun CustomTextField(
     )
 }
 
-fun Modifier.bottomBorder(strokeWidth: Dp, color: Color) = composed(
-    factory = {
-        val density = LocalDensity.current
-        val strokeWidthPx = density.run { strokeWidth.toPx() }
+fun Modifier.bottomBorder(strokeWidth: Dp, color: Color) = composed(factory = {
+    val density = LocalDensity.current
+    val strokeWidthPx = density.run { strokeWidth.toPx() }
 
-        Modifier.drawBehind {
-            val width = size.width
-            val height = size.height - strokeWidthPx / 2
+    Modifier.drawBehind {
+        val width = size.width
+        val height = size.height - strokeWidthPx / 2
 
-            drawLine(
-                color = color,
-                start = Offset(x = 0f, y = height),
-                end = Offset(x = width, y = height),
-                strokeWidth = strokeWidthPx
-            )
-        }
+        drawLine(
+            color = color,
+            start = Offset(x = 0f, y = height),
+            end = Offset(x = width, y = height),
+            strokeWidth = strokeWidthPx
+        )
     }
-)
+})
 
-fun Modifier.bottomTop(strokeWidth: Dp, color: Color) = composed(
-    factory = {
-        val density = LocalDensity.current
-        val strokeWidthPx = density.run { strokeWidth.toPx() }
+fun Modifier.bottomTop(strokeWidth: Dp, color: Color) = composed(factory = {
+    val density = LocalDensity.current
+    val strokeWidthPx = density.run { strokeWidth.toPx() }
 
-        Modifier.drawBehind {
-            val width = size.width
+    Modifier.drawBehind {
+        val width = size.width
 
-            drawLine(
-                color = color,
-                start = Offset(x = 0f, y = strokeWidthPx),
-                end = Offset(x = width, y = strokeWidthPx),
-                strokeWidth = strokeWidthPx,
-                pathEffect = null
-            )
-        }
+        drawLine(
+            color = color,
+            start = Offset(x = 0f, y = strokeWidthPx),
+            end = Offset(x = width, y = strokeWidthPx),
+            strokeWidth = strokeWidthPx,
+            pathEffect = null
+        )
     }
-)
+})
 
 @Composable
 fun StringTextField(
@@ -301,14 +282,12 @@ fun StringTextField(
     keyboardType: KeyboardType,
     imeAction: ImeAction = ImeAction.Next,
 ) {
-    CustomTextField(
-        modifier = modifier,
+    CustomTextField(modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         placeholder = {
             Text(
-                text = label, fontSize = 18.sp,
-                color = CustomTheme.colors.hintText
+                text = label, fontSize = 18.sp, color = CustomTheme.colors.hintText
             )
         },
         keyboardOptions = KeyboardOptions(
@@ -327,8 +306,7 @@ fun StringTextField(
                 tint = Color.Unspecified,
                 contentDescription = "User Icon"
             )
-        }
-    )
+        })
 }
 
 @Composable
@@ -345,14 +323,12 @@ fun StringTextFieldPhoneNumber(
     mask: String = "+380111111111",
     maskNumber: Char = '1',
 ) {
-    CustomTextField(
-        modifier = modifier,
+    CustomTextField(modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         placeholder = {
             Text(
-                text = label, fontSize = 18.sp,
-                color = CustomTheme.colors.hintText
+                text = label, fontSize = 18.sp, color = CustomTheme.colors.hintText
             )
         },
         keyboardOptions = KeyboardOptions(
@@ -371,7 +347,8 @@ fun StringTextFieldPhoneNumber(
                 tint = Color.Unspecified,
                 contentDescription = "UKR Flag Icon"
             )
-        }, visualTransformation = PhoneVisualTransformation(mask, maskNumber)
+        },
+        visualTransformation = PhoneVisualTransformation(mask, maskNumber)
     )
 }
 
@@ -392,43 +369,39 @@ fun StringTextFieldWithTrailingIcon(
 
     val formattedDate by remember {
         derivedStateOf {
-            DateTimeFormatter
-                .ofPattern("dd.MM.yyyy")
-                .format(pickedDate)
+            DateTimeFormatter.ofPattern("dd.MM.yyyy").format(pickedDate)
         }
     }
 
     val dateDialogState = rememberMaterialDialogState()
-    
+
     OutlinedTextField(
-        modifier = modifier.height(47.dp).fillMaxWidth(),
-        value = formattedDate, 
+        modifier = modifier
+            .height(47.dp)
+            .fillMaxWidth(),
+        value = formattedDate,
         onValueChange = onValueChange,
         trailingIcon = {
-            Icon(
-                painter = painterResource(id = trailingIcon),
+            Icon(painter = painterResource(id = trailingIcon),
                 tint = CustomTheme.colors.inputIconHint,
                 contentDescription = "Date Icon",
                 modifier = Modifier.noRippleClickable {
                     dateDialogState.show()
-                }
-            )
+                })
         },
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = CustomTheme.colors.inputIconHint,
-            unfocusedBorderColor = CustomTheme.colors.btnTextDisabled),
+            unfocusedBorderColor = CustomTheme.colors.btnTextDisabled
+        ),
         keyboardOptions = KeyboardOptions(imeAction = imeAction),
         readOnly = true
     )
 
-    MaterialDialog(
-        dialogState = dateDialogState,
-        buttons = {
-            positiveButton(text = "Ok")
-            negativeButton(text = "Cancel")
-        }
-    ) {
+    MaterialDialog(dialogState = dateDialogState, buttons = {
+        positiveButton(text = "Ok")
+        negativeButton(text = "Cancel")
+    }) {
         datepicker(
             initialDate = LocalDate.now(),
             title = "Pick a date",

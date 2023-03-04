@@ -118,7 +118,7 @@ fun RegisterScreen(
                 .height(45.dp)
                 .clip(RoundedCornerShape(28.dp)),
             colors = AuthButtonColors(),
-            onClick = { viewModel.onUiEvent(RegisterUIEvent.Submit)},
+            onClick = { viewModel.onUiEvent(RegisterUIEvent.Submit) },
             enabled = true
         ) {
             Text(
@@ -170,7 +170,11 @@ fun InputSection(
             onValueChange = { onEmailChange(it) },
             label = stringResource(id = R.string.email),
             isError = state.errorState.emailErrorState.hasError,
-            errorText = state.errorState.emailErrorState.errorMessageStringResource?.let { stringResource(id = it) }
+            errorText = state.errorState.emailErrorState.errorMessageStringResource?.let {
+                stringResource(
+                    id = it
+                )
+            }
                 ?: state.errorState.emailErrorState.errorMessage
         )
 

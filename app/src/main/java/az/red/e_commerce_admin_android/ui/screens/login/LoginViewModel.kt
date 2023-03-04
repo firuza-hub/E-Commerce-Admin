@@ -17,7 +17,6 @@ class LoginViewModel(
     private val authRepo: AuthRepository,
 ) : BaseViewModel() {
 
-
     val isLoggedIn = MutableStateFlow(false)
     val loginState = MutableStateFlow(LoginState.NULL)
 
@@ -76,7 +75,8 @@ class LoginViewModel(
                         else
                             emailOrMobileEmptyErrorState
                     ),
-                    btnEnabled = loginState.value.password.trim().isNotEmpty() && loginUiEvent.inputValue.trim().isNotEmpty()
+                    btnEnabled = loginState.value.password.trim()
+                        .isNotEmpty() && loginUiEvent.inputValue.trim().isNotEmpty()
                 )
             }
 
@@ -90,7 +90,8 @@ class LoginViewModel(
                         else
                             passwordEmptyErrorState
                     ),
-                    btnEnabled = loginState.value.email.trim().isNotEmpty() && loginUiEvent.inputValue.trim().isNotEmpty()
+                    btnEnabled = loginState.value.email.trim()
+                        .isNotEmpty() && loginUiEvent.inputValue.trim().isNotEmpty()
                 )
             }
 
@@ -109,22 +110,26 @@ class LoginViewModel(
         }
     }
 
-    private fun handleErrorResponse(data:LoginResponse){
-        if(data.password != null && data.password.isNotEmpty()){
+    private fun handleErrorResponse(data: LoginResponse) {
+        if (data.password != null && data.password.isNotEmpty()) {
             loginState.value = loginState.value.copy(
                 errorState = LoginErrorState(
                     passwordErrorState = ErrorState(hasError = true, errorMessage = data.password)
                 )
             )
         }
-        if(data.loginOrEmail != null && data.loginOrEmail.isNotEmpty()){
+        if (data.loginOrEmail != null && data.loginOrEmail.isNotEmpty()) {
             loginState.value = loginState.value.copy(
                 errorState = LoginErrorState(
-                    emailOrMobileErrorState = ErrorState(hasError = true, errorMessage = data.loginOrEmail)
+                    emailOrMobileErrorState = ErrorState(
+                        hasError = true,
+                        errorMessage = data.loginOrEmail
+                    )
                 )
             )
         }
     }
+
     private fun validateInputs(): Boolean {
         val emailOrMobileString = loginState.value.email.trim()
         val passwordString = loginState.value.password

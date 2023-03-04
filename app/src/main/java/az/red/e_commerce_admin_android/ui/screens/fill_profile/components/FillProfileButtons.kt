@@ -27,16 +27,22 @@ fun FillProfileButtons(onContinueClick: () -> Unit, onSkipClick: () -> Unit) {
     ) {
 
         Button(
-            onClick = { onContinueClick() }, colors = ButtonDefaults.buttonColors(CustomTheme.colors.text),
+            onClick = { onContinueClick() },
+            colors = ButtonDefaults.buttonColors(CustomTheme.colors.text),
             border = BorderStroke(
                 1.dp,
-                color =  CustomTheme.colors.cardBorder
+                color = CustomTheme.colors.cardBorder
             ),
-            shape = RoundedCornerShape(28.dp),modifier = Modifier
+            shape = RoundedCornerShape(28.dp),
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(42.dp)
         ) {
-            Text(text = stringResource(R.string.btn_continue), style = CustomTheme.typography.nunitoNormal18, color = CustomTheme.colors.cardBackground)
+            Text(
+                text = stringResource(R.string.btn_continue),
+                style = CustomTheme.typography.nunitoNormal18,
+                color = CustomTheme.colors.cardBackground
+            )
         }
 
         OutlinedButton(
@@ -44,7 +50,7 @@ fun FillProfileButtons(onContinueClick: () -> Unit, onSkipClick: () -> Unit) {
             colors = ButtonDefaults.buttonColors(CustomTheme.colors.cardBackground),
             border = BorderStroke(
                 1.dp,
-                color =  CustomTheme.colors.cardBorder
+                color = CustomTheme.colors.cardBorder
             ),
             modifier = Modifier
                 .fillMaxWidth()

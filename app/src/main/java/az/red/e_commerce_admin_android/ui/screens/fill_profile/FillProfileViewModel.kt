@@ -34,7 +34,7 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
                         val data = networkResult.data
                         fillProfileState.value = fillProfileState.value.copy(
                             "${data!!.firstName} ${data.lastName}",
-                            data.login,data.email
+                            data.login, data.email
                         )
                     }
                     is NetworkResult.Empty -> Log.i("GET_CURRENT_USER_REQUEST", "Empty")
@@ -52,7 +52,7 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
         }
     }
 
-    private fun updateCurrentUser(dto:FillProfileRequest) {
+    private fun updateCurrentUser(dto: FillProfileRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             triggerEvent(UIEvent.Message("Success!"))
             repository.fillProfile(dto).collect { networkResult ->
@@ -78,10 +78,13 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
     }
 
     private fun handleErrorResponse(data: UserResponse) {
-        if (data.firstName != null && data.firstName.isNotEmpty() && data.lastName !=null && data.lastName.isNotEmpty()) {
+        if (data.firstName != null && data.firstName.isNotEmpty() && data.lastName != null && data.lastName.isNotEmpty()) {
             fillProfileState.value = fillProfileState.value.copy(
                 errorState = fillProfileState.value.errorState.copy(
-                    fullNameErrorState = ErrorState(hasError = true, errorMessage = "${data.firstName} ${data.lastName}")
+                    fullNameErrorState = ErrorState(
+                        hasError = true,
+                        errorMessage = "${data.firstName} ${data.lastName}"
+                    )
                 )
             )
         }
@@ -103,17 +106,23 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
             )
         }
 
-            if (data.birthdate != null && data.birthdate.isNotEmpty()) {
-                fillProfileState.value = fillProfileState.value.copy(
+        if (data.birthdate != null && data.birthdate.isNotEmpty()) {
+            fillProfileState.value = fillProfileState.value.copy(
                 errorState = fillProfileState.value.errorState.copy(
-                    dateOfBirthErrorState = ErrorState(hasError = true, errorMessage = data.birthdate)
+                    dateOfBirthErrorState = ErrorState(
+                        hasError = true,
+                        errorMessage = data.birthdate
+                    )
                 )
             )
         }
         if (data.telephone != null && data.telephone.isNotEmpty()) {
             fillProfileState.value = fillProfileState.value.copy(
                 errorState = fillProfileState.value.errorState.copy(
-                    phoneNumberErrorState = ErrorState(hasError = true, errorMessage = data.telephone)
+                    phoneNumberErrorState = ErrorState(
+                        hasError = true,
+                        errorMessage = data.telephone
+                    )
                 )
             )
         }
@@ -125,6 +134,7 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
             )
         }
     }
+
     fun onUiEvent(fillProfileUIEvent: FillProfileUIEvent) {
         when (fillProfileUIEvent) {
             is FillProfileUIEvent.FullNameChanged -> {
@@ -210,7 +220,7 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
                         fillProfileState.value.nickName,
                         fillProfileState.value.email,
                         fillProfileState.value.dateOfBirth,
-                        "+380"+fillProfileState.value.phoneNumber,
+                        "+380" + fillProfileState.value.phoneNumber,
                         fillProfileState.value.gender,
                         fillProfileState.value.avatarUrl
                     )

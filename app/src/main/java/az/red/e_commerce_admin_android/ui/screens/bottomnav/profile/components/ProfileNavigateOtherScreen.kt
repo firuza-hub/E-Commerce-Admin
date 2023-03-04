@@ -1,6 +1,5 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -11,10 +10,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.noRippleClickable
-import az.red.e_commerce_admin_android.ui.themes.AccentCarrot
-import az.red.e_commerce_admin_android.ui.themes.BackgroundDark
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
-import az.red.e_commerce_admin_android.ui.themes.InputCardBackgroundDark
 
 @Composable
 fun ProfileNavigateOtherScreen(

@@ -6,7 +6,8 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
-class PhoneVisualTransformation(val mask: String, val maskNumber: Char) : VisualTransformation {
+class PhoneVisualTransformation(private val mask: String, private val maskNumber: Char) :
+    VisualTransformation {
 
     private val maxLength = mask.count { it == maskNumber }
 

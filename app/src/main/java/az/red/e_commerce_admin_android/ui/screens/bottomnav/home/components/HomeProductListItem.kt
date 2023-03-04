@@ -9,15 +9,12 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductListItemResponse
@@ -55,10 +52,7 @@ fun ProductListImage(imgUrl: String) {
     ) {
 
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imgUrl)
-                .crossfade(true)
-                .build(),
+            model = ImageRequest.Builder(LocalContext.current).data(imgUrl).crossfade(true).build(),
             modifier = Modifier.fillMaxSize(),
             contentDescription = "productListItemImage",
             contentScale = ContentScale.Fit
@@ -124,15 +118,11 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
             }
 
             Button(
-                modifier = Modifier
-                    .weight(1f),
-                onClick = {
+                modifier = Modifier.weight(1f), onClick = {
                     //your onclick code
-                },
-                colors = ButtonDefaults.buttonColors(
+                }, colors = ButtonDefaults.buttonColors(
                     backgroundColor = CustomTheme.colors.darkBtnBackground,
-                ),
-                shape = RoundedCornerShape(CustomTheme.spaces.large)
+                ), shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
                     text = stringResource(R.string.statistics),

@@ -19,7 +19,6 @@ import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextFie
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextFieldPhoneNumber
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextFieldWithTrailingIcon
 import az.red.e_commerce_admin_android.ui.navigation.main.BottomNavScreen
-import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.ui.screens.fill_profile.components.*
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import org.koin.androidx.compose.koinViewModel
@@ -27,8 +26,7 @@ import org.koin.androidx.compose.koinViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FillProfile(
-    navController: NavController,
-    viewModel: FillProfileViewModel = koinViewModel()
+    navController: NavController, viewModel: FillProfileViewModel = koinViewModel()
 ) {
     val state by viewModel.fillProfileState.collectAsState()
     val scrollState = rememberScrollState()
@@ -42,52 +40,42 @@ fun FillProfile(
                 .padding(horizontal = CustomTheme.spaces.large)
         ) {
             FillProfileImageContainer()
-            FillProfileCustomerInputContainer(
-                state,
-                {
-                    viewModel.onUiEvent(
-                        fillProfileUIEvent = FillProfileUIEvent.FullNameChanged(it)
+            FillProfileCustomerInputContainer(state, {
+                viewModel.onUiEvent(
+                    fillProfileUIEvent = FillProfileUIEvent.FullNameChanged(it)
+                )
+            }, {
+                viewModel.onUiEvent(
+                    fillProfileUIEvent = FillProfileUIEvent.NickNameChanged(it)
+                )
+            }, {
+                viewModel.onUiEvent(
+                    fillProfileUIEvent = FillProfileUIEvent.EmailChanged(it)
+                )
+            }, {
+                viewModel.onUiEvent(
+                    fillProfileUIEvent = FillProfileUIEvent.DateOfBirthChanged(it)
+                )
+            }, {
+                viewModel.onUiEvent(
+                    fillProfileUIEvent = FillProfileUIEvent.PhoneNumberChanged(
+                        if (it.length < 10) it else return@FillProfileCustomerInputContainer
                     )
-                }, {
-                    viewModel.onUiEvent(
-                        fillProfileUIEvent = FillProfileUIEvent.NickNameChanged(it)
-                    )
-                },
-                {
-                    viewModel.onUiEvent(
-                        fillProfileUIEvent = FillProfileUIEvent.EmailChanged(it)
-                    )
-                },
-                {
-                    viewModel.onUiEvent(
-                        fillProfileUIEvent = FillProfileUIEvent.DateOfBirthChanged(it)
-                    )
-                },
-                {
-                    viewModel.onUiEvent(
-                        fillProfileUIEvent = FillProfileUIEvent.PhoneNumberChanged(
-                            if (it.length < 10) it else return@FillProfileCustomerInputContainer
-                        )
-                    )
-                },
-                {
-                    viewModel.onUiEvent(
-                        fillProfileUIEvent = FillProfileUIEvent.GenderChanged(it)
-                    )
-                }
-            )
+                )
+            }, {
+                viewModel.onUiEvent(
+                    fillProfileUIEvent = FillProfileUIEvent.GenderChanged(it)
+                )
+            })
             Spacer(modifier = Modifier.height(40.dp))
-            FillProfileButtons(
-                onContinueClick = {
-                    viewModel.onUiEvent(fillProfileUIEvent = FillProfileUIEvent.Continue)
-                    if(state.isFillProfileSuccessful){
-                        navController.navigate(BottomNavScreen.Home.screen_route)
-                    }
-                },
-                onSkipClick = {
+            FillProfileButtons(onContinueClick = {
+                viewModel.onUiEvent(fillProfileUIEvent = FillProfileUIEvent.Continue)
+                if (state.isFillProfileSuccessful) {
                     navController.navigate(BottomNavScreen.Home.screen_route)
                 }
-            )
+            }, onSkipClick = {
+                navController.navigate(BottomNavScreen.Home.screen_route)
+            })
         }
 
     }
@@ -123,8 +111,7 @@ fun FillProfileCustomerInputContainer(
             .fillMaxWidth()
             .padding(0.dp, CustomTheme.spaces.extraLarge, 0.dp, 0.dp)
     ) {
-        StringTextField(
-            value = fillProfileState.fullName,
+        StringTextField(value = fillProfileState.fullName,
             onValueChange = onFullNameChange,
             label = "Full name",
             isError = fillProfileState.errorState.fullNameErrorState.hasError,
@@ -132,16 +119,13 @@ fun FillProfileCustomerInputContainer(
                 stringResource(
                     id = it
                 )
-            }
-                ?: fillProfileState.errorState.fullNameErrorState.errorMessage,
+            } ?: fillProfileState.errorState.fullNameErrorState.errorMessage,
             keyboardType = KeyboardType.Text,
-            leadingIcon = R.drawable.ic_user
-        )
+            leadingIcon = R.drawable.ic_user)
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        StringTextField(
-            value = fillProfileState.nickName,
+        StringTextField(value = fillProfileState.nickName,
             onValueChange = onNickNameChange,
             label = "Nickname",
             isError = fillProfileState.errorState.nickNameErrorState.hasError,
@@ -149,16 +133,13 @@ fun FillProfileCustomerInputContainer(
                 stringResource(
                     id = it
                 )
-            }
-                ?: fillProfileState.errorState.nickNameErrorState.errorMessage,
+            } ?: fillProfileState.errorState.nickNameErrorState.errorMessage,
             keyboardType = KeyboardType.Text,
-            leadingIcon = R.drawable.ic_user
-        )
+            leadingIcon = R.drawable.ic_user)
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        StringTextField(
-            value = fillProfileState.email,
+        StringTextField(value = fillProfileState.email,
             onValueChange = onEmailChange,
             label = "Email",
             isError = fillProfileState.errorState.emailErrorState.hasError,
@@ -168,8 +149,7 @@ fun FillProfileCustomerInputContainer(
                 )
             } ?: fillProfileState.errorState.emailErrorState.errorMessage,
             keyboardType = KeyboardType.Text,
-            leadingIcon = R.drawable.ic_user
-        )
+            leadingIcon = R.drawable.ic_user)
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -181,8 +161,7 @@ fun FillProfileCustomerInputContainer(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        StringTextFieldPhoneNumber(
-            onValueChange = onPhoneNumberChange,
+        StringTextFieldPhoneNumber(onValueChange = onPhoneNumberChange,
             value = fillProfileState.phoneNumber,
             label = "Phone number",
             leadingIcon = R.drawable.ic_ukraine_flag,
@@ -192,13 +171,11 @@ fun FillProfileCustomerInputContainer(
                     id = it
                 )
             } ?: fillProfileState.errorState.phoneNumberErrorState.errorMessage,
-            keyboardType = KeyboardType.Phone
-        )
+            keyboardType = KeyboardType.Phone)
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        StringTextField(
-            value = fillProfileState.gender,
+        StringTextField(value = fillProfileState.gender,
             onValueChange = onGenderChange,
             label = "Gender",
             isError = fillProfileState.errorState.genderErrorState.hasError,
@@ -208,7 +185,6 @@ fun FillProfileCustomerInputContainer(
                 )
             } ?: fillProfileState.errorState.genderErrorState.errorMessage,
             keyboardType = KeyboardType.Text,
-            leadingIcon = R.drawable.ic_user
-        )
+            leadingIcon = R.drawable.ic_user)
     }
 }

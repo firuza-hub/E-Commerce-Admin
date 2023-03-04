@@ -17,27 +17,22 @@ import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 fun FillProfileTopAppBar(
     navController: NavController
 ) {
-    TopAppBar(
-        elevation = 0.dp,
-        title = {
-            Text(
-                "Fill your profile",
-                style = CustomTheme.typography.nunitoNormal18,
-                modifier = Modifier.offset(x = (-16).dp),
-                color = CustomTheme.colors.text
+    TopAppBar(elevation = 0.dp, title = {
+        Text(
+            "Fill your profile",
+            style = CustomTheme.typography.nunitoNormal18,
+            modifier = Modifier.offset(x = (-16).dp),
+            color = CustomTheme.colors.text
+        )
+    }, backgroundColor = CustomTheme.colors.background, navigationIcon = {
+        IconButton(onClick = {
+            navController.navigateUp()
+        }) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_back),
+                contentDescription = null,
+                tint = CustomTheme.colors.text
             )
-        },
-        backgroundColor = CustomTheme.colors.background,
-        navigationIcon = {
-            IconButton(onClick = {
-                navController.navigateUp()
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_back),
-                    contentDescription = null,
-                    tint = CustomTheme.colors.text
-                )
-            }
         }
-    )
+    })
 }

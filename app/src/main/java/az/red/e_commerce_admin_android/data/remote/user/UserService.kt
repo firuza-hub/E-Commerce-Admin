@@ -11,7 +11,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
 
-interface UserService  {
+interface UserService {
     @GET(EndPoints.CURRENT_USER)
     suspend fun getCurrentUser(): Response<UserResponse>
 
@@ -22,7 +22,6 @@ interface UserService  {
     suspend fun updatePassword(dto: UpdatePasswordRequest): Response<PasswordUpdateResponse>
 
     @PUT(EndPoints.UPDATE_USER)
-    suspend fun fillProfile( @Body dto: FillProfileRequest): Response<UserResponse>
-
+    suspend fun fillProfile(@Body dto: FillProfileRequest): Response<UserResponse>
 
 }

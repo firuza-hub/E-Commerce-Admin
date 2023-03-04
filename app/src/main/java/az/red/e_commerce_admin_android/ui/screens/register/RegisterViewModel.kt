@@ -10,18 +10,12 @@ import az.red.e_commerce_admin_android.ui.common.state.ErrorState
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.UIEvent
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(
     private val authRepo: AuthRepository
 ) : BaseViewModel() {
-
-    private var _registerResponse: MutableStateFlow<NetworkResult<RegisterResponse>> =
-        MutableStateFlow(NetworkResult.Empty())
-    val registerResponse: Flow<NetworkResult<RegisterResponse>> = _registerResponse.asStateFlow()
 
     val registerState = MutableStateFlow(RegisterState.NULL)
 
@@ -35,14 +29,13 @@ class RegisterViewModel(
                     it.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
                 }
 
-                is NetworkResult.Exception ->Log.i("REGISTER_REQUEST", "Exception")
+                is NetworkResult.Exception -> Log.i("REGISTER_REQUEST", "Exception")
                 is NetworkResult.Loading -> Log.i("REGISTER_REQUEST", "Loading")
                 is NetworkResult.Success -> {
                     triggerEvent(UIEvent.Message("Success!"))
                     authRepo.login(
                         LoginRequest(
-                            registerState.value.login,
-                            registerState.value.password
+                            registerState.value.login, registerState.value.password
                         )
                     ).collect { loginResp ->
                         when (loginResp) {
@@ -75,11 +68,10 @@ class RegisterViewModel(
                 registerState.value = registerState.value.copy(
                     email = registerUiEvent.inputValue.trim(),
                     errorState = registerState.value.errorState.copy(
-                        emailErrorState =
-                        if (registerUiEvent.inputValue.trim().isNotEmpty())
-                            ErrorState()
-                        else
-                            emailEmptyErrorState
+                        emailErrorState = if (registerUiEvent.inputValue.trim()
+                                .isNotEmpty()
+                        ) ErrorState()
+                        else emailEmptyErrorState
                     ),
                     btnEnabled = registerState.value.password.trim()
                         .isNotEmpty() && registerUiEvent.inputValue.trim().isNotEmpty()
@@ -89,10 +81,10 @@ class RegisterViewModel(
                 registerState.value = registerState.value.copy(
                     firstName = registerUiEvent.inputValue.trim(),
                     errorState = registerState.value.errorState.copy(
-                        firstNameErrorState = if (registerUiEvent.inputValue.trim().isNotEmpty())
-                            ErrorState()
-                        else
-                            firstNameEmptyErrorState
+                        firstNameErrorState = if (registerUiEvent.inputValue.trim()
+                                .isNotEmpty()
+                        ) ErrorState()
+                        else firstNameEmptyErrorState
                     )
                 )
             }
@@ -100,10 +92,10 @@ class RegisterViewModel(
                 registerState.value = registerState.value.copy(
                     lastName = registerUiEvent.inputValue.trim(),
                     errorState = registerState.value.errorState.copy(
-                        lastNameErrorState = if (registerUiEvent.inputValue.trim().isNotEmpty())
-                            ErrorState()
-                        else
-                            lastNameEmptyErrorState
+                        lastNameErrorState = if (registerUiEvent.inputValue.trim()
+                                .isNotEmpty()
+                        ) ErrorState()
+                        else lastNameEmptyErrorState
                     )
                 )
             }
@@ -111,10 +103,10 @@ class RegisterViewModel(
                 registerState.value = registerState.value.copy(
                     password = registerUiEvent.inputValue.trim(),
                     errorState = registerState.value.errorState.copy(
-                        passwordErrorState = if (registerUiEvent.inputValue.trim().isNotEmpty())
-                            ErrorState()
-                        else
-                            passwordEmptyErrorState
+                        passwordErrorState = if (registerUiEvent.inputValue.trim()
+                                .isNotEmpty()
+                        ) ErrorState()
+                        else passwordEmptyErrorState
                     )
                 )
             }
@@ -122,10 +114,10 @@ class RegisterViewModel(
                 registerState.value = registerState.value.copy(
                     login = registerUiEvent.inputValue.trim(),
                     errorState = registerState.value.errorState.copy(
-                        loginErrorState = if (registerUiEvent.inputValue.trim().isNotEmpty())
-                            ErrorState()
-                        else
-                            loginNameEmptyErrorState
+                        loginErrorState = if (registerUiEvent.inputValue.trim()
+                                .isNotEmpty()
+                        ) ErrorState()
+                        else loginNameEmptyErrorState
                     )
                 )
             }

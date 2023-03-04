@@ -19,7 +19,7 @@ import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
 fun ProfileImage() {
-    Box(modifier = Modifier.size(width = 100.dp, height = 100.dp)){
+    Box(modifier = Modifier.size(width = 100.dp, height = 100.dp)) {
         Box(
             modifier = Modifier
                 .size(width = 100.dp, height = 100.dp)

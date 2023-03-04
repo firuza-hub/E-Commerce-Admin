@@ -27,16 +27,22 @@ fun ProfileButtons(onAddNewProductClick: () -> Unit, onMyProductsClick: () -> Un
     ) {
 
         Button(
-            onClick = { onAddNewProductClick() }, colors = ButtonDefaults.buttonColors(CustomTheme.colors.text),
+            onClick = { onAddNewProductClick() },
+            colors = ButtonDefaults.buttonColors(CustomTheme.colors.text),
             border = BorderStroke(
                 1.dp,
-                color =  CustomTheme.colors.cardBorder
+                color = CustomTheme.colors.cardBorder
             ),
-            shape = RoundedCornerShape(28.dp),modifier = Modifier
+            shape = RoundedCornerShape(28.dp),
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(42.dp)
         ) {
-            Text(text = stringResource(R.string.add_new_product), style = CustomTheme.typography.nunitoNormal18, color = CustomTheme.colors.cardBackground)
+            Text(
+                text = stringResource(R.string.add_new_product),
+                style = CustomTheme.typography.nunitoNormal18,
+                color = CustomTheme.colors.cardBackground
+            )
         }
 
         OutlinedButton(
@@ -44,7 +50,7 @@ fun ProfileButtons(onAddNewProductClick: () -> Unit, onMyProductsClick: () -> Un
             colors = ButtonDefaults.buttonColors(CustomTheme.colors.cardBackground),
             border = BorderStroke(
                 1.dp,
-                color =  CustomTheme.colors.cardBorder
+                color = CustomTheme.colors.cardBorder
             ),
             modifier = Modifier
                 .fillMaxWidth()

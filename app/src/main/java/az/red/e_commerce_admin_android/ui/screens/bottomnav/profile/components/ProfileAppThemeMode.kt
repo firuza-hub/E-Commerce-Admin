@@ -14,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
@@ -25,7 +24,10 @@ import az.red.e_commerce_admin_android.ui.themes.*
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProfileAppThemeMode(profileViewModel: ProfileViewModel,isDarkModeCheck:Boolean = isSystemInDarkTheme()) {
+fun ProfileAppThemeMode(
+    profileViewModel: ProfileViewModel,
+    isDarkModeCheck: Boolean = isSystemInDarkTheme()
+) {
 
     val coroutineScope = rememberCoroutineScope()
     var appThemeMode by remember {
@@ -124,7 +126,7 @@ fun ProfileAppThemeMode(profileViewModel: ProfileViewModel,isDarkModeCheck:Boole
     }
 }
 
-fun refreshActivity(context:Context){
+fun refreshActivity(context: Context) {
     val intent = Intent(context, MainActivity::class.java)
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
