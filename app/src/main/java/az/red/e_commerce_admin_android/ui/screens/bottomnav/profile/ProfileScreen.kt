@@ -11,7 +11,8 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import az.red.e_commerce_admin_android.ui.navigation.main.DetailScreen
+import androidx.navigation.compose.rememberNavController
+import az.red.e_commerce_admin_android.ui.navigation.main.profile.ProfileNavScreen
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.components.*
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
@@ -21,7 +22,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
-    navController: NavController,
+    navController: NavController = rememberNavController(),
     profileViewModel: ProfileViewModel = koinViewModel()
 ) {
 
@@ -53,7 +54,7 @@ fun ProfileScreen(
 
     //Profile Buttons clicks
     val onAddNewProductClick: () -> Unit =
-        { navController.navigate(DetailScreen.CreateProduct.route) }
+        { navController.navigate(ProfileNavScreen.CreateProduct.route) }
     val onMyProductsClick: () -> Unit = {
         navController.navigate(route = Graph.MAIN)
     }

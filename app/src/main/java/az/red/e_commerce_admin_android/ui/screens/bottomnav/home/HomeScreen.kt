@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -17,7 +18,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController, productListViewModel: ProductListViewModel = koinViewModel()
+    navController: NavController = rememberNavController(),
+    productListViewModel: ProductListViewModel = koinViewModel()
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),

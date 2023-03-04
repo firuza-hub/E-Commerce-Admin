@@ -18,7 +18,7 @@ import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextField
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextFieldPhoneNumber
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextFieldWithTrailingIcon
-import az.red.e_commerce_admin_android.ui.navigation.main.BottomNavScreen
+import az.red.e_commerce_admin_android.ui.navigation.main.bottom.BottomNavScreen
 import az.red.e_commerce_admin_android.ui.screens.fill_profile.components.*
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import org.koin.androidx.compose.koinViewModel
