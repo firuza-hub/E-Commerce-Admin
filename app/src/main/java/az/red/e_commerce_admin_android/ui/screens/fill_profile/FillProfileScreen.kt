@@ -113,7 +113,7 @@ fun FillProfileCustomerInputContainer(
     ) {
         StringTextField(value = fillProfileState.fullName,
             onValueChange = onFullNameChange,
-            label = "Full name",
+            label = stringResource(id = R.string.full_name),
             isError = fillProfileState.errorState.fullNameErrorState.hasError,
             errorText = fillProfileState.errorState.fullNameErrorState.errorMessageStringResource?.let {
                 stringResource(
@@ -127,7 +127,7 @@ fun FillProfileCustomerInputContainer(
 
         StringTextField(value = fillProfileState.nickName,
             onValueChange = onNickNameChange,
-            label = "Nickname",
+            label = stringResource(id = R.string.nickname),
             isError = fillProfileState.errorState.nickNameErrorState.hasError,
             errorText = fillProfileState.errorState.nickNameErrorState.errorMessageStringResource?.let {
                 stringResource(
@@ -141,7 +141,7 @@ fun FillProfileCustomerInputContainer(
 
         StringTextField(value = fillProfileState.email,
             onValueChange = onEmailChange,
-            label = "Email",
+            label = stringResource(id = R.string.email),
             isError = fillProfileState.errorState.emailErrorState.hasError,
             errorText = fillProfileState.errorState.emailErrorState.errorMessageStringResource?.let {
                 stringResource(
@@ -163,7 +163,7 @@ fun FillProfileCustomerInputContainer(
 
         StringTextFieldPhoneNumber(onValueChange = onPhoneNumberChange,
             value = fillProfileState.phoneNumber,
-            label = "Phone number",
+            label = stringResource(id = R.string.phone_number),
             leadingIcon = R.drawable.ic_ukraine_flag,
             isError = fillProfileState.errorState.phoneNumberErrorState.hasError,
             errorText = fillProfileState.errorState.phoneNumberErrorState.errorMessageStringResource?.let {
@@ -177,7 +177,7 @@ fun FillProfileCustomerInputContainer(
 
         StringTextField(value = fillProfileState.gender,
             onValueChange = onGenderChange,
-            label = "Gender",
+            label = stringResource(id = R.string.gender),
             isError = fillProfileState.errorState.genderErrorState.hasError,
             errorText = fillProfileState.errorState.genderErrorState.errorMessageStringResource?.let {
                 stringResource(

@@ -195,7 +195,9 @@ private fun CustomTextField(
             errorBorderWidth = if (it.hasFocus) 2.dp else 1.dp
         }
         .border(
-            width = 1.dp, shape = RoundedCornerShape(8.dp), color = CustomTheme.colors.cardBorder
+            width = 1.dp,
+            shape = RoundedCornerShape(8.dp),
+            color = CustomTheme.colors.cardBorder
         ),
         value = value,
         onValueChange = onValueChange,
@@ -323,7 +325,8 @@ fun StringTextFieldPhoneNumber(
     mask: String = "+380111111111",
     maskNumber: Char = '1',
 ) {
-    CustomTextField(modifier = modifier,
+    CustomTextField(
+        modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         placeholder = {
@@ -399,12 +402,12 @@ fun StringTextFieldWithTrailingIcon(
     )
 
     MaterialDialog(dialogState = dateDialogState, buttons = {
-        positiveButton(text = "Ok")
-        negativeButton(text = "Cancel")
+        positiveButton(text = stringResource(id = R.string.ok))
+        negativeButton(text = stringResource(id = R.string.cancel))
     }) {
         datepicker(
             initialDate = LocalDate.now(),
-            title = "Pick a date",
+            title = stringResource(id = R.string.pick_a_date),
         ) {
             pickedDate = it
         }

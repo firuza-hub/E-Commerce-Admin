@@ -93,19 +93,19 @@ fun MainContent(popBackStack: () -> Unit, bottomSheetState: ModalBottomSheetStat
         )
 
         CustomTextView(
-            text = "Brand",
+            text = stringResource(id = R.string.brand),
             R.drawable.ic_brand,
             modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp)
         )
 
         CustomTextView(
-            text = "Category",
+            text = stringResource(id = R.string.category),
             R.drawable.ic_category,
             modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp)
         )
 
         CustomTextView(
-            text = "Subcategory", R.drawable.ic_sub_category,
+            text = stringResource(id = R.string.subcategory), R.drawable.ic_sub_category,
             modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp)
         )
 
@@ -137,8 +137,8 @@ fun SelectImageBottomSheet(popBackStack: () -> Unit) {
         sheetState = bottomSheetState,
         sheetContent = {
             Column(modifier = Modifier.padding(12.dp)) {
-                Text(text = "Gallery")
-                Text(text = "Camera")
+                Text(text = stringResource(id = R.string.gallery))
+                Text(text = stringResource(id = R.string.camera))
             }
         },
         sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),

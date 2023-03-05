@@ -200,7 +200,7 @@ fun InputSection(
         StringTextField(
             value = state.login,
             onValueChange = { onLoginNameChange(it) },
-            label = "Login",
+            label = stringResource(id = R.string.login),
             isError = state.errorState.loginErrorState.hasError,
             errorText = state.errorState.loginErrorState.errorMessageStringResource?.let {
                 stringResource(
@@ -217,7 +217,7 @@ fun InputSection(
         StringTextField(
             value = state.firstName,
             onValueChange = { onFirstNameChange(it) },
-            label = "First Name",
+            label = stringResource(id = R.string.first_name),
             isError = state.errorState.firstNameErrorState.hasError,
             errorText = state.errorState.firstNameErrorState.errorMessageStringResource?.let {
                 stringResource(
@@ -232,7 +232,9 @@ fun InputSection(
         Spacer(modifier = Modifier.height(16.dp))
 
         StringTextField(
-            value = state.lastName, onValueChange = { onLastNameChange(it) }, label = "Last Name",
+            value = state.lastName, onValueChange = { onLastNameChange(it) }, label = stringResource(
+                id = R.string.last_name
+            ),
             isError = state.errorState.lastNameErrorState.hasError,
             errorText = state.errorState.lastNameErrorState.errorMessageStringResource?.let {
                 stringResource(
