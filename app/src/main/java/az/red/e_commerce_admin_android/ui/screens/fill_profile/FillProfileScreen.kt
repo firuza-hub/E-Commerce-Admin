@@ -13,12 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextField
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextFieldPhoneNumber
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextFieldWithTrailingIcon
-import az.red.e_commerce_admin_android.ui.navigation.main.bottom.BottomNavScreen
 import az.red.e_commerce_admin_android.ui.screens.fill_profile.components.*
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import org.koin.androidx.compose.koinViewModel
@@ -26,13 +24,15 @@ import org.koin.androidx.compose.koinViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FillProfile(
-    navController: NavController, viewModel: FillProfileViewModel = koinViewModel()
+    navigateUp: () -> Unit,
+    navigateToHome: () -> Unit,
+    viewModel: FillProfileViewModel = koinViewModel()
 ) {
     val state by viewModel.fillProfileState.collectAsState()
     val scrollState = rememberScrollState()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        FillProfileTopAppBar(navController = navController)
+        FillProfileTopAppBar(navigateUp)
 
         Column(
             modifier = Modifier
@@ -71,10 +71,10 @@ fun FillProfile(
             FillProfileButtons(onContinueClick = {
                 viewModel.onUiEvent(fillProfileUIEvent = FillProfileUIEvent.Continue)
                 if (state.isFillProfileSuccessful) {
-                    navController.navigate(BottomNavScreen.Home.screen_route)
+                    navigateToHome()
                 }
             }, onSkipClick = {
-                navController.navigate(BottomNavScreen.Home.screen_route)
+                navigateToHome()
             })
         }
 

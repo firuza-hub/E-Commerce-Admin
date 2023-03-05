@@ -6,8 +6,6 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -18,13 +16,13 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController = rememberNavController(),
+    navigateUp: () -> Unit,
     productListViewModel: ProductListViewModel = koinViewModel()
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
-        HomeTopAppBar(navController)
+        HomeTopAppBar(navigateUp)
         //Bottom 82.dp padding(BottomNav height size) -> LazyColumn last item didn't show because of BottomNav
         val items = productListViewModel.data.collectAsLazyPagingItems()
 

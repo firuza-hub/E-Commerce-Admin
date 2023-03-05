@@ -15,7 +15,7 @@ import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
 fun FillProfileTopAppBar(
-    navController: NavController
+    popUpToBack: () -> Unit
 ) {
     TopAppBar(elevation = 0.dp, title = {
         Text(
@@ -26,7 +26,7 @@ fun FillProfileTopAppBar(
         )
     }, backgroundColor = CustomTheme.colors.background, navigationIcon = {
         IconButton(onClick = {
-            navController.navigateUp()
+            popUpToBack()
         }) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_back),

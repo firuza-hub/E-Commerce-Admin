@@ -10,12 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
-fun HomeTopAppBar(navController: NavController) {
+fun HomeTopAppBar(navigateUp: () -> Unit) {
 
     TopAppBar(elevation = 0.dp, title = {
         Text(
@@ -26,7 +25,7 @@ fun HomeTopAppBar(navController: NavController) {
         )
     }, backgroundColor = CustomTheme.colors.background, navigationIcon = {
         IconButton(onClick = {
-            navController.navigateUp()
+            navigateUp()
         }) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_back),

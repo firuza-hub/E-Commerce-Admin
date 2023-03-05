@@ -21,7 +21,7 @@ fun RootNavigationGraph(navController: NavHostController) {
         startDestination = Graph.AUTH
     ) {
         authNavGraph(navController = navController)
-        bottomNavGraph()
+        bottomNavGraph(navController = navController)
         homeNavGraph(navController = navController)
         ordersNavGraph(navController = navController)
         cartNavGraph(navController = navController)

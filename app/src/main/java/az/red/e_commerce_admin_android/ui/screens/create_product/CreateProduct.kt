@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.screens.create_product.components.AddImageItem
 import az.red.e_commerce_admin_android.ui.screens.create_product.components.CustomSimpleTextField
@@ -23,13 +22,13 @@ import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun CreateProduct(navController: NavController) {
-    SelectImageBottomSheet(navController)
+fun CreateProduct(popBackStack: () -> Unit) {
+    SelectImageBottomSheet(popBackStack)
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MainContent(navController: NavController, bottomSheetState: ModalBottomSheetState) {
+fun MainContent(popBackStack: () -> Unit, bottomSheetState: ModalBottomSheetState) {
     val scope = rememberCoroutineScope()
 
     val titleText = rememberSaveable { mutableStateOf(value = "") }
@@ -49,7 +48,7 @@ fun MainContent(navController: NavController, bottomSheetState: ModalBottomSheet
             },
             backgroundColor = CustomTheme.colors.background,
             navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = { popBackStack() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_back),
                         contentDescription = null,
@@ -130,7 +129,7 @@ fun MainContent(navController: NavController, bottomSheetState: ModalBottomSheet
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SelectImageBottomSheet(navController: NavController) {
+fun SelectImageBottomSheet(popBackStack: () -> Unit) {
     val bottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
@@ -145,6 +144,6 @@ fun SelectImageBottomSheet(navController: NavController) {
         sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
         sheetElevation = 12.dp
     ) {
-        MainContent(navController, bottomSheetState)
+        MainContent(popBackStack, bottomSheetState)
     }
 }
