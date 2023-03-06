@@ -8,7 +8,6 @@ import androidx.compose.material.ProvideTextStyle
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 
-
 fun lightColors() = CustomColors(
     primary = Color(0xFFE67E22),
     text = TextLight,

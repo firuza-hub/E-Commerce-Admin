@@ -2,12 +2,10 @@ package az.red.e_commerce_admin_android.ui.screens.bottomnav.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -18,20 +16,22 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
+    navigateUp: () -> Unit,
     productListViewModel: ProductListViewModel = koinViewModel()
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
     ) {
-        HomeTopAppBar(navController)
+        HomeTopAppBar(navigateUp)
         //Bottom 82.dp padding(BottomNav height size) -> LazyColumn last item didn't show because of BottomNav
         val items = productListViewModel.data.collectAsLazyPagingItems()
 
 
-        if (items.loadState.append == LoadState.Loading || items.loadState.prepend == LoadState.Loading || items.loadState.refresh == LoadState.Loading)
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth().height(2.dp), color = CustomTheme.colors.accent )
+        if (items.loadState.append == LoadState.Loading || items.loadState.prepend == LoadState.Loading || items.loadState.refresh == LoadState.Loading) LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp), color = CustomTheme.colors.accent
+        )
 
         LazyColumn(
             modifier = Modifier

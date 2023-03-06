@@ -21,19 +21,22 @@ import az.red.e_commerce_admin_android.utils.SessionManager
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 class MainActivity : ComponentActivity() {
+
     private val sessionManager by inject<SessionManager>()
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (!sessionManager.fetchRememberMe()) sessionManager.removeAuthToken()
 
         setContent {
-
             AppTheme {
-
                 val navController = rememberNavController()
-                Scaffold(bottomBar = { BottomNavigationContainer(navController = navController) }) {
+                Scaffold(
+                    bottomBar = {
+                        BottomNavigationContainer(navController = navController)
+                    }
+                ) {
                     Box(
                         modifier = Modifier
                             .background(CustomTheme.colors.background)

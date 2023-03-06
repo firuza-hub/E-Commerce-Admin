@@ -10,9 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import az.red.e_commerce_admin_android.ui.navigation.main.DetailScreen
-import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.components.*
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import az.red.e_commerce_admin_android.utils.UIEvent
@@ -21,7 +18,9 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
-    navController: NavController,
+    popUpToRoot: () -> Unit,
+    navigateCreateNewProduct: () -> Unit,
+    navigationMainGraph: () -> Unit,
     profileViewModel: ProfileViewModel = koinViewModel()
 ) {
 
@@ -41,9 +40,7 @@ fun ProfileScreen(
             profileViewModel.uiEventFlow.collect { event ->
                 when (event) {
                     is UIEvent.Navigate -> {
-                        navController.navigate(route = Graph.AUTH) {
-                            popUpTo(route = Graph.ROOT)
-                        }
+                        popUpToRoot()
                     }
                     else -> {}
                 }
@@ -52,11 +49,8 @@ fun ProfileScreen(
     }
 
     //Profile Buttons clicks
-    val onAddNewProductClick: () -> Unit =
-        { navController.navigate(DetailScreen.CreateProduct.route) }
-    val onMyProductsClick: () -> Unit = {
-        navController.navigate(route = Graph.MAIN)
-    }
+    val onAddNewProductClick: () -> Unit = { navigateCreateNewProduct() }
+    val onMyProductsClick: () -> Unit = { navigationMainGraph() }
 
     Column(
         modifier = Modifier

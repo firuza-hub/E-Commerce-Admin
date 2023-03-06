@@ -10,10 +10,10 @@ import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileViewM
 import az.red.e_commerce_admin_android.ui.screens.fill_profile.FillProfileViewModel
 
 val presentationModule = module {
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(authRepo = get()) }
     viewModel { MainViewModel() }
-    viewModel { RegisterViewModel(get()) }
+    viewModel { RegisterViewModel(authRepo = get()) }
     viewModel { ProfileViewModel() }
-    viewModel { ProductListViewModel(get()) }
-    viewModel { FillProfileViewModel(get()) }
+    viewModel { ProductListViewModel(repo = get()) }
+    viewModel { FillProfileViewModel(repository = get()) }
 }

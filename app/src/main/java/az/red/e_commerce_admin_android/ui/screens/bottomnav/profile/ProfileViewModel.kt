@@ -1,7 +1,5 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.profile
 
-import android.util.Log
-import androidx.compose.foundation.isSystemInDarkTheme
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.utils.UIEvent
@@ -17,21 +15,21 @@ class ProfileViewModel : BaseViewModel() {
         appThemeModeCheck()
     }
 
-    fun logOut(){
+    fun logOut() {
         sessionManager.removeAuthToken()
         triggerEvent(UIEvent.Navigate(Graph.AUTH))
     }
 
-    fun saveCurrentLanguage(language:String){
+    fun saveCurrentLanguage(language: String) {
         sessionManager.saveCurrentLanguage(language)
     }
 
-    fun saveAppThemeMode(isDarkMode:Boolean){
+    fun saveAppThemeMode(isDarkMode: Boolean) {
         sessionManager.saveDarkMode(isDarkMode)
     }
 
     private fun currentLanguageCheck() {
-        sessionManager.fetchCurrentLanguage().let {language ->
+        sessionManager.fetchCurrentLanguage().let { language ->
             if (!language.isNullOrEmpty()) {
                 currentLanguage.value = language.toString()
             } else {
@@ -41,8 +39,8 @@ class ProfileViewModel : BaseViewModel() {
     }
 
     private fun appThemeModeCheck() {
-        sessionManager.fetchDarkMode().let {_isDarkMode ->
-                isDarkMode.value = _isDarkMode
+        sessionManager.fetchDarkMode().let { _isDarkMode ->
+            isDarkMode.value = _isDarkMode
         }
     }
 }

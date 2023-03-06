@@ -7,7 +7,6 @@ import org.koin.java.KoinJavaComponent.inject
 import retrofit2.HttpException
 import retrofit2.Response
 
-
 sealed class NetworkResult<T>(
     val data: T? = null, val message: String? = null
 ) {
@@ -41,8 +40,8 @@ inline fun <reified T : Any> handleApi(
             )
         }
     } catch (e: HttpException) {
-        emit(NetworkResult.Error<T>(message = e.message(), code = e.code()))
+        emit(NetworkResult.Error(message = e.message(), code = e.code()))
     } catch (e: Throwable) {
-        emit(NetworkResult.Exception<T>(exception = e.message!!))
+        emit(NetworkResult.Exception(exception = e.message!!))
     }
 }

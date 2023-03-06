@@ -18,8 +18,8 @@ import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.noRippleClic
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
-fun FillProfileImage(){
-    Box(modifier = Modifier.size(width = 130.dp, height = 130.dp)){
+fun FillProfileImage() {
+    Box(modifier = Modifier.size(width = 130.dp, height = 130.dp)) {
         Box(
             modifier = Modifier
                 .size(width = 130.dp, height = 130.dp)

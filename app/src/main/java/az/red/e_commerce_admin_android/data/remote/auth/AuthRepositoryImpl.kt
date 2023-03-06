@@ -7,7 +7,6 @@ import az.red.e_commerce_admin_android.data.remote.auth.dto.response.RegisterRes
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.handleApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 class AuthRepositoryImpl(private val service: AuthService) : AuthRepository {
     override fun login(loginData: LoginRequest): Flow<NetworkResult<LoginResponse>> =

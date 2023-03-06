@@ -45,4 +45,25 @@
     <string name="user_error_msg_empty_gender">Please enter gender</string>
     <string name="btn_continue">Continue</string>
     <string name="skip">Skip</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="pick_a_date">Pick a date</string>
+    <string name="home">Home</string>
+    <string name="orders">Orders</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="brand">Brand</string>
+    <string name="category">Category</string>
+    <string name="subcategory">Subcategory</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="fill_your_profile">Fill your profile</string>
+    <string name="full_name">Full name</string>
+    <string name="nickname">Nickname</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="gender">Gender</string>
+    <string name="login">Login</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 </resources>

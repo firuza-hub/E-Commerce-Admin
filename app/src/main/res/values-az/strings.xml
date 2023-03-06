@@ -45,4 +45,25 @@
     <string name="user_error_msg_empty_gender">Please enter gender</string>
     <string name="btn_continue">Continue</string>
     <string name="skip">Skip</string>
+    <string name="ok">Tamam</string>
+    <string name="cancel">Ləğv et</string>
+    <string name="pick_a_date">Vaxt seç</string>
+    <string name="home">Ev</string>
+    <string name="orders">Sifarişlər</string>
+    <string name="cart">Səbət</string>
+    <string name="profile">Profil</string>
+    <string name="edit_profile">Profilə düzəliş et</string>
+    <string name="brand">Brend</string>
+    <string name="category">Kateqoriya</string>
+    <string name="subcategory">Altkateqoriya</string>
+    <string name="gallery">Qalereya</string>
+    <string name="camera">Kamera</string>
+    <string name="fill_your_profile">Profilinizi doldurun</string>
+    <string name="full_name">Tam adı</string>
+    <string name="nickname">Ləqəb</string>
+    <string name="phone_number">Telefon nömrəsi</string>
+    <string name="gender">Cins</string>
+    <string name="login">Daxil ol</string>
+    <string name="first_name">Ad</string>
+    <string name="last_name">Soyad</string>
 </resources>

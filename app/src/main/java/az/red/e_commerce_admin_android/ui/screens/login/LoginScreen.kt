@@ -25,11 +25,9 @@ import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-
 @Composable
 fun LoginScreen(
-    navController: NavController,
-    loginViewModel: LoginViewModel = koinViewModel()
+    navController: NavController, loginViewModel: LoginViewModel = koinViewModel()
 ) {
     val state by loginViewModel.loginState.collectAsState()
     val isLoggedInState by loginViewModel.isLoggedIn.collectAsState()
@@ -57,7 +55,8 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Spacer(modifier = Modifier.height(50.dp))
             Text(
@@ -84,15 +83,13 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(24.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
-                    checked = state.rememberMe,
-                    onCheckedChange = {
+                    checked = state.rememberMe, onCheckedChange = {
                         loginViewModel.onUiEvent(
                             loginUiEvent = LoginUIEvent.RememberMeChanged(
                                 it
                             )
                         )
-                    },
-                    colors = CheckBoxColors()
+                    }, colors = CheckBoxColors()
                 )
                 Text(text = stringResource(id = R.string.remember_me))
             }
@@ -147,8 +144,7 @@ fun LoginScreen(
             }
             Spacer(modifier = Modifier.height(32.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 AuthIcon(painterResource(id = R.drawable.ic_facebook))
                 AuthIcon(painterResource(id = R.drawable.ic_google))
@@ -161,16 +157,14 @@ fun LoginScreen(
                     color = CustomTheme.colors.text,
                     style = CustomTheme.typography.body3
                 )
-                Text(
-                    text = stringResource(id = R.string.sign_up),
+                Text(text = stringResource(id = R.string.sign_up),
                     modifier = Modifier
                         .clickable {
                             navController.navigate(AuthScreen.RegisterAuthScreen.route)
                         }
                         .padding(start = 10.dp),
                     color = CustomTheme.colors.accent,
-                    style = CustomTheme.typography.body3
-                )
+                    style = CustomTheme.typography.body3)
             }
         }
     }
@@ -206,21 +200,20 @@ fun InputSection(
         state.email, { onEmailChange(it) },
         stringResource(id = R.string.email),
         state.errorState.emailOrMobileErrorState.hasError,
-        state.errorState.emailOrMobileErrorState.errorMessageStringResource?.let{stringResource(id = it)}
-            ?: state.errorState.emailOrMobileErrorState.errorMessage ,
+        state.errorState.emailOrMobileErrorState.errorMessageStringResource?.let { stringResource(id = it) }
+            ?: state.errorState.emailOrMobileErrorState.errorMessage,
     )
 
     Spacer(modifier = Modifier.height(16.dp))
 
-    PasswordTextField(
-        modifier = Modifier.fillMaxWidth(),
-        state.password, { onPasswordChange(it) },
+    PasswordTextField(modifier = Modifier.fillMaxWidth(),
+        state.password,
+        { onPasswordChange(it) },
         stringResource(id = R.string.password),
         state.errorState.passwordErrorState.hasError,
-        state.errorState.passwordErrorState.errorMessageStringResource?.let{stringResource(id = it)}
+        state.errorState.passwordErrorState.errorMessageStringResource?.let { stringResource(id = it) }
             ?: state.errorState.passwordErrorState.errorMessage,
-        ImeAction.Done
-    )
+        ImeAction.Done)
 
 }
 
@@ -229,8 +222,7 @@ fun AuthIcon(iconPainter: Painter) {
     Box(
         modifier = Modifier
             .border(
-                width = 1.dp, color = CustomTheme.colors.cardBorder,
-                RoundedCornerShape(8.dp)
+                width = 1.dp, color = CustomTheme.colors.cardBorder, RoundedCornerShape(8.dp)
             )
             .size(44.dp), contentAlignment = Alignment.Center
     ) {

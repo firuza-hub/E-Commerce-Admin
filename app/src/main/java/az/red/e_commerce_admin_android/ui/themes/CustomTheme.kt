@@ -5,7 +5,6 @@ import LocalSpaces
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 
-
 object CustomTheme {
     val colors: CustomColors
         @Composable
