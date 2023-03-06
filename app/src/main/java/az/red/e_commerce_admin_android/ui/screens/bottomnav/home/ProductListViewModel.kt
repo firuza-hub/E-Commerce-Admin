@@ -10,13 +10,13 @@ import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductLi
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductListItemResponse
 import kotlinx.coroutines.flow.Flow
 
-class ProductListViewModel(repo: ProductRepository) : BaseViewModel() {
+class ProductListViewModel(repository: ProductRepository) : BaseViewModel() {
 
     var data: Flow<PagingData<ProductListItemResponse>>
 
     init {
         Log.i("CURRENT_THREAD vm", Thread.currentThread().name)
-        data = repo.getProductsFiltered(ProductListItemRequest()).cachedIn(viewModelScope)
+        data = repository.getProductsFiltered(ProductListItemRequest()).cachedIn(viewModelScope)
 
     }
 

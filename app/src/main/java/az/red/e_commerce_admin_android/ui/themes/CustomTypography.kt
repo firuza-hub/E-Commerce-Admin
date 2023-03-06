@@ -24,6 +24,12 @@ data class CustomTypography(
         fontSize = 12.sp
     ),
 
+    val sansSerif20: TextStyle = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp
+    ),
+
     val body3: TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Normal,

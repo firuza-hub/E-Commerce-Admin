@@ -7,6 +7,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import az.red.e_commerce_admin_android.ui.main.MainViewModel
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileViewModel
+import az.red.e_commerce_admin_android.ui.screens.create_product.CreateProductViewModel
 import az.red.e_commerce_admin_android.ui.screens.fill_profile.FillProfileViewModel
 
 val presentationModule = module {
@@ -14,6 +15,7 @@ val presentationModule = module {
     viewModel { MainViewModel() }
     viewModel { RegisterViewModel(authRepo = get()) }
     viewModel { ProfileViewModel() }
-    viewModel { ProductListViewModel(repo = get()) }
+    viewModel { ProductListViewModel(repository = get()) }
     viewModel { FillProfileViewModel(repository = get()) }
+    viewModel { CreateProductViewModel(repository = get()) }
 }

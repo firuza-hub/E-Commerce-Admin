@@ -2,25 +2,32 @@ package az.red.e_commerce_admin_android.ui.screens.create_product.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
 fun CustomSimpleTextField(
-    modifier: Modifier, onValueChangeUnit: (String) -> Unit, text: String = "", hint: String = ""
+    modifier: Modifier,
+    onValueChangeUnit: (String) -> Unit,
+    text: String = "",
+    hint: String = "",
+    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
 ) {
     var textState by remember { mutableStateOf(text) }
-    OutlinedTextField(modifier = modifier
-        .fillMaxWidth(),
+    OutlinedTextField(
+        modifier = modifier
+            .fillMaxWidth(),
         value = textState,
         onValueChange = {
             textState = it
             onValueChangeUnit.invoke(it)
-        },
+        }, keyboardOptions = keyboardOptions,
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             backgroundColor = CustomTheme.colors.background,
