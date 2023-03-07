@@ -91,6 +91,7 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
         Text(
             text = "US $${productListItemResponse.currentPrice}",
             style = CustomTheme.typography.nunitoBold14,
+            color = CustomTheme.colors.text,
             modifier = Modifier.weight(1f)
         )
 
@@ -107,7 +108,7 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
                     //your onclick code
                 },
                 border = BorderStroke(1.dp, CustomTheme.colors.cardBorder),
-                colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.btnText),
+                colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.background),
                 shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
@@ -120,14 +121,13 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
             Button(
                 modifier = Modifier.weight(1f), onClick = {
                     //your onclick code
-                }, colors = ButtonDefaults.buttonColors(
-                    backgroundColor = CustomTheme.colors.darkBtnBackground,
+                }, colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.darkBtnBackground,
                 ), shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
                     text = stringResource(R.string.statistics),
                     style = CustomTheme.typography.nunitoNormal12,
-                    color = CustomTheme.colors.textReverse
+                    color = CustomTheme.colors.btnTextAlwaysLight
                 )
             }
         }

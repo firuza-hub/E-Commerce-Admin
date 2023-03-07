@@ -27,6 +27,7 @@ fun lightColors() = CustomColors(
     btnTextDisabled = InputCardBorderLight,
     darkBtnBackground = InputCardBackgroundDark,
     textReverse = TextDark,
+    btnTextAlwaysLight = BtnTextLight,
     imageCardBackground = ImageCardBackgroundLight
 )
 
@@ -48,7 +49,9 @@ fun darkColors() = CustomColors(
     btnText = BtnTextDark,
     btnTextDisabled = InputCardBorderLight,
     darkBtnBackground = InputHintColorDark,
-    textReverse = TextLight, imageCardBackground = ImageCardBackgroundDark
+    textReverse = TextLight,
+    btnTextAlwaysLight = BtnTextLight,
+    imageCardBackground = ImageCardBackgroundDark
 )
 
 @Composable
@@ -56,7 +59,7 @@ fun AppTheme(
     spaces: CustomSpaces = CustomTheme.spaces,
     typography: CustomTypography = CustomTheme.typography,
     colors: CustomColors = CustomTheme.colors,
-    darkColors: CustomColors? = null,
+    darkColors: CustomColors? = darkColors(),
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
