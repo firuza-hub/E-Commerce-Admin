@@ -49,7 +49,6 @@ fun ProfileAppThemeMode(
 
                 //Save App Theme Mode
                 profileViewModel.saveAppThemeMode(appThemeMode)
-//                refreshActivity(context)
             }
             .size(width = 60.dp, height = 31.dp)
             .border(
@@ -124,12 +123,4 @@ fun ProfileAppThemeMode(
         }
 
     }
-}
-
-fun refreshActivity(context: Context) {
-    val intent = Intent(context, MainActivity::class.java)
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    context.startActivity(intent)
 }

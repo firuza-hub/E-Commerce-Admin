@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import az.red.e_commerce_admin_android.ui.navigation.root.RootNavigationGraph
@@ -30,7 +31,10 @@ class MainActivity : ComponentActivity() {
         if (!sessionManager.fetchRememberMe()) sessionManager.removeAuthToken()
 
         setContent {
-            AppTheme {
+            var isdark by remember { mutableStateOf(sessionManager.fetchDarkMode()) }
+            sessionManager.listenDarkMode { isdark = it }
+
+            AppTheme(isDarkTheme = isdark) {
                 val navController = rememberNavController()
                 Scaffold(
                     bottomBar = {

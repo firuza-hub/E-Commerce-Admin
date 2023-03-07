@@ -60,10 +60,10 @@ fun AppTheme(
     typography: CustomTypography = CustomTheme.typography,
     colors: CustomColors = CustomTheme.colors,
     darkColors: CustomColors? = darkColors(),
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val currentColor = remember { if (darkColors != null && darkTheme) darkColors else colors }
+    val currentColor =  if (darkColors != null && isDarkTheme) darkColors else colors
     val rememberedColors = remember { currentColor.copy() }.apply { updateColorsFrom(currentColor) }
 
     CompositionLocalProvider(
