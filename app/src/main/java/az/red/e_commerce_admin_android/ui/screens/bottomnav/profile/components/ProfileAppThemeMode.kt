@@ -1,7 +1,5 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.components
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,10 +15,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.ui.main.MainActivity
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileViewModel
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.noRippleClickable
-import az.red.e_commerce_admin_android.ui.themes.*
+import az.red.e_commerce_admin_android.ui.themes.AccentCarrot
+import az.red.e_commerce_admin_android.ui.themes.BtnTextLight
+import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import kotlinx.coroutines.launch
 
 @Composable

@@ -202,6 +202,7 @@ private fun CustomTextField(
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
+        textStyle = CustomTheme.typography.inputText(CustomTheme.colors.text),
         cursorBrush = SolidColor(CustomTheme.colors.cardBorder),
         decorationBox = { innerTextField ->
             Column(modifier = Modifier.fillMaxWidth()) {
