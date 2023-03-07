@@ -41,6 +41,7 @@ class CustomColors(
     error: Color,
     isLight: Boolean,
     darkBtnBackground: Color,
+    btnTextAlwaysLight: Color,
     textReverse: Color,
     imageCardBackground: Color
 ) {
@@ -89,6 +90,8 @@ class CustomColors(
         private set
     var textReverse by mutableStateOf(textReverse)
         private set
+    var btnTextAlwaysLight by mutableStateOf(btnTextAlwaysLight)
+        private set
     var imageCardBackground by mutableStateOf(imageCardBackground)
         private set
 
@@ -111,6 +114,7 @@ class CustomColors(
         btnTextDisabled: Color = this.btnTextDisabled,
         darkBtnBackground: Color = this.darkBtnBackground,
         textReverse: Color = this.textReverse,
+        btnTextAlwaysLight: Color = this.btnTextAlwaysLight,
         imageCardBackground: Color = this.imageCardBackground
     ) = CustomColors(
         primary = primary,
@@ -131,6 +135,7 @@ class CustomColors(
         btnTextDisabled = btnTextDisabled,
         darkBtnBackground = darkBtnBackground,
         textReverse = textReverse,
+        btnTextAlwaysLight = btnTextAlwaysLight,
         imageCardBackground = imageCardBackground
     )
 
@@ -153,6 +158,7 @@ class CustomColors(
         btnTextDisabled = other.btnTextDisabled
         darkBtnBackground = other.darkBtnBackground
         textReverse = other.textReverse
+        btnTextAlwaysLight = other.btnTextAlwaysLight
         imageCardBackground = other.imageCardBackground
     }
 
