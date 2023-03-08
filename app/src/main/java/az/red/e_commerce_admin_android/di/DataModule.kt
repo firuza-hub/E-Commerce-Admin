@@ -3,6 +3,12 @@ package az.red.e_commerce_admin_android.di
 import az.red.e_commerce_admin_android.data.remote.*
 import az.red.e_commerce_admin_android.data.remote.user.*
 import az.red.e_commerce_admin_android.data.remote.auth.*
+import az.red.e_commerce_admin_android.data.remote.brand.BrandRepository
+import az.red.e_commerce_admin_android.data.remote.brand.BrandRepositoryImpl
+import az.red.e_commerce_admin_android.data.remote.brand.BrandService
+import az.red.e_commerce_admin_android.data.remote.category.CategoryRepository
+import az.red.e_commerce_admin_android.data.remote.category.CategoryRepositoryImpl
+import az.red.e_commerce_admin_android.data.remote.category.CategoryService
 import az.red.e_commerce_admin_android.data.remote.create_product.CreateProductRepository
 import az.red.e_commerce_admin_android.data.remote.create_product.CreateProductRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.create_product.CreateProductService
@@ -69,4 +75,12 @@ val dataModule = module {
     /////////////////////////////////////////////////////////// Create Product ///////////////////////////////////////////////////////////
     factory<CreateProductService> { get<Retrofit>().create(CreateProductService::class.java) }
     factory<CreateProductRepository> { CreateProductRepositoryImpl(get()) }
+
+    /////////////////////////////////////////////////////////// Brand ///////////////////////////////////////////////////////////
+    factory<BrandService> { get<Retrofit>().create(BrandService::class.java) }
+    factory<BrandRepository> { BrandRepositoryImpl(get()) }
+
+    /////////////////////////////////////////////////////////// Category ///////////////////////////////////////////////////////////
+    factory<CategoryService> { get<Retrofit>().create(CategoryService::class.java) }
+    factory<CategoryRepository> { CategoryRepositoryImpl(get()) }
 }
