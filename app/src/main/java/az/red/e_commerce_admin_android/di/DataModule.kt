@@ -6,12 +6,15 @@ import az.red.e_commerce_admin_android.data.remote.auth.*
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.product.dto.ProductService
+import az.red.e_commerce_admin_android.ui.screens.product_details.ProductDetailsViewModel
 import az.red.e_commerce_admin_android.utils.SessionManager
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.BuildConfig
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -52,7 +55,6 @@ val dataModule = module {
     /////////////////////////////////////////////////////////// Auth ///////////////////////////////////////////////////////////
     factory<AuthService> { get<Retrofit>().create(AuthService::class.java) }
     factory<AuthRepository> { AuthRepositoryImpl(get()) }
-
 
     /////////////////////////////////////////////////////////// User ///////////////////////////////////////////////////////////
     factory<UserService> { get<Retrofit>().create(UserService::class.java) }

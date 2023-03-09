@@ -11,4 +11,5 @@ object EndPoints {
 
     private const val PRODUCT_BASE = "products"
     const val PRODUCTS_FILTERED = "$PRODUCT_BASE/filter"
+    const val PRODUCT = "$PRODUCT_BASE"
 }

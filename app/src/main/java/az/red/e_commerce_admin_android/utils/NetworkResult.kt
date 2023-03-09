@@ -16,8 +16,6 @@ sealed class NetworkResult<T>(
     class Error<T>(message: String?, code: Int, data: T? = null) : NetworkResult<T>(data, message)
     class Exception<T>(exception: String) : NetworkResult<T>(message = exception)
 }
-
-
 inline fun <reified T : Any> handleApi(
     crossinline execute: suspend () -> Response<T>
 ): Flow<NetworkResult<T>> = flow {

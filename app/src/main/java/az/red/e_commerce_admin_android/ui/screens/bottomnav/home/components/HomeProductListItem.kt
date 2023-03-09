@@ -2,6 +2,7 @@ package az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -17,18 +18,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductListItemResponse
+import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
 @Composable
-fun ProductListItem(productListItemResponse: ProductListItemResponse) {
+fun ProductListItem(productResponse: ProductResponse, onClick:(id:String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(CustomTheme.colors.background)
             .padding(vertical = 12.dp, horizontal = 16.dp)
+            .clickable { onClick(productResponse._id) }
     ) {
         Row(
             modifier = Modifier
@@ -36,8 +38,8 @@ fun ProductListItem(productListItemResponse: ProductListItemResponse) {
                 .height(97.dp)
         ) {
 
-            productListItemResponse.imageUrls.let { if (it.any()) ProductListImage(it.first()) }
-            ProductListInfo(productListItemResponse)
+            productResponse.imageUrls.let { if (it.any()) ProductListImage(it.first()) }
+            ProductListInfo(productResponse)
         }
     }
 }
@@ -61,7 +63,7 @@ fun ProductListImage(imgUrl: String) {
 }
 
 @Composable
-fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
+fun ProductListInfo(productResponse: ProductResponse) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -76,7 +78,7 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = productListItemResponse.name,
+                text = productResponse.name,
                 style = CustomTheme.typography.nunitoNormal12,
                 color = CustomTheme.colors.text
             )
@@ -89,7 +91,7 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
         }
 
         Text(
-            text = "US $${productListItemResponse.currentPrice}",
+            text = "US $${productResponse.currentPrice}",
             style = CustomTheme.typography.nunitoBold14,
             color = CustomTheme.colors.text,
             modifier = Modifier.weight(1f)

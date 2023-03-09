@@ -7,16 +7,16 @@ import androidx.paging.cachedIn
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductListItemRequest
-import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductListItemResponse
+import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
 import kotlinx.coroutines.flow.Flow
 
 class ProductListViewModel(repo: ProductRepository) : BaseViewModel() {
 
-    var data: Flow<PagingData<ProductListItemResponse>>
+    var data: Flow<PagingData<ProductResponse>>
 
     init {
         Log.i("CURRENT_THREAD vm", Thread.currentThread().name)
-        data = repo.getProductsFiltered(ProductListItemRequest()).cachedIn(viewModelScope)
+        data = repo.getProductsFilteredPaging(ProductListItemRequest()).cachedIn(viewModelScope)
 
     }
 

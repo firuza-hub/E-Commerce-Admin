@@ -66,4 +66,9 @@
     <string name="login">Login</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="product_specifications">Specifications</string>
+    <string name="product_reviews">Reviews</string>
+    <string name="product_questions">Questions</string>
+    <string name="product_similar_goods">Similar Goods</string>
+    <string name="see_all">See all</string>
 </resources>

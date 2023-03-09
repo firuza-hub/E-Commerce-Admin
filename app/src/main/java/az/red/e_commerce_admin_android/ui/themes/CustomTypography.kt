@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 
 data class CustomTypography(
@@ -38,9 +39,20 @@ data class CustomTypography(
         fontSize = 12.sp
     ),
 
+    val nunitoNormal14: TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    ),
     val nunitoNormal16: TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+
+    val nunitoSemiBold16: TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp
     ),
 
@@ -49,9 +61,22 @@ data class CustomTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp
     ),
+
+    val nunitoNormal14StrikeThrough: TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        textDecoration =  TextDecoration.LineThrough
+    ),
     val nunitoBold14: TextStyle = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
+    ),
+
+    val nunitoExtraBold14: TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 14.sp
     ),
 
