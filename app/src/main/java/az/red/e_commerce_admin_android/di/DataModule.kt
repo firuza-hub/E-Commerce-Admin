@@ -3,6 +3,9 @@ package az.red.e_commerce_admin_android.di
 import az.red.e_commerce_admin_android.data.remote.*
 import az.red.e_commerce_admin_android.data.remote.user.*
 import az.red.e_commerce_admin_android.data.remote.auth.*
+import az.red.e_commerce_admin_android.data.remote.order.OrderRepository
+import az.red.e_commerce_admin_android.data.remote.order.OrderRepositoryImpl
+import az.red.e_commerce_admin_android.data.remote.order.OrderService
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.product.dto.ProductService
@@ -62,4 +65,8 @@ val dataModule = module {
     /////////////////////////////////////////////////////////// Product ///////////////////////////////////////////////////////////
     factory<ProductService> { get<Retrofit>().create(ProductService::class.java) }
     factory<ProductRepository> { ProductRepositoryImpl(get()) }
+
+    /////////////////////////////////////////////////////////// Order ///////////////////////////////////////////////////////////
+    factory<OrderService> { get<Retrofit>().create(OrderService::class.java) }
+    factory<OrderRepository> { OrderRepositoryImpl(get()) }
 }

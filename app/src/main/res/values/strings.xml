@@ -66,4 +66,14 @@
     <string name="login">Login</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="change_order_status">Change status</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="ongoing_empty_list_message">You don’t have an ongoing orders at this time</string>
+    <string name="completed_empty_list_message">You don’t have completed orders yet</string>
+    <string name="cancelled_empty_list_message">There are no cancelled orders</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="completed">Completed</string>
+    <string name="shipped">shipped</string>
+    <string name="not_shipped">not shipped</string>
+    <string name="in_delivery">In delivery</string>
 </resources>

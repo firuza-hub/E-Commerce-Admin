@@ -66,4 +66,14 @@
     <string name="login">Daxil ol</string>
     <string name="first_name">Ad</string>
     <string name="last_name">Soyad</string>
+    <string name="change_order_status">Sifariş statusunu dəyişin</string>
+    <string name="cancelled">Ləğv olunub</string>
+    <string name="ongoing_empty_list_message">Hazırda davam edən sifarişləriniz yoxdur</string>
+    <string name="completed_empty_list_message">Hələ tamamlanmış sifarişləriniz yoxdur</string>
+    <string name="cancelled_empty_list_message">Ləğv edilmiş sifarişlər yoxdur</string>
+    <string name="ongoing">Davam edir</string>
+    <string name="completed">Tamamlandı</string>
+    <string name="shipped">göndərildi</string>
+    <string name="not_shipped">göndərilmədi</string>
+    <string name="in_delivery">Çatdırılmada</string>
 </resources>

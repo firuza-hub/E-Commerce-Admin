@@ -22,6 +22,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(
     navigateUp: () -> Unit,
+    navigateTo: (route:String) -> Unit,
     productListViewModel: ProductListViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -36,7 +37,7 @@ fun HomeScreen(
                         Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                     }
                     is UIEvent.Navigate -> {
-                        navController.navigate(route = event.route)
+                        navigateTo(event.route)
                     }
                 }
             }

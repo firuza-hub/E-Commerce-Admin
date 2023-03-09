@@ -22,6 +22,8 @@ val InputHintColorDark = Color(parseColor("#233447"))
 val BackgroundDark = Color(parseColor("#131C26"))
 val ImageCardBackgroundLight = Color(parseColor("#1A1A262C"))
 val ImageCardBackgroundDark = Color(parseColor("#233447"))
+val OrderStatusCompletedButton = Color(parseColor("#0CA71B"))
+val OrderStatusCancelledButton = Color(parseColor("#EB2D2D"))
 
 class CustomColors(
     primary: Color,
@@ -43,7 +45,9 @@ class CustomColors(
     darkBtnBackground: Color,
     btnTextAlwaysLight: Color,
     textReverse: Color,
-    imageCardBackground: Color
+    imageCardBackground: Color,
+    orderStatusCompletedButton: Color,
+    orderStatusCancelledButton: Color
 ) {
     var primary by mutableStateOf(primary)
         private set
@@ -94,6 +98,10 @@ class CustomColors(
         private set
     var imageCardBackground by mutableStateOf(imageCardBackground)
         private set
+    var orderStatusCompletedButton by mutableStateOf(orderStatusCompletedButton)
+        private set
+    var orderStatusCancelledButton by mutableStateOf(orderStatusCancelledButton)
+        private set
 
     fun copy(
         primary: Color = this.primary,
@@ -115,7 +123,9 @@ class CustomColors(
         darkBtnBackground: Color = this.darkBtnBackground,
         textReverse: Color = this.textReverse,
         btnTextAlwaysLight: Color = this.btnTextAlwaysLight,
-        imageCardBackground: Color = this.imageCardBackground
+        imageCardBackground: Color = this.imageCardBackground,
+        orderStatusCompletedButton: Color = this.orderStatusCompletedButton,
+        orderStatusCancelledButton: Color = this.orderStatusCancelledButton
     ) = CustomColors(
         primary = primary,
         text = text,
@@ -136,7 +146,9 @@ class CustomColors(
         darkBtnBackground = darkBtnBackground,
         textReverse = textReverse,
         btnTextAlwaysLight = btnTextAlwaysLight,
-        imageCardBackground = imageCardBackground
+        imageCardBackground = imageCardBackground,
+        orderStatusCompletedButton = orderStatusCompletedButton,
+        orderStatusCancelledButton = orderStatusCancelledButton
     )
 
     fun updateColorsFrom(other: CustomColors) {
@@ -160,6 +172,8 @@ class CustomColors(
         textReverse = other.textReverse
         btnTextAlwaysLight = other.btnTextAlwaysLight
         imageCardBackground = other.imageCardBackground
+        orderStatusCompletedButton = other.orderStatusCompletedButton
+        orderStatusCancelledButton = other.orderStatusCancelledButton
     }
 
 
