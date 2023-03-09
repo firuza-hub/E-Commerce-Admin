@@ -4,6 +4,7 @@ sealed class OrderUiEvent {
     data class ChangeStatusButton(
         val orderId: String,
         val orderStatus: String,
+        val orderNO: String,
         val mail: String
     ) : OrderUiEvent()
 }

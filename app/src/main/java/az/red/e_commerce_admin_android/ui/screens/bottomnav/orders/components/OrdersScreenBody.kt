@@ -10,7 +10,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,10 +29,9 @@ fun OrdersScreenBody(
     ordersEmptyMessage: String,
     viewModel: OrderViewModel = koinViewModel()
 ) {
-
-    val listItems = arrayOf("shipped", "not shipped")
+    val shippingStatus = arrayOf(stringResource(id = R.string.shipped), stringResource(id = R.string.not_shipped))
     var selectedItem by remember {
-        mutableStateOf(listItems[0])
+        mutableStateOf(shippingStatus[0])
     }
 
     var expandedDropDownMenu by remember {
@@ -45,6 +43,7 @@ fun OrdersScreenBody(
     }
 
     val downOrUpIcon = if (expanded) R.drawable.ic_down else R.drawable.ic_right
+
 
     Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -112,6 +111,7 @@ fun OrdersScreenBody(
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                 ) {
 
+                                   // For each orders create nested LazyColumn
                                     LazyColumn(
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -126,6 +126,7 @@ fun OrdersScreenBody(
                                         }
                                     }
 
+                                    //If cancelled orders then not show change status button
                                     if (!orderList[orderIndex].canceled)
                                         ExposedDropdownMenuBox(
                                             expanded = expandedDropDownMenu,
@@ -157,14 +158,16 @@ fun OrdersScreenBody(
                                                 modifier = Modifier.background(CustomTheme.colors.accent),
                                                 onDismissRequest = { expandedDropDownMenu = false }
                                             ) {
-                                                listItems.forEach { selectedOption ->
+                                                shippingStatus.forEach { selectedOption ->
                                                     DropdownMenuItem(onClick = {
                                                         selectedItem = selectedOption
 
+                                                        //Change order status and send mail with letterSubject and letterHtml
                                                         viewModel.onUiEvent(
                                                             orderUiEvent = OrderUiEvent.ChangeStatusButton(
                                                                 orderList[orderIndex].id,
                                                                 selectedItem,
+                                                                orderList[orderIndex].orderNo,
                                                                 orderList[orderIndex].email
                                                             )
                                                         )
