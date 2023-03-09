@@ -42,6 +42,7 @@ class CustomColors(
     error: Color,
     isLight: Boolean,
     darkBtnBackground: Color,
+    btnTextAlwaysLight: Color,
     textReverse: Color,
     imageCardBackground: Color,
     orderStatus:Color
@@ -118,6 +119,8 @@ class CustomColors(
         textReverse: Color = this.textReverse,
         imageCardBackground: Color = this.imageCardBackground,
         orderStatus: Color = this.orderStatus
+        btnTextAlwaysLight: Color = this.btnTextAlwaysLight,
+        imageCardBackground: Color = this.imageCardBackground
     ) = CustomColors(
         primary = primary,
         text = text,
@@ -137,6 +140,8 @@ class CustomColors(
         btnTextDisabled = btnTextDisabled,
         darkBtnBackground = darkBtnBackground,
         textReverse = textReverse,
+        btnTextAlwaysLight = btnTextAlwaysLight,
+        imageCardBackground = imageCardBackground
         imageCardBackground = imageCardBackground,
         orderStatus = orderStatus
     )
@@ -160,6 +165,7 @@ class CustomColors(
         btnTextDisabled = other.btnTextDisabled
         darkBtnBackground = other.darkBtnBackground
         textReverse = other.textReverse
+        btnTextAlwaysLight = other.btnTextAlwaysLight
         imageCardBackground = other.imageCardBackground
     }
 
