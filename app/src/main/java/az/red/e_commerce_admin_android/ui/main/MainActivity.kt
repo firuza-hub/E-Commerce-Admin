@@ -32,7 +32,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             var isdark by remember { mutableStateOf(sessionManager.fetchDarkMode()) }
-            sessionManager.listenDarkMode { isdark = it }
+            LaunchedEffect(true) {
+                sessionManager.listenDarkMode { isdark = it }
+            }
 
             AppTheme(isDarkTheme = isdark) {
                 val navController = rememberNavController()

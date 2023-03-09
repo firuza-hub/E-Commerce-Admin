@@ -66,6 +66,11 @@
     <string name="login">Login</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="product_specifications">Specifications</string>
+    <string name="product_reviews">Reviews</string>
+    <string name="product_questions">Questions</string>
+    <string name="product_similar_goods">Similar Goods</string>
+    <string name="see_all">See all</string>
     <string name="change_order_status">Change status</string>
     <string name="cancelled">Cancelled</string>
     <string name="ongoing_empty_list_message">You don’t have an ongoing orders at this time</string>

@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import az.red.e_commerce_admin_android.ui.navigation.main.home.HomeNavScreen
 import az.red.e_commerce_admin_android.ui.navigation.main.profile.ProfileNavScreen
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.cart.CartScreen

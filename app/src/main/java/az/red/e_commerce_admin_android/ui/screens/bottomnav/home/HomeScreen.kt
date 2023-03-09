@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import az.red.e_commerce_admin_android.ui.navigation.main.home.HomeNavScreen
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components.HomeTopAppBar
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components.ProductListItem
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
@@ -64,8 +65,8 @@ fun HomeScreen(
                 .padding(2.dp, 0.dp, 0.dp, 82.dp)
         ) {
             items(items) {
-                it?.let {
-                    ProductListItem(it)
+                it?.let {item ->
+                    ProductListItem(it){navigateTo(HomeNavScreen.ProductDetails.route + "/${item.itemNo}")}
                 }
             }
         }

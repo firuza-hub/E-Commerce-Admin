@@ -69,6 +69,11 @@ class SessionManager(context: Context) {
 
     fun listenDarkMode(onModeChanged: (Boolean) -> Unit) =
         prefs.registerOnSharedPreferenceChangeListener { sp, s ->
+
+            println("Mode Changed to " + sp.getBoolean(
+                DARK_MODE,
+                false
+            ).toString())
             onModeChanged(
                 sp.getBoolean(
                     DARK_MODE,
