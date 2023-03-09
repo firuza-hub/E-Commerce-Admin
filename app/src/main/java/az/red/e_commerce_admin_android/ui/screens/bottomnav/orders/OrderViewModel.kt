@@ -43,7 +43,6 @@ class OrderViewModel(
                         it.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
                     }
                     is NetworkResult.Loading -> {
-                        delay(500)
                         orderList.value = OrdersState(isLoading = true)
                         Log.i("ORDER_REQUEST", "Loading")
                     }
@@ -85,7 +84,6 @@ class OrderViewModel(
                         it.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
                     }
                     is NetworkResult.Loading -> {
-                        delay(500)
                         orderList.value = OrdersState(isLoading = true)
                         Log.i("CHANGE_ORDER_STATUS", "Loading")
                     }
