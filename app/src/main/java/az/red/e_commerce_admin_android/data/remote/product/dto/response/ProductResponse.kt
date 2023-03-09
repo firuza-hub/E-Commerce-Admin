@@ -21,10 +21,10 @@ data class ProductResponse(
     val size: String
 ){
     fun toProductState():ProductDetailsState{
-        return ProductDetailsState(_id,  categories, color, currentPrice, date, description, enabled, fabric, imageUrls, itemNo, name, previousPrice, quantity, size, null)
+        return ProductDetailsState(_id,  categories, color, currentPrice, date, description, enabled, fabric, imageUrls, itemNo, name, previousPrice, quantity, size, (100 * (previousPrice -currentPrice)/previousPrice).toInt())
     }
 
     fun toSimilarProduct():SimilarProduct{
-        return SimilarProduct(_id,  categories, color, currentPrice, date, description.take(15), enabled, fabric, imageUrls, itemNo, name, previousPrice, quantity, size)
+        return SimilarProduct(_id,  categories, color, currentPrice, date, description.take(15), enabled, fabric, imageUrls, itemNo, name, previousPrice, quantity, size,(100 * (previousPrice -currentPrice)/previousPrice).toInt())
     }
 }

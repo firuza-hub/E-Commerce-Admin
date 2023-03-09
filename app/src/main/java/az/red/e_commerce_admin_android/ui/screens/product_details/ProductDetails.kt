@@ -4,11 +4,17 @@ import android.widget.Toast
 import androidx.compose.material.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -28,6 +34,7 @@ import org.koin.androidx.compose.koinViewModel
 fun ProductDetails(
     popBackStack: () -> Unit,
     navigateTo: (String) -> Unit,
+    navigateToReviews: (String) -> Unit,
     viewModel: ProductDetailsViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -57,16 +64,24 @@ fun ProductDetails(
     val similarProducts by viewModel.similarProducts.collectAsState()
 
     if (!isLoading && state.error == null) {
-        Column(modifier = Modifier.fillMaxSize().verticalScroll(scrollState)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+        ) {
+
             if (state.imageUrls.any())
                 ProductImagesCarousel(
                     imageUrls = state.imageUrls,
-                    modifier = Modifier.height(375.dp)
+                    modifier = Modifier.height(375.dp),
+                    state.discount
                 )
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = CustomTheme.spaces.large)) {
 
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = CustomTheme.spaces.large)
+            ) {
 
                 Text(
                     text = state.name,
@@ -95,22 +110,29 @@ fun ProductDetails(
                             end = CustomTheme.spaces.large
                         )
                     )
+                    if (state.previousPrice != state.currentPrice) {
+                        Text(
+                            text = "US $${state.previousPrice}",
+                            style = CustomTheme.typography.nunitoNormal14StrikeThrough,
+                            color = CustomTheme.colors.text
 
-                    Text(
-                        text = "US $${state.previousPrice}",
-                        style = CustomTheme.typography.nunitoNormal14StrikeThrough,
-                        color = CustomTheme.colors.text
-
-                    )
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 ProductInfoRedirectLine(stringResource(R.string.product_specifications), {})
-                ProductInfoRedirectLine(stringResource(R.string.product_reviews), {})
+                ProductInfoRedirectLine(stringResource(R.string.product_reviews)) {
+                    navigateToReviews(
+                        state.id
+                    )
+                }
                 ProductInfoRedirectLine(stringResource(R.string.product_questions), {})
 
                 Spacer(Modifier.height(16.dp))
-                if(similarProducts.any())
-                    SimilarGoodsCarousel(similarProducts, redirectTo = {navigateTo(HomeNavScreen.ProductDetails.route + "/${it}")})
+                if (similarProducts.any())
+                    SimilarGoodsCarousel(
+                        similarProducts,
+                        redirectTo = { navigateTo(HomeNavScreen.ProductDetails.route + "/${it}") })
             }
         }
         ProductDetailsTopAppBar(popBackStack)

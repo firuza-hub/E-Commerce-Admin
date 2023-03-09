@@ -4,7 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,26 +27,50 @@ import com.google.accompanist.pager.rememberPagerState
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun ProductImagesCarousel(imageUrls: List<String>, modifier: Modifier) {
+fun ProductImagesCarousel(imageUrls: List<String>, modifier: Modifier, discount: Int) {
     val state = rememberPagerState(initialPage = 1)
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        HorizontalPager(count = imageUrls.size, state = state) { page ->
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current).data(imageUrls[page])
-                    .crossfade(true).build(),
-                modifier = modifier.fillMaxWidth(),
-                contentDescription = "product images",
-                contentScale = ContentScale.Crop
-            )
+        Box(modifier = Modifier.fillMaxWidth()) {
+            HorizontalPager(count = imageUrls.size, state = state) { page ->
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current).data(imageUrls[page])
+                        .crossfade(true).build(),
+                    modifier = modifier.fillMaxWidth(),
+                    contentDescription = "product images",
+                    contentScale = ContentScale.Crop
+                )
+            }
+            if (discount > 0) {
+                Card(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.BottomEnd),
+                    shape = RoundedCornerShape(4.dp),
+                    colors = CardDefaults.cardColors(
+                        contentColor = CustomTheme.colors.text,
+                        containerColor = CustomTheme.colors.accent
+                    )
+                ) {
+                    Text(
+                        text = "-${discount}%",
+                        style = CustomTheme.typography.nunitoBold14,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+                        color = CustomTheme.colors.btnTextAlwaysLight
+                    )
+                }
+            }
         }
-            DotsIndicator(
-                modifier = Modifier.align(CenterHorizontally).padding(vertical = 16.dp),
-                totalDots = imageUrls.size,
-                state.currentPage,
-                CustomTheme.colors.accent,
-                CustomTheme.colors.inputIconHint
-            )
+
+        DotsIndicator(
+            modifier = Modifier
+                .align(CenterHorizontally)
+                .padding(vertical = 16.dp),
+            totalDots = imageUrls.size,
+            state.currentPage,
+            CustomTheme.colors.accent,
+            CustomTheme.colors.inputIconHint
+        )
 
     }
 
@@ -50,12 +79,12 @@ fun ProductImagesCarousel(imageUrls: List<String>, modifier: Modifier) {
 
 @Composable
 fun DotsIndicator(
-    modifier:Modifier,
-    totalDots : Int,
-    selectedIndex : Int,
+    modifier: Modifier,
+    totalDots: Int,
+    selectedIndex: Int,
     selectedColor: Color,
     unSelectedColor: Color,
-){
+) {
 
     LazyRow(
         modifier = modifier

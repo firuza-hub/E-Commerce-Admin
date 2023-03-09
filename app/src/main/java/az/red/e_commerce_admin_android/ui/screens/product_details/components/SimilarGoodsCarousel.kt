@@ -53,7 +53,8 @@ fun SimilarGoodsCarousel(similarProducts: List<SimilarProduct>, redirectTo:(item
                 Text(text = it.description, style = CustomTheme.typography.nunitoNormal14)
                 Text(text = "US $${it.currentPrice}",modifier = Modifier
                     .padding(top = 8.dp), style = CustomTheme.typography.nunitoBold14)
-                Text(text = "US $${it.previousPrice}", style = CustomTheme.typography.nunitoNormal14StrikeThrough)
+                if (it.previousPrice != it.currentPrice) {
+                Text(text = "US $${it.previousPrice}", style = CustomTheme.typography.nunitoNormal14StrikeThrough)}
             }
         }
     }

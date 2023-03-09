@@ -17,6 +17,7 @@ data class ProductDetailsState(
     var previousPrice: Double,
     var quantity: Int,
     var size: String,
+    val discount: Int = 0,
     var error: String? = null
 ) {
     companion object {
@@ -35,7 +36,7 @@ data class ProductDetailsState(
             0.0,
             0,
             "",
-            null
+            0
         )
     }
 }
@@ -54,12 +55,13 @@ data class SimilarProduct(
     var name: String,
     var previousPrice: Double,
     var quantity: Int,
-    var size: String
+    var size: String,
+    val discount: Int = 0
 ) {
     companion object {
         val NULL = SimilarProduct(
             "", "", "", 0.0, "",
-            "", true, "", emptyList(), "", "", 0.0, 0, ""
+            "", true, "", emptyList(), "", "", 0.0, 0, "", 0
         )
     }
 }

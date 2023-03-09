@@ -22,7 +22,8 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
         ) {
             ProductDetails(
                 popBackStack = { navController.popBackStack() },
-                navigateTo = { navController.navigate(it) })
+                navigateTo = { navController.navigate(it) },
+                navigateToReviews = {})
         }
     }
 }
