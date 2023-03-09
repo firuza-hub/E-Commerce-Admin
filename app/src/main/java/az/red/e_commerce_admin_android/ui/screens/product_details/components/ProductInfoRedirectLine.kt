@@ -16,15 +16,25 @@ import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
-fun ProductInfoRedirectLine(text:String, redirectTo:() -> Unit){
-    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth().clickable { redirectTo() }) {
+fun ProductInfoRedirectLine(text: String, redirectTo: () -> Unit) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { redirectTo() }) {
         Text(
             text = text,
             style = CustomTheme.typography.nunitoSemiBold16,
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier.padding(vertical = 16.dp),
+            color = CustomTheme.colors.text
         )
-        Icon(painter = painterResource(id = R.drawable.ic_next), contentDescription = "arrow", modifier = Modifier.align(
-            Alignment.CenterVertically
-        ))
+        Icon(
+            painter = painterResource(id = R.drawable.ic_next),
+            contentDescription = "arrow",
+            modifier = Modifier.align(
+                Alignment.CenterVertically
+            ),
+            tint = CustomTheme.colors.text
+        )
     }
 }

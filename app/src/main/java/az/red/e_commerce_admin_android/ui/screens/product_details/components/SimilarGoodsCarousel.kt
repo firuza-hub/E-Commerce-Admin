@@ -21,7 +21,10 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
 @Composable
-fun SimilarGoodsCarousel(similarProducts: List<SimilarProduct>, redirectTo:(itemNo:String) -> Unit) {
+fun SimilarGoodsCarousel(
+    similarProducts: List<SimilarProduct>,
+    redirectTo: (itemNo: String) -> Unit
+) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         Text(
             text = stringResource(R.string.product_similar_goods),
@@ -35,22 +38,28 @@ fun SimilarGoodsCarousel(similarProducts: List<SimilarProduct>, redirectTo:(item
         )
 
     }
-   LazyRow{
-        items(similarProducts){
-            Column( modifier = Modifier
+    Spacer(modifier = Modifier.height(CustomTheme.spaces.medium))
+    LazyRow {
+        items(similarProducts) {
+            Column(modifier = Modifier
                 .width(160.dp)
-                .padding(end = 10.dp).clickable { redirectTo(it.itemNo) }) {
+                .padding(end = 10.dp)
+                .clickable { redirectTo(it.itemNo) }) {
                 Box {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current).data(it.imageUrls[0])
                             .crossfade(true).build(),
-                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp)),
                         contentDescription = "similar goods item",
                         contentScale = ContentScale.Crop
                     )
                     if (it.discount > 0) {
                         DiscountCard(
-                            modifier = Modifier.width(55.dp).height(30.dp)
+                            modifier = Modifier
+                                .width(55.dp)
+                                .height(30.dp)
                                 .padding(4.dp)
                                 .align(Alignment.TopEnd), discount = it.discount,
                             textStyle = CustomTheme.typography.nunitoNormal12
@@ -58,13 +67,29 @@ fun SimilarGoodsCarousel(similarProducts: List<SimilarProduct>, redirectTo:(item
                     }
                 }
 
-                Text(text = it.name,modifier = Modifier
-                    .padding(top = 8.dp), style = CustomTheme.typography.nunitoSemiBold16)
-                Text(text = it.description, style = CustomTheme.typography.nunitoNormal14)
-                Text(text = "US $${it.currentPrice}",modifier = Modifier
-                    .padding(top = 8.dp), style = CustomTheme.typography.nunitoBold14)
+                Text(
+                    text = it.name,
+                    modifier = Modifier.padding(top = 8.dp),
+                    style = CustomTheme.typography.nunitoSemiBold16,
+                    color = CustomTheme.colors.text
+                )
+                Text(
+                    text = it.description, style = CustomTheme.typography.nunitoNormal14,
+                    color = CustomTheme.colors.text
+                )
+                Text(
+                    text = "US $${it.currentPrice}", modifier = Modifier
+                        .padding(top = 8.dp), style = CustomTheme.typography.nunitoBold14,
+                    color = CustomTheme.colors.text
+                )
                 if (it.previousPrice != it.currentPrice) {
-                Text(text = "US $${it.previousPrice}", style = CustomTheme.typography.nunitoNormal14StrikeThrough)}
+                    Text(
+                        text = "US $${it.previousPrice}",
+                        style = CustomTheme.typography.nunitoNormal14StrikeThrough,
+                        color = CustomTheme.colors.text
+                    )
+                }
+                Spacer(modifier = Modifier.height(CustomTheme.spaces.extraLarge))
             }
         }
     }
