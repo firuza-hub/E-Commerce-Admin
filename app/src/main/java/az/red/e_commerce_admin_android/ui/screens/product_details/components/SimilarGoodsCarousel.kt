@@ -1,6 +1,5 @@
 package az.red.e_commerce_admin_android.ui.screens.product_details.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
