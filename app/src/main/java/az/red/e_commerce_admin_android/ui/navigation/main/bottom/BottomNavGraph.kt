@@ -22,7 +22,7 @@ fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
                 navigateTo = { navController.navigate(it) })
         }
         composable(BottomNavScreen.Orders.screen_route) {
-            OrdersScreen()
+            OrdersScreen(navigateUp = {navController.navigateUp()})
         }
         composable(BottomNavScreen.Cart.screen_route) {
             CartScreen()

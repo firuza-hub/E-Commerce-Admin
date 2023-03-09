@@ -12,4 +12,8 @@ object EndPoints {
     private const val PRODUCT_BASE = "products"
     const val PRODUCTS_FILTERED = "$PRODUCT_BASE/filter"
     const val PRODUCT = "$PRODUCT_BASE"
+
+    private const val ORDER_BASE = "orders"
+    const val UPDATE_ORDER = "${ORDER_BASE}/{id}"
+    const val GET_ORDERS = ORDER_BASE
 }

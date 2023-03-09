@@ -17,5 +17,5 @@ val presentationModule = module {
     viewModel { ProfileViewModel() }
     viewModel { ProductListViewModel(repo = get()) }
     viewModel { FillProfileViewModel(repository = get()) }
-    viewModel { ProductDetailsViewModel(repository = get(), savedStateHandle = get()) }
+    viewModel { OrderViewModel(repository = get()) }
 }
