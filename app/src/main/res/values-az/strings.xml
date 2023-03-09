@@ -75,4 +75,5 @@
     <string name="completed">Tamamlandı</string>
     <string name="shipped">göndərildi</string>
     <string name="not_shipped">göndərilmədi</string>
+    <string name="in_delivery">Çatdırılmada</string>
 </resources>

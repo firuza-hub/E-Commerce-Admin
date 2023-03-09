@@ -149,7 +149,7 @@ fun OrdersScreenBody(
                                                 Text(
                                                     text = stringResource(R.string.change_order_status),
                                                     style = CustomTheme.typography.nunitoNormal12,
-                                                    color = CustomTheme.colors.text
+                                                    color = CustomTheme.colors.btnTextAlwaysLight
                                                 )
                                             }
 
