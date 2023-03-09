@@ -66,4 +66,6 @@
     <string name="login">Login</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="change_order_status">Change status</string>
+    <string name="cancelled">Cancelled</string>
 </resources>

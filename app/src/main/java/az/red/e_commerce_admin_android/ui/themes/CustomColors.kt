@@ -22,6 +22,7 @@ val InputHintColorDark = Color(parseColor("#233447"))
 val BackgroundDark = Color(parseColor("#131C26"))
 val ImageCardBackgroundLight = Color(parseColor("#1A1A262C"))
 val ImageCardBackgroundDark = Color(parseColor("#233447"))
+val OrderStatusCardLight = Color(parseColor("#0CA71B"))
 
 class CustomColors(
     primary: Color,
@@ -42,7 +43,8 @@ class CustomColors(
     isLight: Boolean,
     darkBtnBackground: Color,
     textReverse: Color,
-    imageCardBackground: Color
+    imageCardBackground: Color,
+    orderStatus:Color
 ) {
     var primary by mutableStateOf(primary)
         private set
@@ -92,6 +94,9 @@ class CustomColors(
     var imageCardBackground by mutableStateOf(imageCardBackground)
         private set
 
+    var orderStatus by mutableStateOf(orderStatus)
+        private set
+
     fun copy(
         primary: Color = this.primary,
         text: Color = this.text,
@@ -111,7 +116,8 @@ class CustomColors(
         btnTextDisabled: Color = this.btnTextDisabled,
         darkBtnBackground: Color = this.darkBtnBackground,
         textReverse: Color = this.textReverse,
-        imageCardBackground: Color = this.imageCardBackground
+        imageCardBackground: Color = this.imageCardBackground,
+        orderStatus: Color = this.orderStatus
     ) = CustomColors(
         primary = primary,
         text = text,
@@ -131,7 +137,8 @@ class CustomColors(
         btnTextDisabled = btnTextDisabled,
         darkBtnBackground = darkBtnBackground,
         textReverse = textReverse,
-        imageCardBackground = imageCardBackground
+        imageCardBackground = imageCardBackground,
+        orderStatus = orderStatus
     )
 
     fun updateColorsFrom(other: CustomColors) {
