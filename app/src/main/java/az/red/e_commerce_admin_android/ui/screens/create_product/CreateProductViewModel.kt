@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.ui.screens.create_product
 
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.data.remote.brand.BrandRepository
@@ -7,11 +8,14 @@ import az.red.e_commerce_admin_android.data.remote.category.CategoryRepository
 import az.red.e_commerce_admin_android.data.remote.create_product.CreateProductRepository
 import az.red.e_commerce_admin_android.data.remote.create_product.dto.request.CreateProductRequest
 import az.red.e_commerce_admin_android.utils.NetworkResult
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class CreateProductViewModel(
     private val createProductRepository: CreateProductRepository,
@@ -27,6 +31,9 @@ class CreateProductViewModel(
 
     private val _categoryData = MutableStateFlow(emptyList<String>())
     val categoryData: StateFlow<List<String>> get() = _categoryData.asStateFlow()
+
+    private val _imagesList = MutableStateFlow(emptyList<String>())
+    val imagesList: StateFlow<List<String>> get() = _imagesList.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -83,6 +90,28 @@ class CreateProductViewModel(
                     _categoryData.value = it.data!!.map { item -> item.name }
                 }
             }
+        }
+    }
+
+    fun uploadImagesToFirebase(imagesPath: List<Uri>) {
+        val storageRef = Firebase.storage.reference
+        val list = arrayListOf<String>()
+        for (i in imagesPath) {
+            val uuid = UUID.randomUUID()
+            val mountainImagesRef = storageRef.child("images/${uuid}.jpg")
+            val uploadTask = mountainImagesRef.putFile(i)
+            uploadTask.addOnFailureListener {
+                _state.value = _state.value.copy(isLoading = false)
+            }.addOnSuccessListener { taskSnapshot ->
+                _state.value = _state.value.copy(isLoading = false)
+
+            }.addOnProgressListener {
+                _state.value = _state.value.copy(isLoading = true)
+            }.addOnCompleteListener {
+                // is not complete download url get
+                _imagesList.value = list
+            }
+
         }
     }
 }

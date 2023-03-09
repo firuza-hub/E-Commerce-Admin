@@ -50,6 +50,7 @@ fun MainContent(
     val createProductState = viewModel.state.collectAsState()
     val brandList = viewModel.brandData.collectAsState().value
     val categoryList = viewModel.categoryData.collectAsState().value
+    val imageList = viewModel.imagesList.collectAsState().value
 
     val titleText = rememberSaveable { mutableStateOf(value = "") }
     val descriptionText = rememberSaveable { mutableStateOf(value = "") }
@@ -94,6 +95,22 @@ fun MainContent(
 
     if (createProductState.value.error.isNotEmpty()) {
         Toast.makeText(context, createProductState.value.error, Toast.LENGTH_SHORT).show()
+    }
+
+    if (imageList.size == images.size && imageList.isNotEmpty()) {
+        viewModel.createProduct(
+            CreateProductRequest(
+                brand = brandText.value,
+                categories = categoryText.value,
+                imageUrls = imageList,
+                myCustomParam = descriptionText.value,
+                currentPrice = priceText.value.toDouble(),
+                name = titleText.value,
+                quantity = 0,
+                enabled = true,
+                date = Calendar.getInstance().time
+            )
+        )
     }
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -204,19 +221,7 @@ fun MainContent(
                     .clip(RoundedCornerShape(28.dp)),
                 colors = AuthButtonColors(),
                 onClick = {
-                    viewModel.createProduct(
-                        CreateProductRequest(
-                            brand = brandText.value,
-                            categories = categoryText.value,
-                            imageUrls = emptyList(), // will do
-                            myCustomParam = descriptionText.value,
-                            currentPrice = priceText.value.toDouble(),
-                            name = titleText.value,
-                            quantity = 0,
-                            enabled = true,
-                            date = Calendar.getInstance().time
-                        )
-                    )
+                    viewModel.uploadImagesToFirebase(images)
                 },
                 enabled = true
             ) {
