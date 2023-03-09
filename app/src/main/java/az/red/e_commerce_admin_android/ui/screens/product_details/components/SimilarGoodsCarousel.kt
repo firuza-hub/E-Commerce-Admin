@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -40,13 +41,23 @@ fun SimilarGoodsCarousel(similarProducts: List<SimilarProduct>, redirectTo:(item
             Column( modifier = Modifier
                 .width(160.dp)
                 .padding(end = 10.dp).clickable { redirectTo(it.itemNo) }) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current).data(it.imageUrls[0])
-                        .crossfade(true).build(),
-                    modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
-                    contentDescription = "similar goods item",
-                    contentScale = ContentScale.Crop
-                )
+                Box {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current).data(it.imageUrls[0])
+                            .crossfade(true).build(),
+                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+                        contentDescription = "similar goods item",
+                        contentScale = ContentScale.Crop
+                    )
+                    if (it.discount > 0) {
+                        DiscountCard(
+                            modifier = Modifier.width(55.dp).height(30.dp)
+                                .padding(4.dp)
+                                .align(Alignment.TopEnd), discount = it.discount,
+                            textStyle = CustomTheme.typography.nunitoNormal12
+                        )
+                    }
+                }
 
                 Text(text = it.name,modifier = Modifier
                     .padding(top = 8.dp), style = CustomTheme.typography.nunitoSemiBold16)

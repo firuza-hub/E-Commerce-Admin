@@ -4,10 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -42,23 +38,12 @@ fun ProductImagesCarousel(imageUrls: List<String>, modifier: Modifier, discount:
                 )
             }
             if (discount > 0) {
-                Card(
+                DiscountCard(
                     modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.BottomEnd),
-                    shape = RoundedCornerShape(4.dp),
-                    colors = CardDefaults.cardColors(
-                        contentColor = CustomTheme.colors.text,
-                        containerColor = CustomTheme.colors.accent
-                    )
-                ) {
-                    Text(
-                        text = "-${discount}%",
-                        style = CustomTheme.typography.nunitoBold14,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-                        color = CustomTheme.colors.btnTextAlwaysLight
-                    )
-                }
+                        .padding(16.dp).width(60.dp).height(30.dp)
+                        .align(Alignment.BottomEnd), discount = discount,
+                    textStyle = CustomTheme.typography.nunitoBold14
+                )
             }
         }
 
