@@ -85,7 +85,6 @@ class ProductDetailsViewModel(
                 if (this.data != null) {
                     onSuccess(this.data)
                     Log.i(tag, "Success")
-                    fetchSimilarProducts()
                 } else {
                     triggerEvent(UIEvent.Error("no data"))
                     Log.i(tag, "Success -> no data")

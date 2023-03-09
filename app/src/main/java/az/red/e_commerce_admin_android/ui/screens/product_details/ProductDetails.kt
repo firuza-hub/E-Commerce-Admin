@@ -123,10 +123,12 @@ fun ProductDetails(
                 ProductInfoRedirectLine(stringResource(R.string.product_questions), {})
 
                 Spacer(Modifier.height(16.dp))
-                if (similarProducts.any())
+                if (similarProducts.any()) {
+                    println("MEOW if")
                     SimilarGoodsCarousel(
                         similarProducts,
                         redirectTo = { navigateTo(HomeNavScreen.ProductDetails.route + "/${it}") })
+                }
             }
         }
         ProductDetailsTopAppBar(popBackStack)
