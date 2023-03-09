@@ -1,6 +1,5 @@
 package az.red.e_commerce_admin_android.ui.screens.create_product.components
 
-import SelectItemDialog
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -36,7 +35,6 @@ import java.util.Calendar
 @Composable
 fun CreateProduct(popBackStack: () -> Unit, viewModel: CreateProductViewModel = koinViewModel()) {
     SelectImageBottomSheet(popBackStack, viewModel)
-    SelectItemDialog(dialogState = true, onClick = { println(it) })
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -48,9 +46,10 @@ fun MainContent(
     viewModel: CreateProductViewModel
 ) {
     val context = LocalContext.current
-    val state = viewModel.state.collectAsState()
-
     val scope = rememberCoroutineScope()
+    val createProductState = viewModel.state.collectAsState()
+    val brandList = viewModel.brandData.collectAsState().value
+    val categoryList = viewModel.categoryData.collectAsState().value
 
     val titleText = rememberSaveable { mutableStateOf(value = "") }
     val descriptionText = rememberSaveable { mutableStateOf(value = "") }
@@ -58,9 +57,43 @@ fun MainContent(
     val brandText = rememberSaveable { mutableStateOf(value = "") }
     val categoryText = rememberSaveable { mutableStateOf(value = "") }
 
+    val dialogState = rememberSaveable { mutableStateOf(value = false) }
+    val dialogType = rememberSaveable { mutableStateOf(value = DialogType.BRAND) }
 
-    if (state.value.error.isNotEmpty()) {
-        Toast.makeText(context, state.value.error, Toast.LENGTH_SHORT).show()
+    if (dialogState.value) {
+        when (dialogType.value) {
+            DialogType.CATEGORY -> {
+                SelectItemDialog(
+                    dialogState = true,
+                    modifier = Modifier,
+                    onCategoryItemClick = {
+                        categoryText.value = it
+                    },
+                    categoryList = categoryList,
+                    type = dialogType.value,
+                    onDismissRequest = {
+                        dialogState.value = false
+                    })
+            }
+            DialogType.BRAND -> {
+                SelectItemDialog(
+                    dialogState = true,
+                    modifier = Modifier,
+                    onBrandItemClick = {
+                        brandText.value = it
+                    },
+                    brandList = brandList,
+                    type = dialogType.value,
+                    onDismissRequest = {
+                        dialogState.value = false
+                    })
+            }
+        }
+    }
+
+
+    if (createProductState.value.error.isNotEmpty()) {
+        Toast.makeText(context, createProductState.value.error, Toast.LENGTH_SHORT).show()
     }
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -85,7 +118,7 @@ fun MainContent(
                 }
             })
 
-        if (state.value.isLoading) {
+        if (createProductState.value.isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -147,13 +180,20 @@ fun MainContent(
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp)
                     .clickable {
+                        dialogState.value = true
+                        dialogType.value = DialogType.BRAND
                     }
             )
 
             CustomTextView(
                 text = stringResource(id = R.string.category),
                 R.drawable.ic_category,
-                modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp)
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 8.dp, end = 16.dp)
+                    .clickable {
+                        dialogState.value = true
+                        dialogType.value = DialogType.CATEGORY
+                    }
             )
 
             Button(

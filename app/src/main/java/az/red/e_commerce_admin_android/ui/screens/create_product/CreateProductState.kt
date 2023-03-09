@@ -7,4 +7,3 @@ data class CreateProductState(
     val error: String = "",
     val isLoading: Boolean = false
 )
-
