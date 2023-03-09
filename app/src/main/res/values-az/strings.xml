@@ -66,4 +66,9 @@
     <string name="login">Daxil ol</string>
     <string name="first_name">Ad</string>
     <string name="last_name">Soyad</string>
+    <string name="product_specifications">Spesifikasiyalar</string>
+    <string name="product_reviews">Kommentlər</string>
+    <string name="product_questions">Suallar</string>
+    <string name="product_similar_goods">Oxşar məhsullar</string>
+    <string name="see_all">Hamısını göstər</string>
 </resources>

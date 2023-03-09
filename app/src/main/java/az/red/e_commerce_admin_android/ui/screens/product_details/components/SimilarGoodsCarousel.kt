@@ -36,9 +36,10 @@ fun SimilarGoodsCarousel(
             style = CustomTheme.typography.nunitoNormal14,
             color = CustomTheme.colors.accent
         )
-
     }
+
     Spacer(modifier = Modifier.height(CustomTheme.spaces.medium))
+
     LazyRow {
         items(similarProducts) {
             Column(modifier = Modifier
