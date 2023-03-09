@@ -17,7 +17,8 @@ import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileScree
 fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
     navigation(route = Graph.MAIN, startDestination = BottomNavScreen.Home.screen_route) {
         composable(BottomNavScreen.Home.screen_route) {
-            HomeScreen(navigateUp = { navController.navigateUp() })
+            HomeScreen(navigateUp = { navController.navigateUp() },
+                navigateTo = { navController.navigate(it) })
         }
         composable(BottomNavScreen.Orders.screen_route) {
             OrdersScreen(navigateUp = {navController.navigateUp()})

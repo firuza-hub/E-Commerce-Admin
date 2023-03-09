@@ -22,8 +22,28 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(
     navigateUp: () -> Unit,
+    navigateTo: (route:String) -> Unit,
     productListViewModel: ProductListViewModel = koinViewModel()
 ) {
+    val context = LocalContext.current
+    LaunchedEffect(key1 = true) {
+        launch {
+            productListViewModel.uiEventFlow.collect { event ->
+                when (event) {
+                    is UIEvent.Error -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Message -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Navigate -> {
+                        navigateTo(event.route)
+                    }
+                }
+            }
+        }
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
