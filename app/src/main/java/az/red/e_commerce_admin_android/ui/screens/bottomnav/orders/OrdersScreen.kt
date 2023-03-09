@@ -1,10 +1,7 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.orders
 
-import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import az.red.e_commerce_admin_android.R
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -15,8 +12,6 @@ import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.orders.components.OrdersScreenBody
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.orders.components.OrdersTopAppBar
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -73,24 +68,6 @@ fun OrdersScreen(
                 R.drawable.ic_orders_ongoing,
                 stringResource(R.string.cancelled_empty_list_message)
             )
-
-//            OutlinedButton(
-//                onClick = { onMyProductsClick() },
-//                colors = ButtonDefaults.buttonColors(CustomTheme.colors.cardBackground),
-//                border = BorderStroke(
-//                    1.dp,
-//                    color = CustomTheme.colors.cardBorder
-//                ),
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(42.dp), shape = RoundedCornerShape(28.dp)
-//            ) {
-//                Text(
-//                    text = stringResource(R.string.my_products),
-//                    style = CustomTheme.typography.nunitoNormal18,
-//                    color = CustomTheme.colors.text
-//                )
-//            }
         }
     }
 }

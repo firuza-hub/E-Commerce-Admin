@@ -38,17 +38,17 @@ fun OrdersScreenListItem(
         ) {
 
             orderList[orderIndex].products[productIndex].product.imageUrls.let {
-                if (it.any()) ProductListImage(
+                if (it.any()) OrderListImage(
                     it.first()
                 )
-                ProductListInfo(orderList, orderIndex, productIndex)
+                OrderListInfo(orderList, orderIndex, productIndex)
             }
         }
     }
 }
 
 @Composable
-fun ProductListImage(imgUrl: String) {
+fun OrderListImage(imgUrl: String) {
     Box(
         modifier = Modifier
             .size(width = 97.dp, height = 97.dp)
@@ -66,7 +66,7 @@ fun ProductListImage(imgUrl: String) {
 }
 
 @Composable
-fun ProductListInfo(
+fun OrderListInfo(
     orderList: List<OrderResponse>,
     orderIndex: Int,
     productIndex: Int,
@@ -101,7 +101,8 @@ fun ProductListInfo(
         Text(
             text = "US $${orderList[orderIndex].products[productIndex].product.currentPrice}",
             style = CustomTheme.typography.nunitoBold14,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            color = CustomTheme.colors.text
         )
 
         Row(
@@ -116,17 +117,24 @@ fun ProductListInfo(
                 onClick = {
                     //your onclick code
                 },
-                border = BorderStroke(1.dp, CustomTheme.colors.orderStatus),
+                border = BorderStroke(
+                    1.dp,
+                    color = if (orderList[orderIndex].canceled) CustomTheme.colors.orderStatusCancelledButton
+                    else if (orderList[orderIndex].status == "shipped") CustomTheme.colors.orderStatusCompletedButton
+                    else CustomTheme.colors.accent
+                ),
                 colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.btnText),
                 shape = RoundedCornerShape(CustomTheme.spaces.small)
             ) {
                 Text(
-                    text = if (!orderList[orderIndex].canceled)
-                        orderList[orderIndex].status
-                    else stringResource(R.string.cancelled),
+                    text = if (orderList[orderIndex].canceled) stringResource(id = R.string.cancelled)
+                    else if (orderList[orderIndex].status == "shipped") stringResource(id = R.string.completed)
+                    else stringResource(R.string.in_delivery),
 
                     style = CustomTheme.typography.nunitoNormal12,
-                    color = CustomTheme.colors.orderStatus
+                    color = if (orderList[orderIndex].canceled) CustomTheme.colors.orderStatusCancelledButton
+                    else if (orderList[orderIndex].status == "shipped") CustomTheme.colors.orderStatusCompletedButton
+                    else CustomTheme.colors.accent
                 )
             }
         }

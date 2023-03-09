@@ -24,25 +24,6 @@ fun HomeScreen(
     navigateUp: () -> Unit,
     productListViewModel: ProductListViewModel = koinViewModel()
 ) {
-    val context = LocalContext.current
-    LaunchedEffect(key1 = true) {
-        launch {
-            productListViewModel.uiEventFlow.collect { event ->
-                when (event) {
-                    is UIEvent.Error -> {
-                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
-                    }
-                    is UIEvent.Message -> {
-                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
-                    }
-                    is UIEvent.Navigate -> {
-                        navController.navigate(route = event.route)
-                    }
-                }
-            }
-        }
-    }
-
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {

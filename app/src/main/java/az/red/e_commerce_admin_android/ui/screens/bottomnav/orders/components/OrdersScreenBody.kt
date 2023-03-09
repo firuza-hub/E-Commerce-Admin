@@ -69,7 +69,7 @@ fun OrdersScreenBody(
                 Text(
                     text = text,
                     style = CustomTheme.typography.montSerratSemiBold,
-                    color = CustomTheme.colors.darkBtnBackground,
+                    color = CustomTheme.colors.text,
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
 
@@ -149,7 +149,7 @@ fun OrdersScreenBody(
                                                 Text(
                                                     text = stringResource(R.string.change_order_status),
                                                     style = CustomTheme.typography.nunitoNormal12,
-                                                    color = CustomTheme.colors.textReverse
+                                                    color = CustomTheme.colors.text
                                                 )
                                             }
 
@@ -202,7 +202,7 @@ fun OrdersScreenBody(
                     Text(
                         text = ordersEmptyMessage,
                         style = CustomTheme.typography.nunitoNormal16,
-                        color = CustomTheme.colors.darkBtnBackground
+                        color = CustomTheme.colors.text
                     )
                 }
             }
