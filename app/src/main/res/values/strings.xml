@@ -81,4 +81,5 @@
     <string name="shipped">shipped</string>
     <string name="not_shipped">not shipped</string>
     <string name="in_delivery">In delivery</string>
+    <string name="activate">Activate</string>
 </resources>

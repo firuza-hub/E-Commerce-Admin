@@ -11,4 +11,5 @@ interface ProductRepository {
     fun getProductsFilteredPaging(request: ProductListItemRequest): Flow<PagingData<ProductResponse>>
     fun getProductsFiltered(request: ProductListItemRequest, count:Int? = null): Flow<NetworkResult<ProductsListResponse>>
     fun getProductById(id:String): Flow<NetworkResult<ProductResponse>>
+    fun deactivateProduct(dto : ProductResponse): Flow<NetworkResult<ProductResponse>>
 }
