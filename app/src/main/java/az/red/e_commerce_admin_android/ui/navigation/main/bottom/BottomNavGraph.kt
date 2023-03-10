@@ -6,10 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import az.red.e_commerce_admin_android.ui.navigation.main.home.HomeNavScreen
 import az.red.e_commerce_admin_android.ui.navigation.main.profile.ProfileNavScreen
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
-import az.red.e_commerce_admin_android.ui.screens.bottomnav.cart.CartScreen
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.HomeScreen
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.orders.OrdersScreen
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileScreen
@@ -23,9 +21,6 @@ fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
         }
         composable(BottomNavScreen.Orders.screen_route) {
             OrdersScreen(navigateUp = {navController.navigateUp()})
-        }
-        composable(BottomNavScreen.Cart.screen_route) {
-            CartScreen()
         }
         composable(BottomNavScreen.Profile.screen_route) {
             ProfileScreen(

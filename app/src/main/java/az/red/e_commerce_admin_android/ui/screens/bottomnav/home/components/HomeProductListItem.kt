@@ -9,7 +9,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -19,12 +20,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
+import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.ProductListViewModel
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ProductListItem(productResponse: ProductResponse, onClick:(id:String) -> Unit) {
+fun ProductListItem(productResponse: ProductResponse, onClick: (id: String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,7 +66,14 @@ fun ProductListImage(imgUrl: String) {
 }
 
 @Composable
-fun ProductListInfo(productResponse: ProductResponse) {
+fun ProductListInfo(
+    productResponse: ProductResponse,
+    viewModel: ProductListViewModel = koinViewModel()
+) {
+    var isDeactivate by rememberSaveable {
+        mutableStateOf(productResponse.enabled)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -107,14 +117,17 @@ fun ProductListInfo(productResponse: ProductResponse) {
                     .padding(end = 8.dp)
                     .weight(1f),
                 onClick = {
-                    //your onclick code
+                    isDeactivate = !isDeactivate
+                    viewModel.deactivateProduct(productResponse, isDeactivate)
                 },
                 border = BorderStroke(1.dp, CustomTheme.colors.cardBorder),
                 colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.background),
                 shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
-                    text = stringResource(R.string.deactivate),
+                    text = if (isDeactivate) stringResource(R.string.deactivate) else stringResource(
+                        R.string.activate
+                    ),
                     style = CustomTheme.typography.nunitoNormal12,
                     color = CustomTheme.colors.text
                 )
@@ -123,7 +136,8 @@ fun ProductListInfo(productResponse: ProductResponse) {
             Button(
                 modifier = Modifier.weight(1f), onClick = {
                     //your onclick code
-                }, colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.darkBtnBackground,
+                }, colors = ButtonDefaults.buttonColors(
+                    backgroundColor = CustomTheme.colors.darkBtnBackground,
                 ), shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(

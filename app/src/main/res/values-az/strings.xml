@@ -81,4 +81,5 @@
     <string name="shipped">göndərildi</string>
     <string name="not_shipped">göndərilmədi</string>
     <string name="in_delivery">Çatdırılmada</string>
+    <string name="activate">Aktiv edin</string>
 </resources>

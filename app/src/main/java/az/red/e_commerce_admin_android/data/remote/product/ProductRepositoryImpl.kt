@@ -45,6 +45,12 @@ class ProductRepositoryImpl(private val service: ProductService) : ProductReposi
     override fun getProductById(id: String): Flow<NetworkResult<ProductResponse>> {
         return handleApi { service.getProductById(id) }
     }
+
+    override fun deactivateProduct(
+        dto: ProductResponse
+    ): Flow<NetworkResult<ProductResponse>> {
+        return handleApi { service.deactivateProduct(dto._id, dto) }
+    }
 }
 
 const val NETWORK_PAGE_SIZE = 6
