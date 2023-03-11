@@ -8,6 +8,7 @@ import az.red.e_commerce_admin_android.data.remote.category.CategoryRepository
 import az.red.e_commerce_admin_android.data.remote.create_product.CreateProductRepository
 import az.red.e_commerce_admin_android.data.remote.create_product.dto.request.CreateProductRequest
 import az.red.e_commerce_admin_android.utils.NetworkResult
+import com.google.android.gms.tasks.Task
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.async
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.UUID
+import java.util.*
 
 class CreateProductViewModel(
     private val createProductRepository: CreateProductRepository,
@@ -32,9 +33,6 @@ class CreateProductViewModel(
     private val _categoryData = MutableStateFlow(emptyList<String>())
     val categoryData: StateFlow<List<String>> get() = _categoryData.asStateFlow()
 
-    private val _imagesList = MutableStateFlow(emptyList<String>())
-    val imagesList: StateFlow<List<String>> get() = _imagesList.asStateFlow()
-
     init {
         viewModelScope.launch {
             val getBrands = async { getAllBrands() }
@@ -44,7 +42,7 @@ class CreateProductViewModel(
         }
     }
 
-    fun createProduct(request: CreateProductRequest) = viewModelScope.launch {
+    private fun createProduct(request: CreateProductRequest) = viewModelScope.launch {
         createProductRepository.createProduct(request).collect {
             when (it) {
                 is NetworkResult.Empty -> _state.value = _state.value.copy()
@@ -55,7 +53,7 @@ class CreateProductViewModel(
                 is NetworkResult.Success -> _state.value =
                     _state.value.copy(
                         data = it.data!!,
-                        isLoading = false
+                        isLoading = false,
                     )
             }
         }
@@ -93,23 +91,52 @@ class CreateProductViewModel(
         }
     }
 
-    fun uploadImagesToFirebase(imagesPath: List<Uri>) {
+    fun createProduct(
+        brand: String,
+        categories: String,
+        myCustomParam: String,
+        currentPrice: Double,
+        name: String,
+        imagesPath: List<Uri>
+    ) {
         val storageRef = Firebase.storage.reference
         val list = arrayListOf<String>()
         for (i in imagesPath) {
             val uuid = UUID.randomUUID()
             val mountainImagesRef = storageRef.child("images/${uuid}.jpg")
             val uploadTask = mountainImagesRef.putFile(i)
-            uploadTask.addOnFailureListener {
-                _state.value = _state.value.copy(isLoading = false)
-            }.addOnSuccessListener { taskSnapshot ->
-                _state.value = _state.value.copy(isLoading = false)
 
+            uploadTask.addOnSuccessListener { taskSnapshot ->
+                if (taskSnapshot.metadata != null) {
+                    if (taskSnapshot.metadata!!.reference != null) {
+                        val result: Task<Uri> = taskSnapshot.storage.downloadUrl
+                        result.addOnSuccessListener { uri ->
+                            val imageUrl = uri.toString()
+                            list.add(imageUrl)
+                            _state.value = _state.value.copy(isLoading = false)
+
+                            if (list.size == imagesPath.size) {
+                                createProduct(
+                                    CreateProductRequest(
+                                        brand = brand,
+                                        categories = categories,
+                                        imageUrls = list,
+                                        myCustomParam = myCustomParam,
+                                        currentPrice = currentPrice,
+                                        name = name,
+                                        quantity = 0,
+                                        enabled = true,
+                                        date = Calendar.getInstance().time
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            }.addOnFailureListener {
+                _state.value = _state.value.copy(isLoading = false)
             }.addOnProgressListener {
                 _state.value = _state.value.copy(isLoading = true)
-            }.addOnCompleteListener {
-                // is not complete download url get
-                _imagesList.value = list
             }
 
         }

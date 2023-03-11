@@ -23,14 +23,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.data.remote.create_product.dto.request.CreateProductRequest
 import az.red.e_commerce_admin_android.ui.screens.create_product.CreateProductViewModel
 import az.red.e_commerce_admin_android.ui.screens.login.AuthButtonColors
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-import java.util.Calendar
+import java.util.*
 
 @Composable
 fun CreateProduct(popBackStack: () -> Unit, viewModel: CreateProductViewModel = koinViewModel()) {
@@ -50,11 +49,10 @@ fun MainContent(
     val createProductState = viewModel.state.collectAsState()
     val brandList = viewModel.brandData.collectAsState().value
     val categoryList = viewModel.categoryData.collectAsState().value
-    val imageList = viewModel.imagesList.collectAsState().value
 
     val titleText = rememberSaveable { mutableStateOf(value = "") }
     val descriptionText = rememberSaveable { mutableStateOf(value = "") }
-    val priceText = rememberSaveable { mutableStateOf(value = "") }
+    val priceText = rememberSaveable { mutableStateOf(value = 0.0) }
     val brandText = rememberSaveable { mutableStateOf(value = "") }
     val categoryText = rememberSaveable { mutableStateOf(value = "") }
 
@@ -64,30 +62,18 @@ fun MainContent(
     if (dialogState.value) {
         when (dialogType.value) {
             DialogType.CATEGORY -> {
-                SelectItemDialog(
-                    dialogState = true,
-                    modifier = Modifier,
-                    onCategoryItemClick = {
-                        categoryText.value = it
-                    },
-                    categoryList = categoryList,
-                    type = dialogType.value,
-                    onDismissRequest = {
-                        dialogState.value = false
-                    })
+                SelectItemDialog(dialogState = true, modifier = Modifier, onCategoryItemClick = {
+                    categoryText.value = it
+                }, categoryList = categoryList, type = dialogType.value, onDismissRequest = {
+                    dialogState.value = false
+                })
             }
             DialogType.BRAND -> {
-                SelectItemDialog(
-                    dialogState = true,
-                    modifier = Modifier,
-                    onBrandItemClick = {
-                        brandText.value = it
-                    },
-                    brandList = brandList,
-                    type = dialogType.value,
-                    onDismissRequest = {
-                        dialogState.value = false
-                    })
+                SelectItemDialog(dialogState = true, modifier = Modifier, onBrandItemClick = {
+                    brandText.value = it
+                }, brandList = brandList, type = dialogType.value, onDismissRequest = {
+                    dialogState.value = false
+                })
             }
         }
     }
@@ -97,48 +83,27 @@ fun MainContent(
         Toast.makeText(context, createProductState.value.error, Toast.LENGTH_SHORT).show()
     }
 
-    if (imageList.size == images.size && imageList.isNotEmpty()) {
-        viewModel.createProduct(
-            CreateProductRequest(
-                brand = brandText.value,
-                categories = categoryText.value,
-                imageUrls = imageList,
-                myCustomParam = descriptionText.value,
-                currentPrice = priceText.value.toDouble(),
-                name = titleText.value,
-                quantity = 0,
-                enabled = true,
-                date = Calendar.getInstance().time
-            )
-        )
-    }
-
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        TopAppBar(
-            elevation = 0.dp,
-            title = {
-                Text(
-                    stringResource(id = R.string.add_new_product),
-                    style = CustomTheme.typography.nunitoNormal18,
-                    modifier = Modifier.offset(x = (-16).dp),
-                    color = CustomTheme.colors.text
+        TopAppBar(elevation = 0.dp, title = {
+            Text(
+                stringResource(id = R.string.add_new_product),
+                style = CustomTheme.typography.nunitoNormal18,
+                modifier = Modifier.offset(x = (-16).dp),
+                color = CustomTheme.colors.text
+            )
+        }, backgroundColor = CustomTheme.colors.background, navigationIcon = {
+            IconButton(onClick = { popBackStack() }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_back),
+                    contentDescription = null,
+                    tint = CustomTheme.colors.text
                 )
-            },
-            backgroundColor = CustomTheme.colors.background,
-            navigationIcon = {
-                IconButton(onClick = { popBackStack() }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_back),
-                        contentDescription = null,
-                        tint = CustomTheme.colors.text
-                    )
-                }
-            })
+            }
+        })
 
         if (createProductState.value.isLoading) {
             CircularProgressIndicator(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         } else {
             LazyRow {
@@ -150,16 +115,24 @@ fun MainContent(
                         modifier = Modifier
                             .padding(16.dp, 8.dp)
                             .size(160.dp)
+                            .clickable {
+                                scope.launch {
+                                    if (bottomSheetState.isVisible) bottomSheetState.hide() else bottomSheetState.show()
+                                }
+                            }
                     )
                 }
             }
-            AddImageItem(modifier = Modifier
-                .padding(start = 16.dp, top = 16.dp)
-                .clickable {
-                    scope.launch {
-                        if (bottomSheetState.isVisible) bottomSheetState.hide() else bottomSheetState.show()
-                    }
-                })
+
+            if (images.isEmpty()) {
+                AddImageItem(modifier = Modifier
+                    .padding(start = 16.dp, top = 16.dp)
+                    .clickable {
+                        scope.launch {
+                            if (bottomSheetState.isVisible) bottomSheetState.hide() else bottomSheetState.show()
+                        }
+                    })
+            }
 
             CustomSimpleTextField(
                 modifier = Modifier
@@ -167,7 +140,8 @@ fun MainContent(
                     .fillMaxWidth(),
                 onValueChangeUnit = {
                     titleText.value = it
-                }, hint = stringResource(id = R.string.title)
+                },
+                hint = stringResource(id = R.string.title)
             )
 
             CustomSimpleTextField(
@@ -176,7 +150,8 @@ fun MainContent(
                     .fillMaxWidth(),
                 onValueChangeUnit = {
                     descriptionText.value = it
-                }, hint = stringResource(id = R.string.description)
+                },
+                hint = stringResource(id = R.string.description)
             )
 
             CustomSimpleTextField(
@@ -184,46 +159,47 @@ fun MainContent(
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp)
                     .fillMaxWidth(),
                 onValueChangeUnit = {
-                    priceText.value = it
-                }, hint = stringResource(id = R.string.price),
+                    priceText.value = it.toDouble()
+                },
+                hint = stringResource(id = R.string.price),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
                 )
             )
 
-            CustomTextView(
-                text = stringResource(id = R.string.brand),
+            CustomTextView(text = stringResource(id = R.string.brand),
                 R.drawable.ic_brand,
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp)
                     .clickable {
                         dialogState.value = true
                         dialogType.value = DialogType.BRAND
-                    }
-            )
+                    })
 
-            CustomTextView(
-                text = stringResource(id = R.string.category),
+            CustomTextView(text = stringResource(id = R.string.category),
                 R.drawable.ic_category,
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp)
                     .clickable {
                         dialogState.value = true
                         dialogType.value = DialogType.CATEGORY
-                    }
-            )
+                    })
 
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, top = 24.dp, bottom = 16.dp)
                     .height(45.dp)
-                    .clip(RoundedCornerShape(28.dp)),
-                colors = AuthButtonColors(),
-                onClick = {
-                    viewModel.uploadImagesToFirebase(images)
-                },
-                enabled = true
+                    .clip(RoundedCornerShape(28.dp)), colors = AuthButtonColors(), onClick = {
+                    viewModel.createProduct(
+                        brand = brandText.value,
+                        categories = categoryText.value,
+                        myCustomParam = descriptionText.value,
+                        currentPrice = priceText.value,
+                        imagesPath = images,
+                        name = titleText.value
+                    )
+                }, enabled = true
             ) {
                 Text(
                     text = stringResource(id = R.string._continue),
@@ -248,8 +224,7 @@ fun SelectImageBottomSheet(popBackStack: () -> Unit, viewModel: CreateProductVie
         }
 
     ModalBottomSheetLayout(
-        sheetState = bottomSheetState,
-        sheetContent = {
+        sheetState = bottomSheetState, sheetContent = {
             Column(modifier = Modifier.padding(12.dp)) {
                 Text(
                     modifier = Modifier
@@ -263,9 +238,7 @@ fun SelectImageBottomSheet(popBackStack: () -> Unit, viewModel: CreateProductVie
                     style = CustomTheme.typography.sansSerif20
                 )
             }
-        },
-        sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
-        sheetElevation = 12.dp
+        }, sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp), sheetElevation = 12.dp
     ) {
         MainContent(popBackStack, bottomSheetState, selectImages, viewModel)
     }
