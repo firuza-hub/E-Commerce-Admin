@@ -12,6 +12,9 @@ import az.red.e_commerce_admin_android.data.remote.category.CategoryService
 import az.red.e_commerce_admin_android.data.remote.create_product.CreateProductRepository
 import az.red.e_commerce_admin_android.data.remote.create_product.CreateProductRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.create_product.CreateProductService
+import az.red.e_commerce_admin_android.data.remote.order.OrderRepository
+import az.red.e_commerce_admin_android.data.remote.order.OrderRepositoryImpl
+import az.red.e_commerce_admin_android.data.remote.order.OrderService
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.product.dto.ProductService
@@ -58,10 +61,11 @@ val dataModule = module {
         Gson()
     }
 
+
+
     /////////////////////////////////////////////////////////// Auth ///////////////////////////////////////////////////////////
     factory<AuthService> { get<Retrofit>().create(AuthService::class.java) }
     factory<AuthRepository> { AuthRepositoryImpl(get()) }
-
 
     /////////////////////////////////////////////////////////// User ///////////////////////////////////////////////////////////
     factory<UserService> { get<Retrofit>().create(UserService::class.java) }
@@ -83,4 +87,9 @@ val dataModule = module {
     /////////////////////////////////////////////////////////// Category ///////////////////////////////////////////////////////////
     factory<CategoryService> { get<Retrofit>().create(CategoryService::class.java) }
     factory<CategoryRepository> { CategoryRepositoryImpl(get()) }
+    
+    /////////////////////////////////////////////////////////// Order ///////////////////////////////////////////////////////////
+    factory<OrderService> { get<Retrofit>().create(OrderService::class.java) }
+    factory<OrderRepository> { OrderRepositoryImpl(get()) }
+
 }

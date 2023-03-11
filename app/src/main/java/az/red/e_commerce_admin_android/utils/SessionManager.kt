@@ -53,9 +53,35 @@ class SessionManager(context: Context) {
         return prefs.getString(CURRENT_LANGUAGE, null)
     }
 
+    fun listenCurrentLanguage(onModeChanged: (String?) -> Unit) =
+        prefs.registerOnSharedPreferenceChangeListener { sp, s ->
+            onModeChanged(
+                sp.getString(
+                    CURRENT_LANGUAGE,
+                    null
+                )
+            )
+        }
+
     fun fetchDarkMode(): Boolean {
         return prefs.getBoolean(DARK_MODE, false)
     }
+
+    fun listenDarkMode(onModeChanged: (Boolean) -> Unit) =
+        prefs.registerOnSharedPreferenceChangeListener { sp, s ->
+
+            println("Mode Changed to " + sp.getBoolean(
+                DARK_MODE,
+                false
+            ).toString())
+            onModeChanged(
+                sp.getBoolean(
+                    DARK_MODE,
+                    false
+                )
+            )
+        }
+
 
     fun fetchRememberMe(): Boolean {
         return prefs.getBoolean(REMEMBER_ME, false)
