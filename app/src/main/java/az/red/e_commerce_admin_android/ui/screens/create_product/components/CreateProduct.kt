@@ -108,7 +108,8 @@ fun MainContent(
         } else {
             LazyRow {
                 items(images) { uri ->
-                    Image(painter = rememberAsyncImagePainter(uri),
+                    Image(
+                        painter = rememberAsyncImagePainter(uri),
                         contentScale = ContentScale.FillWidth,
                         contentDescription = null,
                         modifier = Modifier
@@ -118,7 +119,8 @@ fun MainContent(
                                 scope.launch {
                                     if (bottomSheetState.isVisible) bottomSheetState.hide() else bottomSheetState.show()
                                 }
-                            })
+                            }
+                    )
                 }
             }
 
@@ -166,8 +168,7 @@ fun MainContent(
             )
 
             CustomTextView(text = stringResource(id = R.string.brand),
-                selectedItemText = brandText.value,
-                icon = R.drawable.ic_brand,
+                R.drawable.ic_brand,
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp)
                     .clickable {
@@ -176,8 +177,7 @@ fun MainContent(
                     })
 
             CustomTextView(text = stringResource(id = R.string.category),
-                selectedItemText = categoryText.value,
-                icon = R.drawable.ic_category,
+                R.drawable.ic_category,
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp)
                     .clickable {
@@ -191,25 +191,14 @@ fun MainContent(
                     .padding(start = 16.dp, end = 16.dp, top = 24.dp, bottom = 16.dp)
                     .height(45.dp)
                     .clip(RoundedCornerShape(28.dp)), colors = AuthButtonColors(), onClick = {
-                    if (
-                        brandText.value != "" &&
-                        categoryText.value != "" &&
-                        descriptionText.value != "" &&
-                        priceText.value != 0.0 &&
-                        titleText.value != "" &&
-                        images.isNotEmpty()
-                    ) {
-                        viewModel.createProduct(
-                            brand = brandText.value,
-                            categories = categoryText.value,
-                            myCustomParam = descriptionText.value,
-                            currentPrice = priceText.value,
-                            imagesPath = images,
-                            name = titleText.value
-                        )
-                    } else {
-                        // Show Toast
-                    }
+                    viewModel.createProduct(
+                        brand = brandText.value,
+                        categories = categoryText.value,
+                        myCustomParam = descriptionText.value,
+                        currentPrice = priceText.value,
+                        imagesPath = images,
+                        name = titleText.value
+                    )
                 }, enabled = true
             ) {
                 Text(

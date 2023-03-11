@@ -1,18 +1,14 @@
 package az.red.e_commerce_admin_android.ui.screens.create_product.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 
 @Composable
@@ -42,35 +38,26 @@ fun SelectItemDialog(
                             items(categoryList) { text ->
                                 Text(
                                     text = text,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 16.sp,
-                                    modifier = Modifier
-                                        .padding(16.dp)
-                                        .fillMaxWidth()
-                                        .clickable {
-                                            onCategoryItemClick(text)
-                                            onDialogStateChange?.invoke(false)
-                                            onDismissRequest?.invoke()
-                                        }
+                                    modifier = modifier.clickable {
+                                        onCategoryItemClick(text)
+                                        onDialogStateChange?.invoke(false)
+                                        onDismissRequest?.invoke()
+                                    }
                                 )
                             }
                         }
                     }
                     DialogType.BRAND -> {
+                        println(brandList)
                         LazyColumn {
                             items(brandList) { text ->
                                 Text(
                                     text = text,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 16.sp,
-                                    modifier = Modifier
-                                        .padding(16.dp)
-                                        .fillMaxWidth()
-                                        .clickable {
-                                            onBrandItemClick(text)
-                                            onDialogStateChange?.invoke(false)
-                                            onDismissRequest?.invoke()
-                                        }
+                                    modifier = modifier.clickable {
+                                        onBrandItemClick(text)
+                                        onDialogStateChange?.invoke(false)
+                                        onDismissRequest?.invoke()
+                                    }
                                 )
                             }
                         }
@@ -79,9 +66,7 @@ fun SelectItemDialog(
             },
             properties =
             DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = false),
-            modifier = modifier
-                .fillMaxSize()
-                .padding(top = 32.dp, bottom = 32.dp)
+            modifier = modifier.height(200.dp)
         )
     }
 }
