@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.data.remote.brand.BrandRepository
 import az.red.e_commerce_admin_android.data.remote.category.CategoryRepository
-import az.red.e_commerce_admin_android.data.remote.create_product.CreateProductRepository
-import az.red.e_commerce_admin_android.data.remote.create_product.dto.request.CreateProductRequest
+import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
+import az.red.e_commerce_admin_android.data.remote.product.dto.request.CreateProductRequest
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import com.google.android.gms.tasks.Task
 import com.google.firebase.ktx.Firebase
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class CreateProductViewModel(
-    private val createProductRepository: CreateProductRepository,
+    private val productRepository: ProductRepository,
     private val brandRepository: BrandRepository,
     private val categoryRepository: CategoryRepository
 ) : BaseViewModel() {
@@ -43,7 +43,7 @@ class CreateProductViewModel(
     }
 
     private fun createProduct(request: CreateProductRequest) = viewModelScope.launch {
-        createProductRepository.createProduct(request).collect {
+        productRepository.createProduct(request).collect {
             when (it) {
                 is NetworkResult.Empty -> _state.value = _state.value.copy()
                 is NetworkResult.Error -> _state.value = CreateProductState(error = it.message!!)

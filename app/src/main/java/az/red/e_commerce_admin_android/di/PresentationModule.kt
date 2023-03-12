@@ -21,7 +21,7 @@ val presentationModule = module {
     viewModel { FillProfileViewModel(repository = get()) }
     viewModel {
         CreateProductViewModel(
-            createProductRepository = get(),
+            productRepository = get(),
             brandRepository = get(),
             categoryRepository = get()
         )

@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.data.remote.create_product.dto.response
+package az.red.e_commerce_admin_android.data.remote.product.dto.response
 data class CreateProductResponse(
     val __v: Int,
     val _id: String,

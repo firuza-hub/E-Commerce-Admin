@@ -1,4 +1,4 @@
-package az.red.e_commerce_admin_android.data.remote.create_product.dto.request
+package az.red.e_commerce_admin_android.data.remote.product.dto.request
 
 import java.util.Date
 
