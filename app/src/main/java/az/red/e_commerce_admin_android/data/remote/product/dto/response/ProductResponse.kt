@@ -7,24 +7,24 @@ data class ProductResponse(
     val __v: Int,
     val _id: String,
     val categories: String,
-    val color: String,
+    val color: String?,
     val currentPrice: Double,
     val date: String,
-    val description: String,
+    val description: String?,
     val enabled: Boolean,
-    val fabric: String,
+    val fabric: String?,
     val imageUrls: List<String>,
     val itemNo: String,
     val name: String,
-    val previousPrice: Double,
+    val previousPrice: Double?,
     val quantity: Int,
-    val size: String
+    val size: String?
 ){
     fun toProductState():ProductDetailsState{
-        return ProductDetailsState(_id,  categories, color, currentPrice, date, description, enabled, fabric, imageUrls, itemNo, name, previousPrice, quantity, size, (100 * (previousPrice -currentPrice)/previousPrice).toInt())
+        return ProductDetailsState(_id,  categories, color, currentPrice, date, description?:"", enabled, fabric, imageUrls, itemNo, name, previousPrice, quantity, size, (100 * ((previousPrice ?:currentPrice) - currentPrice)/(previousPrice ?:currentPrice)).toInt())
     }
 
     fun toSimilarProduct():SimilarProduct{
-        return SimilarProduct(_id,  categories, color, currentPrice, date, description.take(15), enabled, fabric, imageUrls, itemNo, name, previousPrice, quantity, size,(100 * (previousPrice -currentPrice)/previousPrice).toInt())
+        return SimilarProduct(_id,  categories, color, currentPrice, date, (description?:"").take(15), enabled, fabric, imageUrls, itemNo, name, previousPrice, quantity, size,(100 * ((previousPrice ?:currentPrice) -currentPrice)/(previousPrice ?:currentPrice)).toInt())
     }
 }

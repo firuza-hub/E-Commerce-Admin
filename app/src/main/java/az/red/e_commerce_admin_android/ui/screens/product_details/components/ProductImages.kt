@@ -28,6 +28,9 @@ fun ProductImagesCarousel(imageUrls: List<String>, modifier: Modifier, discount:
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Box(modifier = Modifier.fillMaxWidth()) {
+            if (!imageUrls.any()) {
+                Spacer(modifier = Modifier.height(60.dp))
+            }
             HorizontalPager(count = imageUrls.size, state = state) { page ->
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current).data(imageUrls[page])
@@ -40,7 +43,9 @@ fun ProductImagesCarousel(imageUrls: List<String>, modifier: Modifier, discount:
             if (discount > 0) {
                 DiscountCard(
                     modifier = Modifier
-                        .padding(16.dp).width(60.dp).height(30.dp)
+                        .padding(16.dp)
+                        .width(60.dp)
+                        .height(30.dp)
                         .align(Alignment.BottomEnd), discount = discount,
                     textStyle = CustomTheme.typography.nunitoBold14
                 )

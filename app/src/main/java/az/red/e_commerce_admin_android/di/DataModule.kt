@@ -8,7 +8,7 @@ import az.red.e_commerce_admin_android.data.remote.order.OrderRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.order.OrderService
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepositoryImpl
-import az.red.e_commerce_admin_android.data.remote.product.dto.ProductService
+import az.red.e_commerce_admin_android.data.remote.product.ProductService
 import az.red.e_commerce_admin_android.utils.SessionManager
 import com.google.gson.Gson
 import okhttp3.OkHttpClient

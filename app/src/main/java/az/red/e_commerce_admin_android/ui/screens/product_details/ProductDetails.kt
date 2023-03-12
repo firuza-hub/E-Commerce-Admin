@@ -55,16 +55,17 @@ fun ProductDetails(
 
     val state by viewModel.state.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
     val similarProducts by viewModel.similarProducts.collectAsState()
 
-    if (!isLoading && state.error == null) {
+    if (!isLoading && error.isNullOrEmpty()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
 
-            if (state.imageUrls.any())
+
                 ProductImagesCarousel(
                     imageUrls = state.imageUrls,
                     modifier = Modifier.height(375.dp),

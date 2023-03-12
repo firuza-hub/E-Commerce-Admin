@@ -11,16 +11,39 @@ import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductR
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ProductListViewModel(val repo: ProductRepository) : BaseViewModel() {
+class ProductListViewModel(private val repo: ProductRepository) : BaseViewModel() {
 
     var data: Flow<PagingData<ProductResponse>>
+    val searchInput = MutableStateFlow("")
+
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+
+    private val _error = MutableStateFlow<String?>(null)
+    val error = _error.asStateFlow()
 
     init {
-        Log.i("CURRENT_THREAD vm", Thread.currentThread().name)
         data = repo.getProductsFilteredPaging(ProductListItemRequest()).cachedIn(viewModelScope)
+    }
 
+    fun getProductSearch(search: String, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            data = repo.getProductsFilteredPaging(ProductListItemRequest(name = search))
+                .cachedIn(viewModelScope)
+            onComplete()
+        }
+    }
+
+    fun getProductsFiltered(request: ProductListItemRequest) {
+        viewModelScope.launch {
+            data = repo.getProductsFilteredPaging(request).cachedIn(viewModelScope)
+        }
     }
 
     fun deactivateProduct(dto:ProductResponse,isDeactivate:Boolean){

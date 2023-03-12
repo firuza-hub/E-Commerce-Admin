@@ -3,8 +3,8 @@ package az.red.e_commerce_admin_android.data.remote.product
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import az.red.e_commerce_admin_android.data.remote.product.dto.ProductService
 import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductListItemRequest
+import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductSearchRequest
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductsListResponse
 import az.red.e_commerce_admin_android.utils.NetworkResult
@@ -50,6 +50,10 @@ class ProductRepositoryImpl(private val service: ProductService) : ProductReposi
         dto: ProductResponse
     ): Flow<NetworkResult<ProductResponse>> {
         return handleApi { service.deactivateProduct(dto._id, dto) }
+    }
+
+    override fun getProductSearch(request: ProductSearchRequest): Flow<NetworkResult<ProductsListResponse>> {
+        return handleApi { service.getProductSearch(request) }
     }
 }
 
