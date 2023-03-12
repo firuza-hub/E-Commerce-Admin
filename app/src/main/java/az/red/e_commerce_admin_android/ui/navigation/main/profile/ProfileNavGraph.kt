@@ -18,7 +18,7 @@ fun NavGraphBuilder.profileNavGraph(navController: NavHostController) {
         startDestination = ProfileNavScreen.CreateProduct.route
     ) {
         composable(ProfileNavScreen.CreateProduct.route) {
-            CreateProduct(popBackStack = { navController.popBackStack() })
+            CreateProduct(popBackStack = { navController.popBackStack() }, navigateTo = {navController.navigate(it)})
         }
 
         composable(ProfileNavScreen.FillProfile.route) {

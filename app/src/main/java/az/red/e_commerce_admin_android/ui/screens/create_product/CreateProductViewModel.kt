@@ -7,7 +7,9 @@ import az.red.e_commerce_admin_android.data.remote.brand.BrandRepository
 import az.red.e_commerce_admin_android.data.remote.category.CategoryRepository
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.dto.request.CreateProductRequest
+import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.utils.NetworkResult
+import az.red.e_commerce_admin_android.utils.UIEvent
 import com.google.android.gms.tasks.Task
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -94,7 +96,7 @@ class CreateProductViewModel(
     fun createProduct(
         brand: String,
         categories: String,
-        myCustomParam: String,
+        description: String,
         currentPrice: Double,
         name: String,
         imagesPath: List<Uri>
@@ -121,15 +123,16 @@ class CreateProductViewModel(
                                         brand = brand,
                                         categories = categories,
                                         imageUrls = list,
-                                        myCustomParam = myCustomParam,
+                                        description = description,
                                         currentPrice = currentPrice,
                                         name = name,
                                         quantity = 0,
                                         enabled = true,
                                         date = Calendar.getInstance().time,
-                                        userName = sessionManager.fetchUserId()
+                                        userId = sessionManager.fetchUserId()
                                     )
                                 )
+                                triggerEvent(UIEvent.Navigate(Graph.MAIN))
                             }
                         }
                     }

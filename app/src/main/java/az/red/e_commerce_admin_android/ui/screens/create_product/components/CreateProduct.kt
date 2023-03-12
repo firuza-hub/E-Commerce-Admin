@@ -26,20 +26,22 @@ import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.screens.create_product.CreateProductViewModel
 import az.red.e_commerce_admin_android.ui.screens.login.AuthButtonColors
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import az.red.e_commerce_admin_android.utils.UIEvent
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import java.util.*
 
 @Composable
-fun CreateProduct(popBackStack: () -> Unit, viewModel: CreateProductViewModel = koinViewModel()) {
-    SelectImageBottomSheet(popBackStack, viewModel)
+fun CreateProduct(popBackStack: () -> Unit, navigateTo:(route: String) -> Unit, viewModel: CreateProductViewModel = koinViewModel()) {
+    SelectImageBottomSheet(popBackStack, viewModel, navigateTo)
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainContent(
     popBackStack: () -> Unit,
+    navigateTo: (route: String) -> Unit,
     bottomSheetState: ModalBottomSheetState,
     images: List<Uri>,
     viewModel: CreateProductViewModel
@@ -58,6 +60,24 @@ fun MainContent(
 
     val dialogState = rememberSaveable { mutableStateOf(value = false) }
     val dialogType = rememberSaveable { mutableStateOf(value = DialogType.BRAND) }
+
+    LaunchedEffect(key1 = true) {
+        launch {
+            viewModel.uiEventFlow.collect { event ->
+                when (event) {
+                    is UIEvent.Error -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Message -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Navigate -> {
+                        navigateTo(event.route)
+                    }
+                }
+            }
+        }
+    }
 
     if (dialogState.value) {
         when (dialogType.value) {
@@ -202,7 +222,7 @@ fun MainContent(
                         viewModel.createProduct(
                             brand = brandText.value,
                             categories = categoryText.value,
-                            myCustomParam = descriptionText.value,
+                            description = descriptionText.value,
                             currentPrice = priceText.value,
                             imagesPath = images,
                             name = titleText.value
@@ -223,7 +243,7 @@ fun MainContent(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SelectImageBottomSheet(popBackStack: () -> Unit, viewModel: CreateProductViewModel) {
+fun SelectImageBottomSheet(popBackStack: () -> Unit, viewModel: CreateProductViewModel, navigateTo:(route: String) -> Unit) {
     val scope = rememberCoroutineScope()
     val bottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
@@ -251,6 +271,6 @@ fun SelectImageBottomSheet(popBackStack: () -> Unit, viewModel: CreateProductVie
             }
         }, sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp), sheetElevation = 12.dp
     ) {
-        MainContent(popBackStack, bottomSheetState, selectImages, viewModel)
+        MainContent(popBackStack,navigateTo, bottomSheetState, selectImages, viewModel)
     }
 }

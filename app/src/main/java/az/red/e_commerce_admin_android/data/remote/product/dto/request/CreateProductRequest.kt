@@ -7,10 +7,10 @@ data class CreateProductRequest(
     val categories: String,
     val currentPrice: Double,
     val imageUrls: List<String>,
-    val myCustomParam: String,
     val name: String,
+    val description: String,
     val quantity: Int,
     val enabled:Boolean = true,
     val date: Date,
-    val userName: String?
+    val userId: String?
 )
