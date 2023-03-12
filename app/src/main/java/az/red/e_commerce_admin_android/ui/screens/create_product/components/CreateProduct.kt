@@ -157,7 +157,7 @@ fun MainContent(
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp)
                     .fillMaxWidth(),
                 onValueChangeUnit = {
-                    priceText.value = it.toDouble()
+                    priceText.value = it.toDoubleOrNull() ?: 0.0
                 },
                 hint = stringResource(id = R.string.price),
                 keyboardOptions = KeyboardOptions(
