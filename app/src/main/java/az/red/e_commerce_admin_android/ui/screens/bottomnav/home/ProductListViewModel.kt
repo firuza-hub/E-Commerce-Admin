@@ -20,7 +20,7 @@ class ProductListViewModel(val repo: ProductRepository) : BaseViewModel() {
 
     init {
 
-        data = repo.getProductsFilteredPaging(ProductListItemRequest()).cachedIn(viewModelScope)
+        data = repo.getProductsFilteredPaging(ProductListItemRequest(userId = sessionManager.fetchUserId())).cachedIn(viewModelScope)
 
     }
 

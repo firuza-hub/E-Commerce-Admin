@@ -126,7 +126,8 @@ class CreateProductViewModel(
                                         name = name,
                                         quantity = 0,
                                         enabled = true,
-                                        date = Calendar.getInstance().time
+                                        date = Calendar.getInstance().time,
+                                        userName = sessionManager.fetchUserId()
                                     )
                                 )
                             }

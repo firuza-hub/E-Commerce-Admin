@@ -10,14 +10,16 @@ class SessionManager(context: Context) {
 
     companion object {
         const val USER_TOKEN = "user_token"
+        const val USER_ID = "user_id"
         const val CURRENT_LANGUAGE = "current_language"
         const val DARK_MODE = "dark_mode"
         const val REMEMBER_ME = "remember_me"
     }
 
-    fun saveAuthToken(token: String, rememberMe: Boolean) {
+    fun saveAuthToken(token: String, userId:String, rememberMe: Boolean) {
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
+        editor.putString(USER_ID, userId)
         editor.putBoolean(REMEMBER_ME, rememberMe)
         editor.apply()
         println("Token Saved: $token")
@@ -40,6 +42,7 @@ class SessionManager(context: Context) {
     fun removeAuthToken() {
         val editor = prefs.edit()
         editor.remove(USER_TOKEN)
+        editor.remove(USER_ID)
         editor.remove(REMEMBER_ME)
         editor.apply()
         println("Token Removed")
@@ -47,6 +50,10 @@ class SessionManager(context: Context) {
 
     fun fetchAuthToken(): String? {
         return prefs.getString(USER_TOKEN, null)
+    }
+
+    fun fetchUserId(): String? {
+        return prefs.getString(USER_ID, null)
     }
 
     fun fetchCurrentLanguage(): String? {

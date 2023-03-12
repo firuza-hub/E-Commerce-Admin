@@ -11,5 +11,6 @@ data class CreateProductRequest(
     val name: String,
     val quantity: Int,
     val enabled:Boolean = true,
-    val date: Date
+    val date: Date,
+    val userName: String?
 )

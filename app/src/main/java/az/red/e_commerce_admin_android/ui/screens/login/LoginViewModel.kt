@@ -7,6 +7,7 @@ import az.red.e_commerce_admin_android.data.remote.auth.AuthRepository
 import az.red.e_commerce_admin_android.data.remote.auth.dto.response.LoginResponse
 import az.red.e_commerce_admin_android.ui.common.state.ErrorState
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
+import az.red.e_commerce_admin_android.utils.JwtParser.getUserId
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +42,7 @@ class LoginViewModel(
             authRepo.login(loginState.value.toLoginRequest()).collect {
                 when (it) {
                     is NetworkResult.Success -> {
-                        sessionManager.saveAuthToken(it.data!!.token!!, loginState.value.rememberMe)
+                        sessionManager.saveAuthToken(it.data!!.token!!, getUserId(it.data!!.token!!), loginState.value.rememberMe)
                         triggerEvent(UIEvent.Message("Success!"))
                         triggerEvent(UIEvent.Navigate(Graph.MAIN))
                         Log.i("LOGIN_REQUEST", "Success: ${it.data.token}")
