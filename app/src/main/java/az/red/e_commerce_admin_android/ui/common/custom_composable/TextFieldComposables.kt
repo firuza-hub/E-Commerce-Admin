@@ -25,21 +25,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.*
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.ui.common.bottomTop
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.noRippleClickable
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import az.red.e_commerce_admin_android.utils.PhoneVisualTransformation
@@ -202,6 +198,7 @@ private fun CustomTextField(
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
+        textStyle = CustomTheme.typography.inputText(CustomTheme.colors.text),
         cursorBrush = SolidColor(CustomTheme.colors.cardBorder),
         decorationBox = { innerTextField ->
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -237,40 +234,6 @@ private fun CustomTextField(
         keyboardActions = keyboardActions ?: KeyboardActions.Default
     )
 }
-
-fun Modifier.bottomBorder(strokeWidth: Dp, color: Color) = composed(factory = {
-    val density = LocalDensity.current
-    val strokeWidthPx = density.run { strokeWidth.toPx() }
-
-    Modifier.drawBehind {
-        val width = size.width
-        val height = size.height - strokeWidthPx / 2
-
-        drawLine(
-            color = color,
-            start = Offset(x = 0f, y = height),
-            end = Offset(x = width, y = height),
-            strokeWidth = strokeWidthPx
-        )
-    }
-})
-
-fun Modifier.bottomTop(strokeWidth: Dp, color: Color) = composed(factory = {
-    val density = LocalDensity.current
-    val strokeWidthPx = density.run { strokeWidth.toPx() }
-
-    Modifier.drawBehind {
-        val width = size.width
-
-        drawLine(
-            color = color,
-            start = Offset(x = 0f, y = strokeWidthPx),
-            end = Offset(x = width, y = strokeWidthPx),
-            strokeWidth = strokeWidthPx,
-            pathEffect = null
-        )
-    }
-})
 
 @Composable
 fun StringTextField(

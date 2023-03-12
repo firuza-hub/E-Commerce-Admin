@@ -61,8 +61,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     // DI
-    implementation "io.insert-koin:koin-android:3.2.0"
-    implementation "io.insert-koin:koin-androidx-compose:3.2.0"
+    implementation "io.insert-koin:koin-android:3.2.3"
+    implementation "io.insert-koin:koin-androidx-compose:3.2.2"
 
     // Network
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -97,4 +97,8 @@ dependencies {
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:31.2.3')
     implementation 'com.google.firebase:firebase-storage-ktx'
+   
+    // Image Pager
+    implementation "com.google.accompanist:accompanist-pager:0.28.0"
+
 }

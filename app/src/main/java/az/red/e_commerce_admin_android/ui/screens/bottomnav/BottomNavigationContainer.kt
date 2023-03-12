@@ -27,7 +27,6 @@ fun BottomNavigationContainer(navController: NavController) {
     val items = listOf(
         BottomNavScreen.Home,
         BottomNavScreen.Orders,
-        BottomNavScreen.Cart,
         BottomNavScreen.Profile,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()

@@ -5,27 +5,27 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import az.red.e_commerce_admin_android.data.remote.product.dto.ProductService
 import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductListItemRequest
-import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductListItemResponse
+import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
 import retrofit2.HttpException
 import java.io.IOException
 
 class ProductListPagingSource(
     private val service: ProductService,
     private val request: ProductListItemRequest
-) : PagingSource<Int, ProductListItemResponse>() {
+) : PagingSource<Int, ProductResponse>() {
 
-    override fun getRefreshKey(state: PagingState<Int, ProductListItemResponse>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, ProductResponse>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductListItemResponse> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductResponse> {
         val position = params.key ?: PRODUCT_LIST_STARTING_PAGE_INDEX
         Log.e("PRODUCT_LIST", "Start Load " + position)
         return try {
-            val response = service.getProductsFiltered(request.toMap(), position, params.loadSize)
+            val response = service.getProductsFilteredPaging(request.toMap(), position, params.loadSize)
 
             Log.e("PRODUCT_LIST", "LOADED " + response.products.size)
             val products = response.products

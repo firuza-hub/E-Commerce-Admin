@@ -2,13 +2,15 @@ package az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -17,18 +19,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductListItemResponse
+import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
+import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.ProductListViewModel
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ProductListItem(productListItemResponse: ProductListItemResponse) {
+fun ProductListItem(productResponse: ProductResponse, onClick: (id: String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(CustomTheme.colors.background)
             .padding(vertical = 12.dp, horizontal = 16.dp)
+            .clickable { onClick(productResponse._id) }
     ) {
         Row(
             modifier = Modifier
@@ -36,8 +41,8 @@ fun ProductListItem(productListItemResponse: ProductListItemResponse) {
                 .height(97.dp)
         ) {
 
-            productListItemResponse.imageUrls.let { if (it.any()) ProductListImage(it.first()) }
-            ProductListInfo(productListItemResponse)
+            productResponse.imageUrls.let { if (it.any()) ProductListImage(it.first()) }
+            ProductListInfo(productResponse)
         }
     }
 }
@@ -61,7 +66,14 @@ fun ProductListImage(imgUrl: String) {
 }
 
 @Composable
-fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
+fun ProductListInfo(
+    productResponse: ProductResponse,
+    viewModel: ProductListViewModel = koinViewModel()
+) {
+    var isDeactivate by rememberSaveable {
+        mutableStateOf(productResponse.enabled)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -76,7 +88,7 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = productListItemResponse.name,
+                text = productResponse.name,
                 style = CustomTheme.typography.nunitoNormal12,
                 color = CustomTheme.colors.text
             )
@@ -89,8 +101,9 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
         }
 
         Text(
-            text = "US $${productListItemResponse.currentPrice}",
+            text = "US $${productResponse.currentPrice}",
             style = CustomTheme.typography.nunitoBold14,
+            color = CustomTheme.colors.text,
             modifier = Modifier.weight(1f)
         )
 
@@ -104,14 +117,17 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
                     .padding(end = 8.dp)
                     .weight(1f),
                 onClick = {
-                    //your onclick code
+                    isDeactivate = !isDeactivate
+                    viewModel.deactivateProduct(productResponse, isDeactivate)
                 },
                 border = BorderStroke(1.dp, CustomTheme.colors.cardBorder),
-                colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.btnText),
+                colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.background),
                 shape = RoundedCornerShape(CustomTheme.spaces.large)
             ) {
                 Text(
-                    text = stringResource(R.string.deactivate),
+                    text = if (isDeactivate) stringResource(R.string.deactivate) else stringResource(
+                        R.string.activate
+                    ),
                     style = CustomTheme.typography.nunitoNormal12,
                     color = CustomTheme.colors.text
                 )
@@ -127,7 +143,7 @@ fun ProductListInfo(productListItemResponse: ProductListItemResponse) {
                 Text(
                     text = stringResource(R.string.statistics),
                     style = CustomTheme.typography.nunitoNormal12,
-                    color = CustomTheme.colors.textReverse
+                    color = CustomTheme.colors.btnTextAlwaysLight
                 )
             }
         }
