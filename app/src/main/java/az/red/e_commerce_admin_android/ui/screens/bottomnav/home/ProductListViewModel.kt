@@ -13,13 +13,14 @@ import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
+
 class ProductListViewModel(val repo: ProductRepository) : BaseViewModel() {
 
     var data: Flow<PagingData<ProductResponse>>
 
     init {
-        Log.i("CURRENT_THREAD vm", Thread.currentThread().name)
-        data = repo.getProductsFilteredPaging(ProductListItemRequest()).cachedIn(viewModelScope)
+
+        data = repo.getProductsFilteredPaging(ProductListItemRequest(userId = sessionManager.fetchUserId())).cachedIn(viewModelScope)
 
     }
 

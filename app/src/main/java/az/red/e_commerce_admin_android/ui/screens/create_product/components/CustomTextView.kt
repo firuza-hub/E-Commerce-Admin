@@ -14,7 +14,12 @@ import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
-fun CustomTextView(text: String, icon: Int, modifier: Modifier = Modifier) {
+fun CustomTextView(
+    text: String,
+    selectedItemText: String,
+    icon: Int,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier
             .border(
@@ -32,6 +37,7 @@ fun CustomTextView(text: String, icon: Int, modifier: Modifier = Modifier) {
                 contentDescription = "Item Text",
             )
             Text(text = text)
+            Text(text = selectedItemText, modifier = Modifier.padding(start = 12.dp))
         }
 
         Image(

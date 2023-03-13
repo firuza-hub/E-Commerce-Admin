@@ -18,7 +18,6 @@ class HeaderInterceptor(private val sessionManager: SessionManager) : Intercepto
             val request = chain.request().newBuilder()
 
             val headers = HashMap<String, String>()
-            // We add key and value in header for example:
 
             sessionManager.fetchAuthToken()?.let { headers["Authorization"] = it }
 
