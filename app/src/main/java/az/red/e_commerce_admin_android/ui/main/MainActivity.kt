@@ -1,6 +1,7 @@
 package az.red.e_commerce_admin_android.ui.main
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,12 +19,17 @@ import az.red.e_commerce_admin_android.ui.screens.bottomnav.BottomNavigationCont
 import az.red.e_commerce_admin_android.ui.themes.AppTheme
 import org.koin.android.ext.android.inject
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import az.red.e_commerce_admin_android.utils.LocalLanguageManager
 import az.red.e_commerce_admin_android.utils.SessionManager
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 class MainActivity : ComponentActivity() {
 
     private val sessionManager by inject<SessionManager>()
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(LocalLanguageManager().onAttach(base!!))
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {

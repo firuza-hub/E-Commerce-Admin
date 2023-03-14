@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.components
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
+import az.red.e_commerce_admin_android.ui.main.MainActivity
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileViewModel
 import az.red.e_commerce_admin_android.ui.themes.AccentCarrot
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
@@ -19,7 +21,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ProfileMultiLanguage(profileViewModel: ProfileViewModel) {
+fun ProfileMultiLanguage(profileViewModel: ProfileViewModel, context: Context) {
     val coroutineScope = rememberCoroutineScope()
     val languageList = arrayOf("US", "AZ")
 
@@ -86,10 +88,11 @@ fun ProfileMultiLanguage(profileViewModel: ProfileViewModel) {
             languageList.forEach { selectedOption ->
                 // menu item
                 DropdownMenuItem(onClick = {
-                    selectedItem = selectedOption
+                    selectedItem = selectedOption.lowercase()
                     //Save Current Language
                     profileViewModel.saveCurrentLanguage(selectedOption)
                     expanded = false
+                    (context as MainActivity).recreate()
                 }) {
                     Text(text = selectedOption)
                 }

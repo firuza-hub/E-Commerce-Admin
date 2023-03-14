@@ -8,6 +8,7 @@ import az.red.e_commerce_admin_android.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.components.*
@@ -151,6 +152,7 @@ fun ProfileNavigateOtherScreensItems(
 
 @Composable
 fun ProfileThemeImageLanguageContainer(profileViewModel: ProfileViewModel) {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -163,7 +165,7 @@ fun ProfileThemeImageLanguageContainer(profileViewModel: ProfileViewModel) {
 
         ProfileImage()
 
-        ProfileMultiLanguage(profileViewModel)
+        ProfileMultiLanguage(profileViewModel, context)
     }
 }
 

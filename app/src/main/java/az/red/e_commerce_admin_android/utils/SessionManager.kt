@@ -16,7 +16,7 @@ class SessionManager(context: Context) {
         const val REMEMBER_ME = "remember_me"
     }
 
-    fun saveAuthToken(token: String, userId:String, rememberMe: Boolean) {
+    fun saveAuthToken(token: String, userId: String, rememberMe: Boolean) {
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
         editor.putString(USER_ID, userId)
@@ -29,7 +29,11 @@ class SessionManager(context: Context) {
         val editor = prefs.edit()
         editor.putString(CURRENT_LANGUAGE, language)
         editor.apply()
-        println("Language Saved: $language")
+    }
+
+    fun getCurrentLanguage(): String {
+        val language = prefs.getString(CURRENT_LANGUAGE, "az")
+        return language.toString()
     }
 
     fun saveDarkMode(isDarkMode: Boolean) {
@@ -60,16 +64,6 @@ class SessionManager(context: Context) {
         return prefs.getString(CURRENT_LANGUAGE, null)
     }
 
-    fun listenCurrentLanguage(onModeChanged: (String?) -> Unit) =
-        prefs.registerOnSharedPreferenceChangeListener { sp, s ->
-            onModeChanged(
-                sp.getString(
-                    CURRENT_LANGUAGE,
-                    null
-                )
-            )
-        }
-
     fun fetchDarkMode(): Boolean {
         return prefs.getBoolean(DARK_MODE, false)
     }
@@ -77,10 +71,12 @@ class SessionManager(context: Context) {
     fun listenDarkMode(onModeChanged: (Boolean) -> Unit) =
         prefs.registerOnSharedPreferenceChangeListener { sp, s ->
 
-            println("Mode Changed to " + sp.getBoolean(
-                DARK_MODE,
-                false
-            ).toString())
+            println(
+                "Mode Changed to " + sp.getBoolean(
+                    DARK_MODE,
+                    false
+                ).toString()
+            )
             onModeChanged(
                 sp.getBoolean(
                     DARK_MODE,
