@@ -1,7 +1,5 @@
 package az.red.e_commerce_admin_android.ui.screens.product_details
 
-import kotlinx.coroutines.flow.MutableStateFlow
-
 data class ProductDetailsState(
     var id: String,
     var categories: String,

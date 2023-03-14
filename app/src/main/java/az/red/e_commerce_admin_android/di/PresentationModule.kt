@@ -10,6 +10,7 @@ import az.red.e_commerce_admin_android.ui.main.MainViewModel
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileViewModel
 import az.red.e_commerce_admin_android.ui.screens.fill_profile.FillProfileViewModel
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.orders.OrderViewModel
+import az.red.e_commerce_admin_android.ui.screens.review.ReviewViewModel
 
 val presentationModule = module {
     viewModel { LoginViewModel(authRepo = get()) }
@@ -20,4 +21,11 @@ val presentationModule = module {
     viewModel { FillProfileViewModel(repository = get()) }
     viewModel { OrderViewModel(repository = get()) }
     viewModel { ProductDetailsViewModel(repository = get(), get()) }
+    viewModel {
+        ReviewViewModel(
+            productRepository = get(),
+            reviewRepository = get(),
+            savedStateHandle = get()
+        )
+    }
 }

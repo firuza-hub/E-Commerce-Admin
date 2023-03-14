@@ -37,4 +37,5 @@ object Graph {
     const val CART_DETAIL = "cart_graph"
     const val ORDERS_DETAIL = "orders_graph"
     const val PROFILE_DETAIL = "profile_graph"
+    const val REVIEW = "review"
 }

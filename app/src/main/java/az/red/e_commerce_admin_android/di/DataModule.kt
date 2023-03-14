@@ -9,6 +9,9 @@ import az.red.e_commerce_admin_android.data.remote.order.OrderService
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.product.dto.ProductService
+import az.red.e_commerce_admin_android.data.remote.review.ReviewRepository
+import az.red.e_commerce_admin_android.data.remote.review.ReviewRepositoryImpl
+import az.red.e_commerce_admin_android.data.remote.review.ReviewService
 import az.red.e_commerce_admin_android.utils.SessionManager
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -70,4 +73,8 @@ val dataModule = module {
     /////////////////////////////////////////////////////////// Order ///////////////////////////////////////////////////////////
     factory<OrderService> { get<Retrofit>().create(OrderService::class.java) }
     factory<OrderRepository> { OrderRepositoryImpl(get()) }
+
+    /////////////////////////////////////////////////////////// Review ///////////////////////////////////////////////////////////
+    factory<ReviewService> { get<Retrofit>().create(ReviewService::class.java) }
+    factory<ReviewRepository> { ReviewRepositoryImpl(get()) }
 }

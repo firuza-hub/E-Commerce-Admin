@@ -6,6 +6,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.composable
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.ui.screens.product_details.ProductDetails
+import az.red.e_commerce_admin_android.ui.screens.review.ReviewScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
@@ -23,7 +24,19 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
             ProductDetails(
                 popBackStack = { navController.popBackStack() },
                 navigateTo = { navController.navigate(it) },
-                navigateToReviews = {})
+                navigateToReviews = { navController.navigate(it) }
+            )
+        }
+        composable(
+            route = HomeNavScreen.ReviewScreen.route + "/{itemNo}",
+            arguments = listOf(navArgument("itemNo") {
+                type = NavType.StringType
+                defaultValue = "-1"
+            })
+        ) {
+            ReviewScreen(
+                popStackUp = {navController.popBackStack()}
+            )
         }
     }
 }

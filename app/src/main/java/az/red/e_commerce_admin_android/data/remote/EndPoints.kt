@@ -20,4 +20,8 @@ object EndPoints {
     private const val ORDER_BASE = "orders"
     const val UPDATE_ORDER = "${ORDER_BASE}/{id}"
     const val GET_ORDERS = ORDER_BASE
+
+    //Review
+    private const val REVIEW = "comments"
+    const val GET_COMMENTS_OF_CUSTOMER = "$REVIEW/product/{productId}"
 }

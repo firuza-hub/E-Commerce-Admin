@@ -29,7 +29,7 @@ class ProductListViewModel(val repo: ProductRepository) : BaseViewModel() {
             repo.deactivateProduct(productResponse).collect {
                 when (it) {
                     is NetworkResult.Success -> {
-                        val productStatus = if(dto.enabled) "deactivated" else "activated"
+                        val productStatus = if(!isDeactivate) "deactivated" else "activated"
                         triggerEvent(UIEvent.Message("${dto.name} has been $productStatus!"))
                     }
                     is NetworkResult.Empty -> Log.i("DEACTIVATE_PRODUCT", "Empty")
