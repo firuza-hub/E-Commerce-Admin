@@ -8,7 +8,8 @@ data class ProductListItemRequest(
     val description: String? = null,
     val fabric: String? = null,
     val name: String? = null,
-    val size: String? = null
+    val size: String? = null,
+    val userId: String? = null
 ) {
     fun toMap(): Map<String, String> {
         return mapOf(
@@ -18,6 +19,7 @@ data class ProductListItemRequest(
             "description" to description,
             "fabric" to fabric,
             "name" to name,
+            "userId" to userId,
             "size" to size
         ).filter { !it.value.isNullOrEmpty() } as Map<String, String>
     }

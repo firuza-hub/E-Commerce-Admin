@@ -20,8 +20,8 @@ class ReviewViewModel(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val _state = MutableStateFlow(ProductDetailsState.NULL)
-    val state = _state.asStateFlow()
+    private val _productDetailState = MutableStateFlow(ProductDetailsState.NULL)
+    val productDetailState = _productDetailState.asStateFlow()
 
     private val _review = MutableStateFlow(ReviewState.NULL)
     val review = _review.asStateFlow()
@@ -36,7 +36,7 @@ class ReviewViewModel(
 
                     result.handleResult(
                         onSuccess = { productResponse ->
-                            _state.value = productResponse.toProductState()
+                            _productDetailState.value = productResponse.toProductState()
                             getCommentsOfCustomer(result.data!!._id)
                         }, "PRODUCT_REVIEW"
                     )
@@ -91,13 +91,13 @@ class ReviewViewModel(
             }
             is NetworkResult.Error -> {
                 _isLoading.value = false
-                _state.value.error = this.message
+                _productDetailState.value.error = this.message
                 Log.i(tag, "Error: ${this.message}")
                 triggerEvent(UIEvent.Message("no data"))
             }
             is NetworkResult.Exception -> {
                 _isLoading.value = false
-                _state.value.error = this.message
+                _productDetailState.value.error = this.message
                 Log.i(tag, "Exception: ${this.message}")
                 triggerEvent(UIEvent.Error("no data"))
             }

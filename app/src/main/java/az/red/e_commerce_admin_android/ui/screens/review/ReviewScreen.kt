@@ -16,9 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.ui.screens.product_details.ProductDetailsState
-import az.red.e_commerce_admin_android.ui.screens.product_details.components.ProductDetailsTopAppBar
 import az.red.e_commerce_admin_android.ui.screens.review.components.ReviewListItemImage
 import az.red.e_commerce_admin_android.ui.screens.review.components.ReviewListItemInfo
+import az.red.e_commerce_admin_android.ui.screens.review.components.ReviewTopAppBar
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
@@ -31,7 +31,7 @@ fun ReviewScreen(
     viewModel: ReviewViewModel = koinViewModel()
 ) {
     val reviewStateState = viewModel.review.collectAsState()
-    val productDetailState = viewModel.state.collectAsState()
+    val productDetailState = viewModel.productDetailState.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
 
     if (isLoading) LinearProgressIndicator(
@@ -44,7 +44,7 @@ fun ReviewScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        ProductDetailsTopAppBar(popStackUp)
+        ReviewTopAppBar(popStackUp)
         Column(
             modifier = Modifier
                 .fillMaxWidth()

@@ -40,7 +40,7 @@ class RegisterViewModel(
                     ).collect { loginResp ->
                         when (loginResp) {
                             is NetworkResult.Success -> {
-                                sessionManager.saveAuthToken(loginResp.data!!.token!!, true)
+                                sessionManager.saveAuthToken(loginResp.data!!.token!!, loginResp.data.loginOrEmail!!, true)
                                 triggerEvent(UIEvent.Message("Success!"))
                                 triggerEvent(UIEvent.Navigate(Graph.MAIN))
                                 Log.i("LOGIN_REQUEST", "Success: ${loginResp.data.token}")
