@@ -15,7 +15,8 @@ data class ProductDetailsState(
     var previousPrice: Double?,
     var quantity: Int,
     var size: String?,
-    val discount: Int = 0
+    val discount: Int = 0,
+    var error: String? = null
 ) {
     companion object {
         val NULL = ProductDetailsState(
