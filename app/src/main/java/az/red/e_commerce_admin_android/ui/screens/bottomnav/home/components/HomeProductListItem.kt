@@ -1,6 +1,7 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -41,27 +42,40 @@ fun ProductListItem(productResponse: ProductResponse, onClick: (id: String) -> U
                 .height(97.dp)
         ) {
 
-            productResponse.imageUrls.let { if (it.any()) ProductListImage(it.first()) }
+            ProductListImage(productResponse.imageUrls)
             ProductListInfo(productResponse)
         }
     }
 }
 
 @Composable
-fun ProductListImage(imgUrl: String) {
+fun ProductListImage(imageUrls: List<String>) {
     Box(
         modifier = Modifier
             .size(width = 97.dp, height = 97.dp)
             .clip(RoundedCornerShape(size = 8.dp))
             .background(CustomTheme.colors.btnText)
     ) {
+        if (imageUrls.any()) {
 
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current).data(imgUrl).crossfade(true).build(),
-            modifier = Modifier.fillMaxSize(),
-            contentDescription = "productListItemImage",
-            contentScale = ContentScale.Fit
-        )
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current).data(imageUrls.first())
+                    .crossfade(true)
+                    .build(),
+                modifier = Modifier.fillMaxSize(),
+                contentDescription = "Product Image",
+                placeholder = painterResource(id = R.drawable.no_image),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = painterResource(id = R.drawable.no_image),
+                contentDescription = "No Image",
+                contentScale = ContentScale.Crop
+            )
+        }
+
     }
 }
 

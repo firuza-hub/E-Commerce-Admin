@@ -32,7 +32,6 @@ fun ProductDetails(
     viewModel: ProductDetailsViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-
     val scrollState = rememberScrollState()
 
     LaunchedEffect(true) {
@@ -55,21 +54,20 @@ fun ProductDetails(
 
     val state by viewModel.state.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
     val similarProducts by viewModel.similarProducts.collectAsState()
 
-    if (!isLoading && state.error == null) {
+    if (!isLoading && error.isNullOrEmpty()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
-
-            if (state.imageUrls.any())
-                ProductImagesCarousel(
-                    imageUrls = state.imageUrls,
-                    modifier = Modifier.height(375.dp),
-                    state.discount
-                )
+            ProductImagesCarousel(
+                imageUrls = state.imageUrls,
+                modifier = Modifier.height(375.dp),
+                state.discount
+            )
 
             Column(
                 modifier = Modifier
@@ -104,7 +102,7 @@ fun ProductDetails(
                             end = CustomTheme.spaces.large
                         )
                     )
-                    if (state.previousPrice != state.currentPrice) {
+                    if (state.previousPrice!= null && state.previousPrice != state.currentPrice) {
                         Text(
                             text = "US $${state.previousPrice}",
                             style = CustomTheme.typography.nunitoNormal14StrikeThrough,
