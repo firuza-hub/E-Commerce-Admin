@@ -4,10 +4,9 @@ package az.red.e_commerce_admin_android.data.remote.product.dto.request
 data class ProductListItemRequest(
     val categories: String? = null,
     val color: String? = null,
-    val currentPrice: Double? = null,
-    val description: String? = null,
     val fabric: String? = null,
     val name: String? = null,
+    val brand: String? = null,
     val size: String? = null,
     val userId: String? = null
 ) {
@@ -15,11 +14,10 @@ data class ProductListItemRequest(
         return mapOf(
             "categories" to categories,
             "color" to color,
-            "currentPrice" to currentPrice?.toString(),
-            "description" to description,
             "fabric" to fabric,
             "name" to name,
             "userId" to userId,
+            "brand" to brand,
             "size" to size
         ).filter { !it.value.isNullOrEmpty() } as Map<String, String>
     }

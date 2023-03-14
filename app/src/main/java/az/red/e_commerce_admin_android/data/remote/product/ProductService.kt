@@ -1,6 +1,7 @@
-package az.red.e_commerce_admin_android.data.remote.product.dto
+package az.red.e_commerce_admin_android.data.remote.product
 
 import az.red.e_commerce_admin_android.data.remote.EndPoints
+import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductSearchRequest
 import az.red.e_commerce_admin_android.data.remote.product.dto.request.CreateProductRequest
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.CreateProductResponse
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
@@ -25,6 +26,10 @@ interface ProductService {
 
     @GET(EndPoints.PRODUCT + "/{itemNo}")
     suspend fun getProductById(@Path("itemNo") itemNo: String): Response<ProductResponse>
+
+
+    @POST(EndPoints.PRODUCT_SEARCH)
+    suspend fun getProductSearch(@Body request: ProductSearchRequest): Response<ProductsListResponse>
 
     @PUT(EndPoints.UPDATE_PRODUCT)
     suspend fun deactivateProduct(

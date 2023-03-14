@@ -13,14 +13,22 @@ object EndPoints {
     //Product
     private const val PRODUCT_BASE = "products"
     const val PRODUCTS_FILTERED = "$PRODUCT_BASE/filter"
+    const val PRODUCT = PRODUCT_BASE
+    const val PRODUCT_SEARCH = "$PRODUCT_BASE/search"
     const val CREATE_PRODUCT = PRODUCT_BASE
+    const val UPDATE_PRODUCT = "$PRODUCT_BASE/{id}"
+
+    //Product Filters
     const val CATEGORY = "catalog"
     const val BRAND = "filters/brand"
-    const val PRODUCT = "$PRODUCT_BASE"
-    const val UPDATE_PRODUCT = "$PRODUCT_BASE/{id}"
+    const val SIZE = "sizes"
+    const val COLOR = "colors"
 
     //Order
     private const val ORDER_BASE = "orders"
     const val UPDATE_ORDER = "${ORDER_BASE}/{id}"
     const val GET_ORDERS = ORDER_BASE
+
+    private const val PRODUCT_FILTERS_BASE = "filters"
+    const val PRODUCT_FILTERS = PRODUCT_FILTERS_BASE
 }
