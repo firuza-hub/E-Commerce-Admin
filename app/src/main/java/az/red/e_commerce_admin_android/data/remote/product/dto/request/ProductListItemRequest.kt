@@ -7,7 +7,8 @@ data class ProductListItemRequest(
     val fabric: String? = null,
     val name: String? = null,
     val brand: String? = null,
-    val size: String? = null
+    val size: String? = null,
+    val userId: String? = null
 ) {
     fun toMap(): Map<String, String> {
         return mapOf(
@@ -15,6 +16,8 @@ data class ProductListItemRequest(
             "color" to color,
             "fabric" to fabric,
             "name" to name,
+            "userId" to userId,
+            "brand" to brand,
             "size" to size
         ).filter { !it.value.isNullOrEmpty() } as Map<String, String>
     }

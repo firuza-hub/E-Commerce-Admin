@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id "com.google.gms.google-services"
 }
 
 android {
@@ -93,7 +94,11 @@ dependencies {
     // DateTime
     implementation "io.github.vanpra.compose-material-dialogs:datetime:0.9.0"
 
-    //Image Pager
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:31.2.3')
+    implementation 'com.google.firebase:firebase-storage-ktx'
+   
+    // Image Pager
     implementation "com.google.accompanist:accompanist-pager:0.28.0"
 
 }

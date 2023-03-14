@@ -2,6 +2,8 @@ package az.red.e_commerce_admin_android.data.remote.product
 
 import az.red.e_commerce_admin_android.data.remote.EndPoints
 import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductSearchRequest
+import az.red.e_commerce_admin_android.data.remote.product.dto.request.CreateProductRequest
+import az.red.e_commerce_admin_android.data.remote.product.dto.response.CreateProductResponse
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductsListResponse
 import retrofit2.Response
@@ -34,4 +36,7 @@ interface ProductService {
         @Path("id") id : String,
         @Body dto : ProductResponse
     ) : Response<ProductResponse>
+
+    @POST(EndPoints.CREATE_PRODUCT)
+    suspend fun createProduct(@Body productData: CreateProductRequest): Response<CreateProductResponse>
 }
