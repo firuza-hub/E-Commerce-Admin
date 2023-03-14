@@ -16,7 +16,7 @@ import az.red.e_commerce_admin_android.data.remote.order.OrderRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.order.OrderService
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepositoryImpl
-import az.red.e_commerce_admin_android.data.remote.product.dto.ProductService
+import az.red.e_commerce_admin_android.data.remote.product.ProductService
 import az.red.e_commerce_admin_android.data.remote.review.ReviewRepository
 import az.red.e_commerce_admin_android.data.remote.review.ReviewRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.review.ReviewService
