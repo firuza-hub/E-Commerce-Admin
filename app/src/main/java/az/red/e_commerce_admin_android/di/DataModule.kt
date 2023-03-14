@@ -6,6 +6,8 @@ import az.red.e_commerce_admin_android.data.remote.auth.*
 import az.red.e_commerce_admin_android.data.remote.brand.BrandRepository
 import az.red.e_commerce_admin_android.data.remote.brand.BrandRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.brand.BrandService
+import az.red.e_commerce_admin_android.data.remote.size.*
+import az.red.e_commerce_admin_android.data.remote.color.*
 import az.red.e_commerce_admin_android.data.remote.category.CategoryRepository
 import az.red.e_commerce_admin_android.data.remote.category.CategoryRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.category.CategoryService
@@ -84,5 +86,13 @@ val dataModule = module {
     /////////////////////////////////////////////////////////// Order ///////////////////////////////////////////////////////////
     factory<OrderService> { get<Retrofit>().create(OrderService::class.java) }
     factory<OrderRepository> { OrderRepositoryImpl(get()) }
+
+    /////////////////////////////////////////////////////////// Size ///////////////////////////////////////////////////////////
+    factory<SizeService> { get<Retrofit>().create(SizeService::class.java) }
+    factory<SizeRepository> { SizeRepositoryImpl(get()) }
+
+    /////////////////////////////////////////////////////////// Color ///////////////////////////////////////////////////////////
+    factory<ColorService> { get<Retrofit>().create(ColorService::class.java) }
+    factory<ColorRepository> { ColorRepositoryImpl(get()) }
 
 }

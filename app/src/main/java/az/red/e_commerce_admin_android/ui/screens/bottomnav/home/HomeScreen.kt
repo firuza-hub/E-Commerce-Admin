@@ -8,8 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -34,7 +34,7 @@ fun HomeScreen(
     val searchInput by productListViewModel.searchInput.collectAsState()
     var showFilter by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(true) {
         launch {
             productListViewModel.uiEventFlow.collect { event ->
                 when (event) {
@@ -66,37 +66,59 @@ fun HomeScreen(
                         it,
                         onComplete = { items.refresh() })
                 },
-                switchShowFilter = { showFilter = it ?:!showFilter })
+                switchShowFilter = { showFilter = it ?: !showFilter })
             //Bottom 82.dp padding(BottomNav height size) -> LazyColumn last item didn't show because of BottomNav
-            if (showFilter)
-                Surface(
-                    Modifier
-                        .fillMaxSize()
-                        .alpha(0.7f), color = Color.Black) {
 
-                }
-            if (items.loadState.append == LoadState.Loading || items.loadState.prepend == LoadState.Loading || items.loadState.refresh == LoadState.Loading) LinearProgressIndicator(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(2.dp), color = CustomTheme.colors.accent
-            )
+            if (items.loadState.append == LoadState.Loading || items.loadState.prepend == LoadState.Loading || items.loadState.refresh == LoadState.Loading) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(2.dp), color = CustomTheme.colors.accent
+                )
+            }
+            if (items.loadState.append != LoadState.Loading && items.loadState.prepend != LoadState.Loading
+                && items.loadState.refresh != LoadState.Loading && items.itemCount == 0
+            ) {
+                Text(
+                    text = "No products found",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
 
-            LazyColumn(
+            Surface(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(2.dp, 0.dp, 0.dp, 82.dp)
+                    .alpha(if (showFilter) 0.3f else 1f)
             ) {
-                items(items) {
-                    it?.let { item ->
-                        ProductListItem(it) { navigateTo(HomeNavScreen.ProductDetails.route + "/${item.itemNo}") }
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(2.dp, 0.dp, 0.dp, 82.dp)
+                ) {
+                    items(items) {
+                        it?.let { item ->
+                            ProductListItem(it) { navigateTo(HomeNavScreen.ProductDetails.route + "/${item.itemNo}") }
+                        }
+
                     }
+
                 }
+
             }
+
 
         }
         if (showFilter) {
             ProductListFilter(
-                Modifier.align(Alignment.BottomStart)
+                Modifier.align(Alignment.BottomStart),
+                closeFilter = {
+                    productListViewModel.getProductsFiltered(
+                        it,
+                        onComplete = { items.refresh() })
+                    showFilter = false
+                }
             )
         }
 

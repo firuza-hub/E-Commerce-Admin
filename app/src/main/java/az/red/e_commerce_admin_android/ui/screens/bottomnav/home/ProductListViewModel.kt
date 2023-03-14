@@ -29,7 +29,7 @@ class ProductListViewModel(private val repo: ProductRepository) : BaseViewModel(
     val error = _error.asStateFlow()
 
     init {
-        data = repo.getProductsFilteredPaging(ProductListItemRequest()).cachedIn(viewModelScope)
+        data = repo.getProductsFilteredPaging(ProductListItemRequest(userId = sessionManager.fetchUserId())).cachedIn(viewModelScope)
     }
 
     fun getProductSearch(search: String, onComplete: () -> Unit) {
@@ -40,9 +40,10 @@ class ProductListViewModel(private val repo: ProductRepository) : BaseViewModel(
         }
     }
 
-    fun getProductsFiltered(request: ProductListItemRequest) {
+    fun getProductsFiltered(request: ProductListItemRequest, onComplete: () -> Unit) {
         viewModelScope.launch {
             data = repo.getProductsFilteredPaging(request).cachedIn(viewModelScope)
+            onComplete()
         }
     }
 

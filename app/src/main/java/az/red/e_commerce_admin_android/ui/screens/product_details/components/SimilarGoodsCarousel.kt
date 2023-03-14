@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.ui.screens.product_details.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
@@ -47,13 +49,22 @@ fun SimilarGoodsCarousel(
                 .padding(end = 10.dp)
                 .clickable { redirectTo(it.itemNo) }) {
                 Box {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current).data(it.imageUrls[0])
-                            .crossfade(true).build(),
-                        modifier = Modifier
-                            .fillMaxWidth()
+                    if (it.imageUrls.any()) {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current).data(it.imageUrls[0])
+                                .crossfade(true).build(),
+                            modifier = Modifier
+                                .height(160.dp)
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(8.dp)),
+                            contentDescription = "similar goods item",
+                            contentScale = ContentScale.Crop
+                        )
+                    } else Image(
+                        modifier = Modifier.height(160.dp).fillMaxWidth()
                             .clip(RoundedCornerShape(8.dp)),
-                        contentDescription = "similar goods item",
+                        painter = painterResource(id = R.drawable.no_image),
+                        contentDescription = "No image",
                         contentScale = ContentScale.Crop
                     )
                     if (it.discount > 0) {
@@ -83,7 +94,7 @@ fun SimilarGoodsCarousel(
                         .padding(top = 8.dp), style = CustomTheme.typography.nunitoBold14,
                     color = CustomTheme.colors.text
                 )
-                if (it.previousPrice != it.currentPrice) {
+                if (it.previousPrice!= null && it.previousPrice != it.currentPrice) {
                     Text(
                         text = "US $${it.previousPrice}",
                         style = CustomTheme.typography.nunitoNormal14StrikeThrough,
