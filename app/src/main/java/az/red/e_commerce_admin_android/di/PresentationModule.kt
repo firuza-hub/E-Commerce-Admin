@@ -11,6 +11,7 @@ import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileViewM
 import az.red.e_commerce_admin_android.ui.screens.create_product.CreateProductViewModel
 import az.red.e_commerce_admin_android.ui.screens.fill_profile.FillProfileViewModel
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.orders.OrderViewModel
+import az.red.e_commerce_admin_android.ui.screens.review.ReviewViewModel
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.ProductFilterViewModel
 
 val presentationModule = module {
@@ -29,5 +30,12 @@ val presentationModule = module {
     }
     viewModel { OrderViewModel(repository = get()) }
     viewModel { ProductDetailsViewModel(repository = get(), get()) }
+    viewModel {
+        ReviewViewModel(
+            productRepository = get(),
+            reviewRepository = get(),
+            savedStateHandle = get()
+        )
+    }
     viewModel { ProductFilterViewModel(brandRepo = get(), categoryRepo = get(), colorRepo = get(), sizeRepo = get()) }
 }

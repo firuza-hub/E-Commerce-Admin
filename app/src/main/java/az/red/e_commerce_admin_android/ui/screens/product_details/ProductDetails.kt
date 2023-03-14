@@ -115,7 +115,7 @@ fun ProductDetails(
                 ProductInfoRedirectLine(stringResource(R.string.product_specifications), {})
                 ProductInfoRedirectLine(stringResource(R.string.product_reviews)) {
                     navigateToReviews(
-                        state.id
+                        HomeNavScreen.ReviewScreen.route + "/${state.itemNo}"
                     )
                 }
                 ProductInfoRedirectLine(stringResource(R.string.product_questions), {})

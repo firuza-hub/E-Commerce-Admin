@@ -17,6 +17,9 @@ import az.red.e_commerce_admin_android.data.remote.order.OrderService
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepositoryImpl
 import az.red.e_commerce_admin_android.data.remote.product.ProductService
+import az.red.e_commerce_admin_android.data.remote.review.ReviewRepository
+import az.red.e_commerce_admin_android.data.remote.review.ReviewRepositoryImpl
+import az.red.e_commerce_admin_android.data.remote.review.ReviewService
 import az.red.e_commerce_admin_android.utils.SessionManager
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -75,6 +78,7 @@ val dataModule = module {
     factory<ProductService> { get<Retrofit>().create(ProductService::class.java) }
     factory<ProductRepository> { ProductRepositoryImpl(get()) }
 
+
     /////////////////////////////////////////////////////////// Brand ///////////////////////////////////////////////////////////
     factory<BrandService> { get<Retrofit>().create(BrandService::class.java) }
     factory<BrandRepository> { BrandRepositoryImpl(get()) }
@@ -82,11 +86,15 @@ val dataModule = module {
     /////////////////////////////////////////////////////////// Category ///////////////////////////////////////////////////////////
     factory<CategoryService> { get<Retrofit>().create(CategoryService::class.java) }
     factory<CategoryRepository> { CategoryRepositoryImpl(get()) }
-    
+
+
     /////////////////////////////////////////////////////////// Order ///////////////////////////////////////////////////////////
     factory<OrderService> { get<Retrofit>().create(OrderService::class.java) }
     factory<OrderRepository> { OrderRepositoryImpl(get()) }
 
+    /////////////////////////////////////////////////////////// Review ///////////////////////////////////////////////////////////
+    factory<ReviewService> { get<Retrofit>().create(ReviewService::class.java) }
+    factory<ReviewRepository> { ReviewRepositoryImpl(get()) }
     /////////////////////////////////////////////////////////// Size ///////////////////////////////////////////////////////////
     factory<SizeService> { get<Retrofit>().create(SizeService::class.java) }
     factory<SizeRepository> { SizeRepositoryImpl(get()) }

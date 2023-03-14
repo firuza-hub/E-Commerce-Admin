@@ -1,7 +1,5 @@
 package az.red.e_commerce_admin_android.ui.screens.product_details
 
-import kotlinx.coroutines.flow.MutableStateFlow
-
 data class ProductDetailsState(
     var id: String,
     var categories: String,
@@ -17,7 +15,8 @@ data class ProductDetailsState(
     var previousPrice: Double?,
     var quantity: Int,
     var size: String?,
-    val discount: Int = 0
+    val discount: Int = 0,
+    var error: String? = null
 ) {
     companion object {
         val NULL = ProductDetailsState(
