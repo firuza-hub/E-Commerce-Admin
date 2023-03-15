@@ -103,7 +103,7 @@ fun ProductListInfo(
         ) {
             Text(
                 text = productResponse.name,
-                style = CustomTheme.typography.nunitoNormal12,
+                style = CustomTheme.typography.nunitoNormal16,
                 color = CustomTheme.colors.text
             )
 

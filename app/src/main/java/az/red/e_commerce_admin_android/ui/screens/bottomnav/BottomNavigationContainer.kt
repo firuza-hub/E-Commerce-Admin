@@ -17,11 +17,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.ui.navigation.main.bottom.BottomNavScreen
+import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 
 @Composable
 fun BottomNavigationContainer(navController: NavController) {
@@ -68,11 +68,11 @@ fun BottomNavigationContainer(navController: NavController) {
                     selected = currentRoute == item.screen_route,
                     onClick = {
                         navController.navigate(item.screen_route) {
-                            navController.graph.startDestinationRoute?.let { screen_route ->
-                                popUpTo(screen_route) {
-                                    saveState = true
-                                }
+                            popUpTo(Graph.MAIN) {
+                                saveState = true
                             }
+                            navController.backQueue.forEach { i -> println(i.destination.route) }
+
                             launchSingleTop = true
                             restoreState = true
                         }
