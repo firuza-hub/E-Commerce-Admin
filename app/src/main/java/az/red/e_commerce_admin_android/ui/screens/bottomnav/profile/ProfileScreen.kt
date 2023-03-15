@@ -20,6 +20,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ProfileScreen(
     popUpToRoot: () -> Unit,
+    navigateUp: () -> Unit,
     navigateCreateNewProduct: () -> Unit,
     navigationMainGraph: () -> Unit,
     profileViewModel: ProfileViewModel = koinViewModel()
@@ -59,7 +60,7 @@ fun ProfileScreen(
             .padding(bottom = 100.dp)
     ) {
 
-        ProfileTopAppBar()
+        ProfileTopAppBar(navigateUp)
 
         Column(
             modifier = Modifier

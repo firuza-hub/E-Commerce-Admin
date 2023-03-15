@@ -1,11 +1,15 @@
 package az.red.e_commerce_admin_android.ui.screens.login
 
 import android.widget.Toast
-import androidx.compose.foundation.*
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +47,7 @@ fun LoginScreen(
                         Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                     }
                     is UIEvent.Navigate -> {
+                        navController.popBackStack()
                         navController.navigate(route = event.route)
                     }
                 }
