@@ -129,6 +129,6 @@ fun ProductDetails(
                 }
             }
         }
-        ProductDetailsTopAppBar(popBackStack)
+        ProductDetailsTopAppBar(popBackStack,state)
     }
 }
