@@ -7,7 +7,7 @@ data class UserResponse(
     val id: String,
     val isAdmin: Boolean,
     val enabled: Boolean,
-    val avatarUrl: String,
+    val avatarUrl: String?,
     val customerNo: String,
     val date: String,
     val email: String,

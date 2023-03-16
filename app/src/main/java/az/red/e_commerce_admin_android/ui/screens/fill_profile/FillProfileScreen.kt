@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -29,55 +30,58 @@ fun FillProfile(
     viewModel: FillProfileViewModel = koinViewModel()
 ) {
     val state by viewModel.fillProfileState.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
     val scrollState = rememberScrollState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         FillProfileTopAppBar(navigateUp)
 
-        Column(
-            modifier = Modifier
-                .verticalScroll(scrollState)
-                .padding(horizontal = CustomTheme.spaces.large)
-        ) {
-            FillProfileImageContainer()
-            FillProfileCustomerInputContainer(state, {
-                viewModel.onUiEvent(
-                    fillProfileUIEvent = FillProfileUIEvent.FullNameChanged(it)
-                )
-            }, {
-                viewModel.onUiEvent(
-                    fillProfileUIEvent = FillProfileUIEvent.NickNameChanged(it)
-                )
-            }, {
-                viewModel.onUiEvent(
-                    fillProfileUIEvent = FillProfileUIEvent.EmailChanged(it)
-                )
-            }, {
-                viewModel.onUiEvent(
-                    fillProfileUIEvent = FillProfileUIEvent.DateOfBirthChanged(it)
-                )
-            }, {
-                viewModel.onUiEvent(
-                    fillProfileUIEvent = FillProfileUIEvent.PhoneNumberChanged(
-                        it
+        if (isLoading) LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+        else {
+            Column(
+                modifier = Modifier
+                    .verticalScroll(scrollState)
+                    .padding(horizontal = CustomTheme.spaces.large)
+            ) {
+                FillProfileImageContainer()
+                FillProfileCustomerInputContainer(state, {
+                    viewModel.onUiEvent(
+                        fillProfileUIEvent = FillProfileUIEvent.FullNameChanged(it)
                     )
-                )
-            }, {
-                viewModel.onUiEvent(
-                    fillProfileUIEvent = FillProfileUIEvent.GenderChanged(it)
-                )
-            })
-            Spacer(modifier = Modifier.height(40.dp))
-            FillProfileButtons(onContinueClick = {
-                viewModel.onUiEvent(fillProfileUIEvent = FillProfileUIEvent.Continue)
-                if (state.isFillProfileSuccessful) {
+                }, {
+                    viewModel.onUiEvent(
+                        fillProfileUIEvent = FillProfileUIEvent.NickNameChanged(it)
+                    )
+                }, {
+                    viewModel.onUiEvent(
+                        fillProfileUIEvent = FillProfileUIEvent.EmailChanged(it)
+                    )
+                }, {
+                    viewModel.onUiEvent(
+                        fillProfileUIEvent = FillProfileUIEvent.DateOfBirthChanged(it)
+                    )
+                }, {
+                    viewModel.onUiEvent(
+                        fillProfileUIEvent = FillProfileUIEvent.PhoneNumberChanged(
+                            it
+                        )
+                    )
+                }, {
+                    viewModel.onUiEvent(
+                        fillProfileUIEvent = FillProfileUIEvent.GenderChanged(it)
+                    )
+                })
+                Spacer(modifier = Modifier.height(40.dp))
+                FillProfileButtons(onContinueClick = {
+                    viewModel.onUiEvent(fillProfileUIEvent = FillProfileUIEvent.Continue)
+                    if (state.isFillProfileSuccessful) {
+                        navigateToHome()
+                    }
+                }, onSkipClick = {
                     navigateToHome()
-                }
-            }, onSkipClick = {
-                navigateToHome()
-            })
+                })
+            }
         }
-
     }
 }
 
@@ -120,8 +124,7 @@ fun FillProfileCustomerInputContainer(
                     id = it
                 )
             } ?: fillProfileState.errorState.fullNameErrorState.errorMessage,
-            keyboardType = KeyboardType.Text,
-            leadingIcon = R.drawable.ic_user)
+            keyboardType = KeyboardType.Text)
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -134,8 +137,7 @@ fun FillProfileCustomerInputContainer(
                     id = it
                 )
             } ?: fillProfileState.errorState.nickNameErrorState.errorMessage,
-            keyboardType = KeyboardType.Text,
-            leadingIcon = R.drawable.ic_user)
+            keyboardType = KeyboardType.Text)
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -148,13 +150,15 @@ fun FillProfileCustomerInputContainer(
                     id = it
                 )
             } ?: fillProfileState.errorState.emailErrorState.errorMessage,
-            keyboardType = KeyboardType.Text,
-            leadingIcon = R.drawable.ic_user)
+            keyboardType = KeyboardType.Text)
 
         Spacer(modifier = Modifier.height(10.dp))
 
         StringTextFieldWithTrailingIcon(
-            onValueChange = onDateOfBirthChange,
+            onValueChange = {
+                println("DATE_CHANGED " + it)
+                onDateOfBirthChange(it)
+            },
             value = fillProfileState.dateOfBirth,
             trailingIcon = R.drawable.ic_date
         )
@@ -184,7 +188,6 @@ fun FillProfileCustomerInputContainer(
                     id = it
                 )
             } ?: fillProfileState.errorState.genderErrorState.errorMessage,
-            keyboardType = KeyboardType.Text,
-            leadingIcon = R.drawable.ic_user)
+            keyboardType = KeyboardType.Text)
     }
 }
