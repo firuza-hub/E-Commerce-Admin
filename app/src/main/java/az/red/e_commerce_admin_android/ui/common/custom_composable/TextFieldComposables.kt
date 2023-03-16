@@ -19,8 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -179,25 +177,28 @@ private fun CustomTextField(
     keyboardOptions: KeyboardOptions? = null,
     keyboardActions: KeyboardActions? = null,
     placeholder: @Composable (() -> Unit)? = null,
-    hasError: Boolean,
+    hasError: Boolean = false,
     errorText: @Composable (() -> Unit)? = null,
+    readOnly: Boolean = false
 ) {
     var errorBorderWidth by remember { mutableStateOf(1.dp) }
     var errorVisibilityState by remember { mutableStateOf(false) }
     errorVisibilityState = hasError
-    BasicTextField(modifier = modifier
-        .background(CustomTheme.colors.cardBackground)
-        .onFocusChanged {
-            errorBorderWidth = if (it.hasFocus) 2.dp else 1.dp
-        }
-        .border(
-            width = 1.dp,
-            shape = RoundedCornerShape(8.dp),
-            color = CustomTheme.colors.cardBorder
-        ),
+    BasicTextField(
+        modifier = modifier
+            .background(CustomTheme.colors.cardBackground)
+            .onFocusChanged {
+                errorBorderWidth = if (it.hasFocus) 2.dp else 1.dp
+            }
+            .border(
+                width = 1.dp,
+                shape = RoundedCornerShape(8.dp),
+                color = CustomTheme.colors.cardBorder
+            ),
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
+        readOnly = readOnly,
         textStyle = CustomTheme.typography.inputText(CustomTheme.colors.text),
         cursorBrush = SolidColor(CustomTheme.colors.cardBorder),
         decorationBox = { innerTextField ->
@@ -205,7 +206,10 @@ private fun CustomTextField(
                 Row(
                     modifier.height(44.dp), verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (leadingIcon != null) Column(modifier = Modifier.padding(8.dp)) { leadingIcon() }
+                    if (leadingIcon != null) 
+                        Column(modifier = Modifier.padding(8.dp)) { leadingIcon() }
+                    else
+                        Spacer(modifier = Modifier.width(10.dp))
                     Box(
                         Modifier.weight(1f)
                     ) {
@@ -213,7 +217,7 @@ private fun CustomTextField(
 
                         innerTextField()
                     }
-                    if (trailingIcon != null) trailingIcon()
+                    if (trailingIcon != null) Column(modifier = Modifier.padding(12.dp)) { trailingIcon()}
                 }
 
                 AnimatedVisibility(
@@ -243,7 +247,6 @@ fun StringTextField(
     label: String,
     isError: Boolean = false,
     errorText: String = "",
-    leadingIcon: Int,
     keyboardType: KeyboardType,
     imeAction: ImeAction = ImeAction.Next,
 ) {
@@ -264,13 +267,6 @@ fun StringTextField(
             if (isError) {
                 ErrorTextInputField(text = errorText)
             }
-        },
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = leadingIcon),
-                tint = Color.Unspecified,
-                contentDescription = "User Icon"
-            )
         })
 }
 
@@ -285,8 +281,8 @@ fun StringTextFieldPhoneNumber(
     leadingIcon: Int,
     keyboardType: KeyboardType,
     imeAction: ImeAction = ImeAction.Next,
-    mask: String = "+380111111111",
-    maskNumber: Char = '1',
+    mask: String = "+380 (xx) xxx xx xx",
+    maskChar: Char = 'x',
 ) {
     CustomTextField(
         modifier = modifier,
@@ -314,7 +310,7 @@ fun StringTextFieldPhoneNumber(
                 contentDescription = "UKR Flag Icon"
             )
         },
-        visualTransformation = PhoneVisualTransformation(mask, maskNumber)
+        visualTransformation = PhoneVisualTransformation(mask, maskChar)
     )
 }
 
@@ -328,24 +324,18 @@ fun StringTextFieldWithTrailingIcon(
     trailingIcon: Int,
     imeAction: ImeAction = ImeAction.Next
 ) {
-
-    var pickedDate by remember {
-        mutableStateOf(LocalDate.now())
-    }
-
-    val formattedDate by remember {
-        derivedStateOf {
-            DateTimeFormatter.ofPattern("dd.MM.yyyy").format(pickedDate)
-        }
-    }
+    var pickedDate = if (value.isNotBlank()) LocalDate.parse(
+        value,
+        DateTimeFormatter.ISO_LOCAL_DATE
+    ) else LocalDate.now()
 
     val dateDialogState = rememberMaterialDialogState()
 
-    OutlinedTextField(
+    CustomTextField(
         modifier = modifier
             .height(47.dp)
             .fillMaxWidth(),
-        value = formattedDate,
+        value = value,
         onValueChange = onValueChange,
         trailingIcon = {
             Icon(painter = painterResource(id = trailingIcon),
@@ -355,11 +345,11 @@ fun StringTextFieldWithTrailingIcon(
                     dateDialogState.show()
                 })
         },
-        shape = RoundedCornerShape(8.dp),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = CustomTheme.colors.inputIconHint,
-            unfocusedBorderColor = CustomTheme.colors.btnTextDisabled
-        ),
+//        shape = RoundedCornerShape(8.dp),
+//        colors = TextFieldDefaults.outlinedTextFieldColors(
+//            focusedBorderColor = CustomTheme.colors.inputIconHint,
+//            unfocusedBorderColor = CustomTheme.colors.btnTextDisabled
+//        ),
         keyboardOptions = KeyboardOptions(imeAction = imeAction),
         readOnly = true
     )
@@ -369,10 +359,11 @@ fun StringTextFieldWithTrailingIcon(
         negativeButton(text = stringResource(id = R.string.cancel))
     }) {
         datepicker(
-            initialDate = LocalDate.now(),
+            initialDate = pickedDate,
             title = stringResource(id = R.string.pick_a_date),
         ) {
             pickedDate = it
+            onValueChange(pickedDate.toString())
         }
     }
 

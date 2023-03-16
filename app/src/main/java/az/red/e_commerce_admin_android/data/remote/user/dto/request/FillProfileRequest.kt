@@ -8,5 +8,5 @@ data class FillProfileRequest(
     val birthdate: String,
     val telephone: String,
     val gender: String,
-    val avatarUrl: String,
+    val avatarUrl: String?,
 )

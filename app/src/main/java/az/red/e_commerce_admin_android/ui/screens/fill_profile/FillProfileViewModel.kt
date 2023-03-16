@@ -13,48 +13,46 @@ import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class FillProfileViewModel(private val repository: UserRepository) : BaseViewModel() {
+
+    val fillProfileState = MutableStateFlow(FillProfileState.NULL)
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+    private val _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage = _errorMessage.asStateFlow()
 
     init {
         getCurrentUser()
     }
 
-    val fillProfileState = MutableStateFlow(FillProfileState.NULL)
 
     private fun getCurrentUser() {
         viewModelScope.launch(Dispatchers.IO) {
-            triggerEvent(UIEvent.Message("Success!"))
+            _isLoading.value = true
             repository.getCurrentUser().collect { networkResult ->
-                when (networkResult) {
-                    is NetworkResult.Success -> {
-                        triggerEvent(UIEvent.Message("Success get current user!"))
-                        triggerEvent(UIEvent.Navigate(Graph.MAIN))
-                        val data = networkResult.data
-                        fillProfileState.value = fillProfileState.value.copy(
-                            "${data!!.firstName} ${data.lastName}",
-                            data.login, data.email
-                        )
-                    }
-                    is NetworkResult.Empty -> Log.i("GET_CURRENT_USER_REQUEST", "Empty")
-                    is NetworkResult.Error -> {
-                        Log.i("GET_CURRENT_USER_REQUEST", "Error: ${networkResult.message}")
-                        networkResult.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
-                    }
-                    is NetworkResult.Exception -> {
-                        Log.e("GET_CURRENT_USER_REQUEST", "Exception: ${networkResult.message}")
-                        networkResult.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
-                    }
-                    is NetworkResult.Loading -> Log.i("GET_CURRENT_USER_REQUEST", "Loading")
-                }
+                networkResult.handleResult(onSuccess = {
+                    val data = networkResult.data
+                    fillProfileState.value = fillProfileState.value.copy(
+                        fullName = "${data!!.firstName} ${data.lastName}",
+                        nickName = data.login,
+                        email = data.email,
+                        dateOfBirth = data.birthdate ?: "",
+                        phoneNumber = data.telephone?.substringAfter("+380") ?: "",
+                        gender = data.gender ?: "",
+                        avatarUrl = data.avatarUrl
+                    )
+                }, _isLoading, _errorMessage, "GET_CURRENT_USER_REQUEST")
             }
         }
     }
 
     private fun updateCurrentUser(dto: FillProfileRequest) {
         viewModelScope.launch(Dispatchers.IO) {
-            triggerEvent(UIEvent.Message("Success!"))
             repository.fillProfile(dto).collect { networkResult ->
                 when (networkResult) {
                     is NetworkResult.Success -> {
@@ -187,6 +185,7 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
                 )
             }
             is FillProfileUIEvent.PhoneNumberChanged -> {
+                if (fillProfileUIEvent.inputValue.trim().length >= 10) return
                 fillProfileState.value = fillProfileState.value.copy(
                     phoneNumber = fillProfileUIEvent.inputValue.trim(),
                     errorState = fillProfileState.value.errorState.copy(

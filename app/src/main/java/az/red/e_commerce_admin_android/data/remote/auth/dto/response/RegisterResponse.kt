@@ -13,5 +13,6 @@ data class RegisterResponse(
     val lastName: String?,
     val login: String?,
     val password: String?,
-    val telephone: String?
+    val telephone: String?,
+    val message:String?
 )

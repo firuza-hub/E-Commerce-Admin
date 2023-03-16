@@ -16,7 +16,7 @@ import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.noRippleClic
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 
 @Composable
-fun ProfileTopAppBar(navigateUp:()->Unit) {
+fun ProfileTopAppBar(navigateUp: () -> Unit, navigateToProfileEdit: () -> Unit) {
 
     TopAppBar(elevation = 0.dp, title = {
         Text(
@@ -26,7 +26,7 @@ fun ProfileTopAppBar(navigateUp:()->Unit) {
             color = CustomTheme.colors.text
         )
     }, backgroundColor = CustomTheme.colors.background, navigationIcon = {
-        IconButton(onClick = navigateUp ) {
+        IconButton(onClick = navigateUp) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_back),
                 contentDescription = null,
@@ -41,7 +41,7 @@ fun ProfileTopAppBar(navigateUp:()->Unit) {
             modifier = Modifier
                 .padding(0.dp, 0.dp, CustomTheme.spaces.large, 0.dp)
                 .noRippleClickable {
-                    /* Do Something */
+                    navigateToProfileEdit()
                 })
 
     })
