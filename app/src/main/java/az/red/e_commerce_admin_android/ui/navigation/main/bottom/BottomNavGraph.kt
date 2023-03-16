@@ -20,7 +20,7 @@ fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
                 navigateTo = { navController.navigate(it) })
         }
         composable(BottomNavScreen.Orders.screen_route) {
-            OrdersScreen(navigateUp = { navController.navigateUp() })
+            OrdersScreen(navigateUp = {navController.navigateUp()}, navigateTo = {navController.navigate(it)})
         }
         composable(BottomNavScreen.Profile.screen_route) {
             ProfileScreen(
@@ -32,6 +32,9 @@ fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
                 navigateUp = { navController.navigateUp() },
                 navigateCreateNewProduct = {
                     navController.navigate(ProfileNavScreen.CreateProduct.route)
+                },
+                navigateToProfileEdit = {
+                    navController.navigate(ProfileNavScreen.FillProfile.route)
                 },
                 navigationMainGraph = {
                     navController.navigate(route = Graph.MAIN)

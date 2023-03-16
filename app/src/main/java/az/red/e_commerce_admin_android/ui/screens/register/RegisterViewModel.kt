@@ -7,7 +7,9 @@ import az.red.e_commerce_admin_android.data.remote.auth.AuthRepository
 import az.red.e_commerce_admin_android.data.remote.auth.dto.request.LoginRequest
 import az.red.e_commerce_admin_android.data.remote.auth.dto.response.RegisterResponse
 import az.red.e_commerce_admin_android.ui.common.state.ErrorState
+import az.red.e_commerce_admin_android.ui.navigation.main.profile.ProfileNavScreen
 import az.red.e_commerce_admin_android.ui.navigation.root.Graph
+import az.red.e_commerce_admin_android.utils.JwtParser
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,9 +42,12 @@ class RegisterViewModel(
                     ).collect { loginResp ->
                         when (loginResp) {
                             is NetworkResult.Success -> {
-                                sessionManager.saveAuthToken(loginResp.data!!.token!!, loginResp.data.loginOrEmail!!, true)
-                                triggerEvent(UIEvent.Message("Success!"))
-                                triggerEvent(UIEvent.Navigate(Graph.MAIN))
+                                sessionManager.saveAuthToken(
+                                    loginResp.data!!.token!!,
+                                    JwtParser.getUserId(loginResp.data.token!!),
+                                    true
+                                )
+                                triggerEvent(UIEvent.Navigate(ProfileNavScreen.FillProfile.route))
                                 Log.i("LOGIN_REQUEST", "Success: ${loginResp.data.token}")
                             }
                             is NetworkResult.Empty -> Log.i("LOGIN_REQUEST", "Empty")
@@ -184,7 +189,6 @@ class RegisterViewModel(
         }
     }
 
-
     private fun handleErrorResponse(data: RegisterResponse) {
         if (data.password != null && data.password.isNotEmpty()) {
             registerState.value = registerState.value.copy(
@@ -221,6 +225,9 @@ class RegisterViewModel(
                     loginErrorState = ErrorState(hasError = true, errorMessage = data.login)
                 )
             )
+        }
+        if (data.message != null && data.message.isNotEmpty()) {
+            triggerEvent(UIEvent.Message(data.message))
         }
     }
 }

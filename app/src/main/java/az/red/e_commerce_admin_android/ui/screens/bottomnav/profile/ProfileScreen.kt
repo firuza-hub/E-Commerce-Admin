@@ -22,6 +22,7 @@ fun ProfileScreen(
     popUpToRoot: () -> Unit,
     navigateUp: () -> Unit,
     navigateCreateNewProduct: () -> Unit,
+    navigateToProfileEdit: () -> Unit,
     navigationMainGraph: () -> Unit,
     profileViewModel: ProfileViewModel = koinViewModel()
 ) {
@@ -61,7 +62,7 @@ fun ProfileScreen(
             .padding(bottom = 100.dp)
     ) {
 
-        ProfileTopAppBar(navigateUp)
+        ProfileTopAppBar(navigateUp,navigateToProfileEdit)
 
         Column(
             modifier = Modifier

@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.orders
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import az.red.e_commerce_admin_android.R
@@ -7,22 +8,43 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.orders.components.OrdersScreenBody
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.orders.components.OrdersTopAppBar
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import az.red.e_commerce_admin_android.utils.UIEvent
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OrdersScreen(
     navigateUp: () -> Unit,
+    navigateTo: (String) -> Unit,
     viewModel: OrderViewModel = koinViewModel()
 ) {
     val state = viewModel.orderList.collectAsState()
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
 
-
+    LaunchedEffect(true) {
+        launch {
+            viewModel.uiEventFlow.collect { event ->
+                when (event) {
+                    is UIEvent.Error -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Message -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Navigate -> {
+                        navigateTo(event.route)
+                    }
+                }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier

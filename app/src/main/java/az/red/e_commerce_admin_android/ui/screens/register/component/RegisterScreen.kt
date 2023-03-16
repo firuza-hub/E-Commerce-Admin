@@ -29,7 +29,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegisterScreen(
-    navController: NavController, viewModel: RegisterViewModel = koinViewModel()
+    navController: NavController,
+    viewModel: RegisterViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
     val state by viewModel.registerState.collectAsState()
@@ -209,7 +210,6 @@ fun InputSection(
                 )
             }
                 ?: state.errorState.loginErrorState.errorMessage,
-            leadingIcon = R.drawable.ic_user,
             keyboardType = KeyboardType.Text
         )
 
@@ -226,7 +226,6 @@ fun InputSection(
                 )
             }
                 ?: state.errorState.firstNameErrorState.errorMessage,
-            leadingIcon = R.drawable.ic_user,
             keyboardType = KeyboardType.Text
         )
 
@@ -243,7 +242,6 @@ fun InputSection(
                 )
             }
                 ?: state.errorState.lastNameErrorState.errorMessage,
-            leadingIcon = R.drawable.ic_user,
             keyboardType = KeyboardType.Text
         )
 
