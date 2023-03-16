@@ -154,7 +154,7 @@ fun ProfileNavigateOtherScreensItems(
 }
 
 @Composable
-fun ProfileThemeImageLanguageContainer(profileViewModel: ProfileViewModel, imgUrl:String) {
+fun ProfileThemeImageLanguageContainer(profileViewModel: ProfileViewModel, imgUrl:String?) {
     val context = LocalContext.current
     Row(
         modifier = Modifier

@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class FillProfileViewModel(private val repository: UserRepository) : BaseViewModel() {
 
-    val fillProfileState = MutableStateFlow(FillProfileState.NULL)
+    val fillProfileState = MutableStateFlow(UserProfileState.NULL)
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
