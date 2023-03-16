@@ -55,6 +55,11 @@ data class CustomTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
+    val nunitoThin16: TextStyle = TextStyle(
+        fontFamily = nunitoFamily,
+        fontWeight = FontWeight.Thin,
+        fontSize = 16.sp
+    ),
 
     val nunitoSemiBold16: TextStyle = TextStyle(
         fontFamily = nunitoFamily,

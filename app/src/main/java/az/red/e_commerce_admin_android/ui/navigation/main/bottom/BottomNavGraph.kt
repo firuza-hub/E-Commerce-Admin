@@ -29,6 +29,7 @@ fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
                         popUpTo(route = Graph.ROOT)
                     }
                 },
+                navigateUp = {navController.navigateUp()},
                 navigateCreateNewProduct = {
                     navController.navigate(ProfileNavScreen.CreateProduct.route)
                 },

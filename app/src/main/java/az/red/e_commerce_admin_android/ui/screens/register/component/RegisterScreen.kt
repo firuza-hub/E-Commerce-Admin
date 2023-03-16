@@ -44,6 +44,7 @@ fun RegisterScreen(
                         Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                     }
                     is UIEvent.Navigate -> {
+                        navController.popBackStack()
                         navController.navigate(route = event.route)
                     }
                 }
