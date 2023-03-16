@@ -9,13 +9,14 @@ import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductSe
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.CreateProductResponse
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductsListResponse
+import az.red.e_commerce_admin_android.ui.screens.product_details.ProductModel
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.handleApi
 import kotlinx.coroutines.flow.Flow
 
 class ProductRepositoryImpl(private val service: ProductService) : ProductRepository {
 
-    override fun getProductsFilteredPaging(request: ProductListItemRequest): Flow<PagingData<ProductResponse>> {
+    override fun getProductsFilteredPaging(request: ProductListItemRequest): Flow<PagingData<ProductModel>> {
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,

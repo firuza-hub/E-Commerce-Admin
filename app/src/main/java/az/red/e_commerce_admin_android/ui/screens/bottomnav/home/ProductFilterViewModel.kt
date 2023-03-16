@@ -40,6 +40,7 @@ class ProductFilterViewModel(
 
     private fun fetchSelectedFilterOptions() {
         viewModelScope.launch {
+            _isLoading.value = true
             when (_selectedFilter.value) {
                 ProductFilter.Color -> colorRepo.get().collect { result ->
                     result.handleResult(onSuccess = {

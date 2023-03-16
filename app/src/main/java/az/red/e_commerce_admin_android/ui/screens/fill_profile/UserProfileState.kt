@@ -2,7 +2,7 @@ package az.red.e_commerce_admin_android.ui.screens.fill_profile
 
 import az.red.e_commerce_admin_android.ui.common.state.ErrorState
 
-data class FillProfileState(
+data class UserProfileState(
     val fullName: String,
     val nickName: String,
     val email: String,
@@ -15,7 +15,7 @@ data class FillProfileState(
     val btnEnabled: Boolean = false
 ) {
     companion object {
-        val NULL = FillProfileState("", "", "", "", "", "", "")
+        val NULL = UserProfileState("", "", "", "", "", "", "")
     }
 }
 

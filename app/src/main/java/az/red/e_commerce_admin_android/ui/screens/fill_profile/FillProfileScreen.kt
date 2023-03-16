@@ -98,7 +98,7 @@ fun FillProfileImageContainer() {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FillProfileCustomerInputContainer(
-    fillProfileState: FillProfileState,
+    fillProfileState: UserProfileState,
     onFullNameChange: (newValue: String) -> Unit,
     onNickNameChange: (newValue: String) -> Unit,
     onEmailChange: (newValue: String) -> Unit,

@@ -20,7 +20,7 @@ fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
                 navigateTo = { navController.navigate(it) })
         }
         composable(BottomNavScreen.Orders.screen_route) {
-            OrdersScreen(navigateUp = {navController.navigateUp()})
+            OrdersScreen(navigateUp = { navController.navigateUp() })
         }
         composable(BottomNavScreen.Profile.screen_route) {
             ProfileScreen(
@@ -29,13 +29,14 @@ fun NavGraphBuilder.bottomNavGraph(navController: NavHostController) {
                         popUpTo(route = Graph.ROOT)
                     }
                 },
-                navigateUp = {navController.navigateUp()},
+                navigateUp = { navController.navigateUp() },
                 navigateCreateNewProduct = {
                     navController.navigate(ProfileNavScreen.CreateProduct.route)
                 },
                 navigationMainGraph = {
                     navController.navigate(route = Graph.MAIN)
-                })
+                }
+            )
         }
     }
 }

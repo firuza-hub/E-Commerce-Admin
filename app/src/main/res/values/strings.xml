@@ -83,4 +83,6 @@
     <string name="in_delivery">In delivery</string>
     <string name="activate">Activate</string>
     <string name="reviews">Reviews</string>
+    <string name="btnClearFilter">Clear</string>
+    <string name="btnApplyFilter">Apply</string>
 </resources>

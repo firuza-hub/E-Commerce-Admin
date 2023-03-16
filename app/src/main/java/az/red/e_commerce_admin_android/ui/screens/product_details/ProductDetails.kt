@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -57,6 +58,7 @@ fun ProductDetails(
     val error by viewModel.error.collectAsState()
     val similarProducts by viewModel.similarProducts.collectAsState()
 
+    if(isLoading) LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = CustomTheme.colors.accent)
     if (!isLoading && error.isNullOrEmpty()) {
         Column(
             modifier = Modifier

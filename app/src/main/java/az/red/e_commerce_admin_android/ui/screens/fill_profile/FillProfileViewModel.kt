@@ -21,7 +21,7 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
         getCurrentUser()
     }
 
-    val fillProfileState = MutableStateFlow(FillProfileState.NULL)
+    val fillProfileState = MutableStateFlow(UserProfileState.NULL)
 
     private fun getCurrentUser() {
         viewModelScope.launch(Dispatchers.IO) {
