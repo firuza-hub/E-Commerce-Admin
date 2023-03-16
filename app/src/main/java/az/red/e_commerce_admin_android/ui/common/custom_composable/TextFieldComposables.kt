@@ -285,8 +285,8 @@ fun StringTextFieldPhoneNumber(
     leadingIcon: Int,
     keyboardType: KeyboardType,
     imeAction: ImeAction = ImeAction.Next,
-    mask: String = "+380111111111",
-    maskNumber: Char = '1',
+    mask: String = "+380 (xx) xxx xx xx",
+    maskChar: Char = 'x',
 ) {
     CustomTextField(
         modifier = modifier,
@@ -314,7 +314,7 @@ fun StringTextFieldPhoneNumber(
                 contentDescription = "UKR Flag Icon"
             )
         },
-        visualTransformation = PhoneVisualTransformation(mask, maskNumber)
+        visualTransformation = PhoneVisualTransformation(mask, maskChar)
     )
 }
 

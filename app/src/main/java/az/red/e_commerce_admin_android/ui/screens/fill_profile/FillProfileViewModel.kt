@@ -33,8 +33,13 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
                         triggerEvent(UIEvent.Navigate(Graph.MAIN))
                         val data = networkResult.data
                         fillProfileState.value = fillProfileState.value.copy(
-                            "${data!!.firstName} ${data.lastName}",
-                            data.login, data.email
+                            fullName = "${data!!.firstName} ${data.lastName}",
+                            nickName = data.login,
+                            email = data.email,
+                            dateOfBirth = data.birthdate ?: "",
+                            phoneNumber = data.telephone?.substringAfter("+380") ?: "",
+                            gender = data.gender ?: "",
+                            avatarUrl = data.avatarUrl
                         )
                     }
                     is NetworkResult.Empty -> Log.i("GET_CURRENT_USER_REQUEST", "Empty")
@@ -187,6 +192,7 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
                 )
             }
             is FillProfileUIEvent.PhoneNumberChanged -> {
+                if(fillProfileUIEvent.inputValue.trim().length >= 10) return
                 fillProfileState.value = fillProfileState.value.copy(
                     phoneNumber = fillProfileUIEvent.inputValue.trim(),
                     errorState = fillProfileState.value.errorState.copy(

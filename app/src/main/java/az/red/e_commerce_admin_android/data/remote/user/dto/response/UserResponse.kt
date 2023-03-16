@@ -16,8 +16,8 @@ data class UserResponse(
     val lastName: String,
     val login: String,
     val password: String,
-    val telephone: String,
-    val birthdate: String,
+    val telephone: String?,
+    val birthdate: String?,
     @SerializedName("__v")
     val v: Int
 )

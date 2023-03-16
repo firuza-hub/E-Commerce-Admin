@@ -59,7 +59,7 @@ fun FillProfile(
             }, {
                 viewModel.onUiEvent(
                     fillProfileUIEvent = FillProfileUIEvent.PhoneNumberChanged(
-                        if (it.length < 10) it else return@FillProfileCustomerInputContainer
+                        it
                     )
                 )
             }, {

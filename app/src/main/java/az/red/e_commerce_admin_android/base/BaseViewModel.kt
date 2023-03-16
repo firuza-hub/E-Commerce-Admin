@@ -28,6 +28,11 @@ abstract class BaseViewModel : ViewModel() {
                 if (authed == AuthenticationStatus.UNAUTHENTICATED) {
                     println("LOGOUT TRIGGERED")
                     triggerEvent(
+                        UIEvent.Message(
+                            "Unauthorized"
+                        )
+                    )
+                    triggerEvent(
                         UIEvent.Navigate(
                             Graph.AUTH
                         )
@@ -41,7 +46,7 @@ abstract class BaseViewModel : ViewModel() {
     fun <T : Any> NetworkResult<T>.handleResult(
         onSuccess: (data: T) -> Unit,
         isLoading: MutableStateFlow<Boolean>,
-        errorMessage:MutableStateFlow<String?>,
+        errorMessage: MutableStateFlow<String?>,
         tag: String? = null
     ) {
         when (this) {
