@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,9 +50,10 @@ fun ProfileImage(imgUrl: String?) {
                         .crossfade(true).build(),
                     modifier = Modifier.fillMaxSize(),
                     contentDescription = "Profile Image",
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
                 )
             }
         }
     }
+
 }

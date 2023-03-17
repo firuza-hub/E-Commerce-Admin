@@ -38,7 +38,7 @@ class ProfileViewModel(private val repository: UserRepository) : BaseViewModel()
                         val data = networkResult.data
                         _userProfileState.value = _userProfileState.value.copy(
                             fullName = "${data!!.firstName} ${data.lastName}",
-                            nickName = data.login, email = data.email
+                            nickName = data.login, email = data.email, avatarUrl = data.avatarUrl
                         )
                     }
                     is NetworkResult.Empty -> Log.i("GET_CURRENT_USER_REQUEST", "Empty")

@@ -1,8 +1,11 @@
 package az.red.e_commerce_admin_android.ui.screens.fill_profile
 
+import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.lifecycle.viewModelScope
 import az.red.e_commerce_admin_android.base.BaseViewModel
+import az.red.e_commerce_admin_android.data.remote.product.dto.request.CreateProductRequest
 import az.red.e_commerce_admin_android.data.remote.user.UserRepository
 import az.red.e_commerce_admin_android.data.remote.user.dto.request.FillProfileRequest
 import az.red.e_commerce_admin_android.data.remote.user.dto.response.UserResponse
@@ -11,10 +14,16 @@ import az.red.e_commerce_admin_android.ui.navigation.root.Graph
 import az.red.e_commerce_admin_android.ui.screens.register.*
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.UIEvent
+import com.google.android.gms.common.internal.FallbackServiceBroker
+import com.google.android.gms.tasks.Task
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.util.*
 
 class FillProfileViewModel(private val repository: UserRepository) : BaseViewModel() {
 
@@ -50,32 +59,31 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
         }
     }
 
-    private fun updateCurrentUser(dto: FillProfileRequest) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.fillProfile(dto).collect { networkResult ->
-                when (networkResult) {
-                    is NetworkResult.Success -> {
-                        triggerEvent(UIEvent.Message("Success update current user!"))
-                        triggerEvent(UIEvent.Navigate(Graph.MAIN))
-                    }
-                    is NetworkResult.Empty -> Log.i("UPDATE_PROFILE_REQUEST", "Empty")
-                    is NetworkResult.Error -> {
-                        Log.i("UPDATE_PROFILE_REQUEST", "Error: ${networkResult.message}")
-                        handleErrorResponse(networkResult.data!!)
-                        networkResult.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
-                    }
-                    is NetworkResult.Exception -> {
-                        Log.e("UPDATE_PROFILE_REQUEST", "Exception: ${networkResult.message}")
-                        networkResult.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
-                    }
-                    is NetworkResult.Loading -> Log.i("UPDATE_PROFILE_REQUEST", "Loading")
+    private suspend fun updateCurrentUser(dto: FillProfileRequest) {
+        repository.fillProfile(dto).collect { networkResult ->
+            when (networkResult) {
+                is NetworkResult.Success -> {
+                    triggerEvent(UIEvent.Message("Success update current user!"))
+                    triggerEvent(UIEvent.Navigate(Graph.MAIN))
+                    _isLoading.value = false
                 }
+                is NetworkResult.Empty -> Log.i("UPDATE_PROFILE_REQUEST", "Empty")
+                is NetworkResult.Error -> {
+                    Log.i("UPDATE_PROFILE_REQUEST", "Error: ${networkResult.message}")
+                    handleErrorResponse(networkResult.data!!)
+                    networkResult.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
+                }
+                is NetworkResult.Exception -> {
+                    Log.e("UPDATE_PROFILE_REQUEST", "Exception: ${networkResult.message}")
+                    networkResult.message?.let { m -> triggerEvent(UIEvent.Error(m)) }
+                }
+                is NetworkResult.Loading -> Log.i("UPDATE_PROFILE_REQUEST", "Loading")
             }
         }
     }
 
     private fun handleErrorResponse(data: UserResponse) {
-        if (data.firstName != null && data.firstName.isNotEmpty() && data.lastName != null && data.lastName.isNotEmpty()) {
+        if (data.firstName.isNotEmpty() && data.lastName.isNotEmpty()) {
             fillProfileState.value = fillProfileState.value.copy(
                 errorState = fillProfileState.value.errorState.copy(
                     fullNameErrorState = ErrorState(
@@ -209,23 +217,45 @@ class FillProfileViewModel(private val repository: UserRepository) : BaseViewMod
                     )
                 )
             }
+            is FillProfileUIEvent.AvatarChanged -> {
+                fillProfileState.value = fillProfileState.value.copy(
+                    avatarUrl = fillProfileUIEvent.inputValue.trim()
+                )
+            }
 
             FillProfileUIEvent.Continue -> {
                 val inputsValidated = validateInputs()
                 if (inputsValidated) {
-                    val fillProfileRequest = FillProfileRequest(
-                        fillProfileState.value.fullName,
-                        fillProfileState.value.nickName,
-                        fillProfileState.value.email,
-                        fillProfileState.value.dateOfBirth,
-                        "+380" + fillProfileState.value.phoneNumber,
-                        fillProfileState.value.gender,
-                        fillProfileState.value.avatarUrl
-                    )
-                    updateCurrentUser(fillProfileRequest)
-                    fillProfileState.value =
-                        fillProfileState.value.copy(isFillProfileSuccessful = true)
+                    viewModelScope.launch(Dispatchers.IO) {
+                        fillProfileState.value.avatarUrl?.let { uploadAvatarToStorage(it.toUri()) }
+
+                        val fillProfileRequest = FillProfileRequest(
+                            fillProfileState.value.fullName,
+                            fillProfileState.value.nickName,
+                            fillProfileState.value.email,
+                            fillProfileState.value.dateOfBirth,
+                            "+380" + fillProfileState.value.phoneNumber,
+                            fillProfileState.value.gender,
+                            fillProfileState.value.avatarUrl
+                        )
+                        updateCurrentUser(fillProfileRequest)
+                        _isLoading.value = false
+                        triggerEvent(UIEvent.Navigate(Graph.PROFILE_DETAIL))
+                    }
                 }
+            }
+        }
+    }
+
+    private suspend fun uploadAvatarToStorage(uri: Uri) {
+        val storageRef = Firebase.storage.reference
+        val uuid = UUID.randomUUID()
+        val mountainImagesRef = storageRef.child("images/${uuid}.jpg")
+        val uploadTask = mountainImagesRef.putFile(uri).await()
+
+        if (uploadTask.metadata != null) {
+            if (uploadTask.metadata!!.reference != null) {
+                fillProfileState.value.avatarUrl = uploadTask.storage.downloadUrl.await().toString()
             }
         }
     }

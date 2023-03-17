@@ -23,6 +23,7 @@ fun NavGraphBuilder.profileNavGraph(navController: NavHostController) {
 
         composable(ProfileNavScreen.FillProfile.route) {
             FillProfile(
+                navigateTo = {navController.navigate(it)},
                 navigateUp = {
                     navController.navigateUp()
                 }, navigateToHome = {

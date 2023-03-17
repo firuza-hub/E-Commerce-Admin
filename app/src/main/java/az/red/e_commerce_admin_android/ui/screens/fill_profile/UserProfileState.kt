@@ -9,9 +9,8 @@ data class UserProfileState(
     val dateOfBirth: String,
     val phoneNumber: String,
     val gender: String,
-    val avatarUrl: String?,
+    var avatarUrl: String?,
     val errorState: FillProfileErrorState = FillProfileErrorState(),
-    val isFillProfileSuccessful: Boolean = false,
     val btnEnabled: Boolean = false
 ) {
     companion object {
