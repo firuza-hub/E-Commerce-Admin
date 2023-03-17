@@ -7,11 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class ProfileViewModel : BaseViewModel() {
 
-    val currentLanguage = MutableStateFlow("")
     val isDarkMode = MutableStateFlow(false)
 
     init {
-        currentLanguageCheck()
         appThemeModeCheck()
     }
 
@@ -26,16 +24,6 @@ class ProfileViewModel : BaseViewModel() {
 
     fun saveAppThemeMode(isDarkMode: Boolean) {
         sessionManager.saveDarkMode(isDarkMode)
-    }
-
-    private fun currentLanguageCheck() {
-        sessionManager.fetchCurrentLanguage().let { language ->
-            if (!language.isNullOrEmpty()) {
-                currentLanguage.value = language.toString()
-            } else {
-                currentLanguage.value = "US"
-            }
-        }
     }
 
     private fun appThemeModeCheck() {
