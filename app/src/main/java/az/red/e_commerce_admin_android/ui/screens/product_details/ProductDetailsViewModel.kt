@@ -23,10 +23,11 @@ class ProductDetailsViewModel(
     private val _error = MutableStateFlow<String?>(null)
     val error = _error.asStateFlow()
 
-    private val _similarProducts = MutableStateFlow(emptyList<SimilarProduct>())
+    private val _similarProducts = MutableStateFlow(emptyList<ProductModel>())
     val similarProducts = _similarProducts.asStateFlow()
 
     init {
+        _isLoading.value = true
         viewModelScope.launch {
             savedStateHandle.get<String>("itemNo")?.let {
                 repository.getProductById(it).collect { result ->
@@ -47,11 +48,9 @@ class ProductDetailsViewModel(
             ).collect { result ->
                 result.handleResult(onSuccess = {
                     _similarProducts.value =
-                        it.products.map { i -> i.toSimilarProduct() }
+                        it.products.map { i -> i.toProductModel() }
                 }, _isLoading, _error, "SIMILAR_PRODUCTS")
             }
         }
     }
-
-
 }

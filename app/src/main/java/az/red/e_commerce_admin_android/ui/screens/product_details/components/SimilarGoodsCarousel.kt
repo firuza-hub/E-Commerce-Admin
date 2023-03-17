@@ -17,14 +17,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.ui.screens.product_details.SimilarProduct
+import az.red.e_commerce_admin_android.ui.screens.product_details.ProductModel
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
 @Composable
 fun SimilarGoodsCarousel(
-    similarProducts: List<SimilarProduct>,
+    similarProducts: List<ProductModel>,
     redirectTo: (itemNo: String) -> Unit
 ) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {

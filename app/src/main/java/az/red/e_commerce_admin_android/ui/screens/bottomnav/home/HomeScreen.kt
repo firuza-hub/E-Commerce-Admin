@@ -1,6 +1,7 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.home
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -76,6 +77,7 @@ fun HomeScreen(
                         .height(2.dp), color = CustomTheme.colors.accent
                 )
             }
+
             if (items.loadState.append != LoadState.Loading && items.loadState.prepend != LoadState.Loading
                 && items.loadState.refresh != LoadState.Loading && items.itemCount == 0
             ) {
@@ -89,13 +91,13 @@ fun HomeScreen(
             Surface(
                 modifier = Modifier
                     .fillMaxSize()
-                    .alpha(if (showFilter) 0.3f else 1f)
+                    .alpha(if (showFilter) 0.3f else 1f),
+                color = CustomTheme.colors.background
             ) {
-
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(2.dp, 0.dp, 0.dp, 82.dp)
+                        .padding(0.dp, 0.dp, 0.dp, 82.dp)
                 ) {
                     items(items) {
                         it?.let { item ->

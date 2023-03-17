@@ -18,7 +18,7 @@ val presentationModule = module {
     viewModel { LoginViewModel(authRepo = get()) }
     viewModel { MainViewModel() }
     viewModel { RegisterViewModel(authRepo = get()) }
-    viewModel { ProfileViewModel() }
+    viewModel { ProfileViewModel(repository = get()) }
     viewModel { ProductListViewModel(repo = get()) }
     viewModel { FillProfileViewModel(repository = get()) }
     viewModel {

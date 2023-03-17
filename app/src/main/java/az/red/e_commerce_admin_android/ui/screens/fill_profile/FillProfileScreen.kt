@@ -1,16 +1,20 @@
 package az.red.e_commerce_admin_android.ui.screens.fill_profile
 
+import android.net.Uri
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -20,6 +24,8 @@ import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextFie
 import az.red.e_commerce_admin_android.ui.common.custom_composable.StringTextFieldWithTrailingIcon
 import az.red.e_commerce_admin_android.ui.screens.fill_profile.components.*
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import az.red.e_commerce_admin_android.utils.UIEvent
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -27,11 +33,31 @@ import org.koin.androidx.compose.koinViewModel
 fun FillProfile(
     navigateUp: () -> Unit,
     navigateToHome: () -> Unit,
+    navigateTo: (String) -> Unit,
     viewModel: FillProfileViewModel = koinViewModel()
 ) {
     val state by viewModel.fillProfileState.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
+
+    LaunchedEffect(true) {
+        launch {
+            viewModel.uiEventFlow.collect { event ->
+                when (event) {
+                    is UIEvent.Error -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Message -> {
+                        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is UIEvent.Navigate -> {
+                        navigateTo(event.route)
+                    }
+                }
+            }
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         FillProfileTopAppBar(navigateUp)
@@ -43,7 +69,11 @@ fun FillProfile(
                     .verticalScroll(scrollState)
                     .padding(horizontal = CustomTheme.spaces.large)
             ) {
-                FillProfileImageContainer()
+                FillProfileImageContainer(selectedImage = state.avatarUrl, onImageSelected = {
+                    viewModel.onUiEvent(
+                        fillProfileUIEvent = FillProfileUIEvent.AvatarChanged(it.toString())
+                    )
+                })
                 FillProfileCustomerInputContainer(state, {
                     viewModel.onUiEvent(
                         fillProfileUIEvent = FillProfileUIEvent.FullNameChanged(it)
@@ -62,9 +92,7 @@ fun FillProfile(
                     )
                 }, {
                     viewModel.onUiEvent(
-                        fillProfileUIEvent = FillProfileUIEvent.PhoneNumberChanged(
-                            it
-                        )
+                        fillProfileUIEvent = FillProfileUIEvent.PhoneNumberChanged(it)
                     )
                 }, {
                     viewModel.onUiEvent(
@@ -74,9 +102,6 @@ fun FillProfile(
                 Spacer(modifier = Modifier.height(40.dp))
                 FillProfileButtons(onContinueClick = {
                     viewModel.onUiEvent(fillProfileUIEvent = FillProfileUIEvent.Continue)
-                    if (state.isFillProfileSuccessful) {
-                        navigateToHome()
-                    }
                 }, onSkipClick = {
                     navigateToHome()
                 })
@@ -86,23 +111,23 @@ fun FillProfile(
 }
 
 @Composable
-fun FillProfileImageContainer() {
+fun FillProfileImageContainer(selectedImage: String?, onImageSelected: (Uri?) -> Unit) {
+    Spacer(modifier = Modifier.height(CustomTheme.spaces.large))
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(130.dp)
-            .padding(0.dp, CustomTheme.spaces.large, 0.dp, 0.dp),
+            .height(130.dp),
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.Center
     ) {
-        FillProfileImage()
+        FillProfileImage(selectedImage = selectedImage, onImageSelected = onImageSelected)
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FillProfileCustomerInputContainer(
-    fillProfileState: FillProfileState,
+    fillProfileState: UserProfileState,
     onFullNameChange: (newValue: String) -> Unit,
     onNickNameChange: (newValue: String) -> Unit,
     onEmailChange: (newValue: String) -> Unit,

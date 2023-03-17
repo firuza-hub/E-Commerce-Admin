@@ -29,6 +29,7 @@ fun ProfileScreen(
 
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
+    val userProfileState by profileViewModel.userProfileState.collectAsState()
 
     val onAddressClick: () -> Unit = { }
     val onNotificationClick: () -> Unit = { }
@@ -69,7 +70,7 @@ fun ProfileScreen(
                 .padding(horizontal = CustomTheme.spaces.large)
         ) {
             //Profile Theme & Image & Language Container
-            ProfileThemeImageLanguageContainer(profileViewModel)
+            ProfileThemeImageLanguageContainer(profileViewModel,userProfileState.avatarUrl)
             Spacer(modifier = Modifier.height(CustomTheme.spaces.extraLarge))
 
             //Navigate Other Screens
@@ -153,7 +154,7 @@ fun ProfileNavigateOtherScreensItems(
 }
 
 @Composable
-fun ProfileThemeImageLanguageContainer(profileViewModel: ProfileViewModel) {
+fun ProfileThemeImageLanguageContainer(profileViewModel: ProfileViewModel, imgUrl:String?) {
     val context = LocalContext.current
     Row(
         modifier = Modifier
@@ -165,7 +166,7 @@ fun ProfileThemeImageLanguageContainer(profileViewModel: ProfileViewModel) {
 
         ProfileAppThemeMode(profileViewModel)
 
-        ProfileImage()
+        ProfileImage(imgUrl)
 
         ProfileMultiLanguage(profileViewModel, context)
     }

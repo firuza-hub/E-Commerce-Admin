@@ -7,5 +7,6 @@ sealed class FillProfileUIEvent {
     data class DateOfBirthChanged(val inputValue: String) : FillProfileUIEvent()
     data class PhoneNumberChanged(val inputValue: String) : FillProfileUIEvent()
     data class GenderChanged(val inputValue: String) : FillProfileUIEvent()
+    data class AvatarChanged(val inputValue: String) : FillProfileUIEvent()
     object Continue : FillProfileUIEvent()
 }

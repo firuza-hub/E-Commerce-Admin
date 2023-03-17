@@ -34,8 +34,5 @@ object Graph {
     const val MAIN = "main_graph"
     const val AUTH = "auth_graph"
     const val HOME_DETAIL = "home_graph"
-    const val CART_DETAIL = "cart_graph"
-    const val ORDERS_DETAIL = "orders_graph"
     const val PROFILE_DETAIL = "profile_graph"
-    const val REVIEW = "review"
 }

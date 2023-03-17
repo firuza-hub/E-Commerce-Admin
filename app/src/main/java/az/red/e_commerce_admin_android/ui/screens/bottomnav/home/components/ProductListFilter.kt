@@ -1,5 +1,6 @@
 package az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -9,16 +10,23 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
 import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductListItemRequest
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.ProductFilter
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.ProductFilterViewModel
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
+import az.red.e_commerce_admin_android.utils.capitalizeCustom
 import org.koin.androidx.compose.koinViewModel
+import java.util.*
 
 @Composable
 fun ProductListFilter(
@@ -28,6 +36,7 @@ fun ProductListFilter(
 ) {
     val selectedFilter by viewModel.selectedFilter.collectAsState()
     val selectedFilterOptions by viewModel.selectedFilterOptions.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
     val request by viewModel.request.collectAsState()
     val filterItems = ProductFilter.values().toList()
 
@@ -35,7 +44,8 @@ fun ProductListFilter(
         modifier = modifier
             .height(400.dp)
             .padding(bottom = 70.dp),
-        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+        backgroundColor = CustomTheme.colors.background
     ) {
         Column(
             Modifier
@@ -46,7 +56,8 @@ fun ProductListFilter(
                 Text(
                     text = "Filter",
                     style = CustomTheme.typography.nunitoBold24,
-                    modifier = Modifier.align(CenterVertically)
+                    modifier = Modifier.align(CenterVertically),
+                    color = CustomTheme.colors.text
                 )
                 FiltersDropDown(
                     modifier = Modifier.align(CenterVertically),
@@ -54,12 +65,19 @@ fun ProductListFilter(
                     selectedFilter = selectedFilter,
                     onValueSelected = {
                         viewModel.onProductFilterValueChange(it)
-                    })
+                    }
+                )
             }
             Box(
-                Modifier.fillMaxHeight()
+                Modifier
+                    .fillMaxSize()
                     .weight(weight = 1f, fill = false)
             ) {
+                if (isLoading) CircularProgressIndicator(
+                    modifier = Modifier.align(Center),
+                    color = CustomTheme.colors.accent,
+                    strokeWidth = 2.dp
+                )
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(3),
                 ) {
@@ -75,35 +93,48 @@ fun ProductListFilter(
                                     viewModel.onFilterOptionSelected(it)
                                 }
                         ) {
-                            Text(text = it.name, modifier = Modifier.padding(4.dp))
+                            Text(
+                                text = it.name.capitalizeCustom(),
+                                modifier = Modifier.padding(4.dp),
+                                color = CustomTheme.colors.text
+                            )
                         }
                     }
                 }
             }
             Spacer(modifier = Modifier.height(CustomTheme.spaces.medium))
             Row(modifier = Modifier.fillMaxWidth()) {
-                Button(onClick = {
-                    closeFilter(request)
-                },
+                Button(
+                    onClick = {
+                        closeFilter(request)
+                    },
                     Modifier
                         .weight(1f)
-                        .padding(4.dp)) {
-                    Text(text = "Apply", color = CustomTheme.colors.btnText)
-
+                        .padding(4.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.accent)
+                ) {
+                    Text(
+                        text = stringResource(R.string.btnApplyFilter),
+                        color = CustomTheme.colors.btnText
+                    )
                 }
-                Button(onClick = {
-                    viewModel.clearFilter()
-                },
+                Button(
+                    onClick = {
+                        viewModel.clearFilter()
+                    },
                     Modifier
                         .weight(1f)
-                        .padding(4.dp)) {
-                    Text(text = "Clear", color = CustomTheme.colors.btnText)
+                        .padding(4.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.btnBackgroundActive)
+                ) {
+                    Text(
+                        text = stringResource(R.string.btnClearFilter),
+                        color = CustomTheme.colors.btnText
+                    )
                 }
             }
         }
     }
-
-
 }
 
 @Composable
@@ -113,7 +144,6 @@ fun FiltersDropDown(
     selectedFilter: ProductFilter,
     onValueSelected: (selectedFilter: ProductFilter) -> Unit
 ) {
-
     var ddExpanded by remember { mutableStateOf(false) }
 
     Box(
@@ -127,7 +157,7 @@ fun FiltersDropDown(
                     .wrapContentSize()
                     .clickable(onClick = { ddExpanded = true }),
                 style = CustomTheme.typography.nunitoNormal16,
-                color = CustomTheme.colors.hintText
+                color = CustomTheme.colors.accent
             )
             Icon(
                 modifier = Modifier.align(CenterVertically),
@@ -138,6 +168,7 @@ fun FiltersDropDown(
         }
 
         DropdownMenu(
+            modifier = Modifier.background(CustomTheme.colors.cardBackground),
             expanded = ddExpanded,
             onDismissRequest = { ddExpanded = false }) {
             filterItems.forEachIndexed { _, productFilter ->
@@ -145,7 +176,10 @@ fun FiltersDropDown(
                     ddExpanded = false
                     onValueSelected(productFilter)
                 }) {
-                    Text(text = productFilter.name)
+                    Text(
+                        text = productFilter.name,
+                        color = CustomTheme.colors.accent
+                    )
                 }
             }
         }

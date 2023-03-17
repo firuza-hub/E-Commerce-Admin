@@ -8,6 +8,7 @@ import az.red.e_commerce_admin_android.base.BaseViewModel
 import az.red.e_commerce_admin_android.data.remote.product.ProductRepository
 import az.red.e_commerce_admin_android.data.remote.product.dto.request.ProductListItemRequest
 import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
+import az.red.e_commerce_admin_android.ui.screens.product_details.ProductModel
 import az.red.e_commerce_admin_android.utils.NetworkResult
 import az.red.e_commerce_admin_android.utils.UIEvent
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class ProductListViewModel(private val repo: ProductRepository) : BaseViewModel() {
 
-    var data: Flow<PagingData<ProductResponse>>
+    var data: Flow<PagingData<ProductModel>>
     val searchInput = MutableStateFlow("")
 
 
@@ -29,7 +30,9 @@ class ProductListViewModel(private val repo: ProductRepository) : BaseViewModel(
     val error = _error.asStateFlow()
 
     init {
-        data = repo.getProductsFilteredPaging(ProductListItemRequest(userId = sessionManager.fetchUserId())).cachedIn(viewModelScope)
+        data =
+            repo.getProductsFilteredPaging(ProductListItemRequest(userId = sessionManager.fetchUserId()))
+                .cachedIn(viewModelScope)
     }
 
     fun getProductSearch(search: String, onComplete: () -> Unit) {
@@ -47,13 +50,13 @@ class ProductListViewModel(private val repo: ProductRepository) : BaseViewModel(
         }
     }
 
-    fun deactivateProduct(dto:ProductResponse,isDeactivate:Boolean){
+    fun deactivateProduct(dto: ProductModel, isDeactivate: Boolean) {
         viewModelScope.launch {
             val productResponse = fillProductResponse(dto, isDeactivate)
             repo.deactivateProduct(productResponse).collect {
                 when (it) {
                     is NetworkResult.Success -> {
-                        val productStatus = if(!isDeactivate) "deactivated" else "activated"
+                        val productStatus = if (!isDeactivate) "deactivated" else "activated"
                         triggerEvent(UIEvent.Message("${dto.name} has been $productStatus!"))
                     }
                     is NetworkResult.Empty -> Log.i("DEACTIVATE_PRODUCT", "Empty")
@@ -73,10 +76,10 @@ class ProductListViewModel(private val repo: ProductRepository) : BaseViewModel(
         }
     }
 
-    private fun fillProductResponse(dto : ProductResponse,isDeactivate:Boolean):ProductResponse{
+    private fun fillProductResponse(dto: ProductModel, isDeactivate: Boolean): ProductResponse {
         return ProductResponse(
-            __v = dto.__v,
-            _id = dto._id,
+            __v = 0,
+            _id = dto.id,
             categories = dto.categories,
             color = dto.color,
             currentPrice = dto.currentPrice,

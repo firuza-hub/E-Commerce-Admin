@@ -20,21 +20,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import az.red.e_commerce_admin_android.R
-import az.red.e_commerce_admin_android.data.remote.product.dto.response.ProductResponse
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.ProductListViewModel
+import az.red.e_commerce_admin_android.ui.screens.product_details.ProductModel
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ProductListItem(productResponse: ProductResponse, onClick: (id: String) -> Unit) {
+fun ProductListItem(productResponse: ProductModel, onClick: (id: String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(CustomTheme.colors.background)
             .padding(vertical = 12.dp, horizontal = 16.dp)
-            .clickable { onClick(productResponse._id) }
+            .clickable { onClick(productResponse.id) }
     ) {
         Row(
             modifier = Modifier
@@ -81,11 +81,11 @@ fun ProductListImage(imageUrls: List<String>) {
 
 @Composable
 fun ProductListInfo(
-    productResponse: ProductResponse,
+    product: ProductModel,
     viewModel: ProductListViewModel = koinViewModel()
 ) {
     var isDeactivate by rememberSaveable {
-        mutableStateOf(productResponse.enabled)
+        mutableStateOf(product.enabled)
     }
 
     Column(
@@ -102,7 +102,7 @@ fun ProductListInfo(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = productResponse.name,
+                text = product.name,
                 style = CustomTheme.typography.nunitoNormal16,
                 color = CustomTheme.colors.text
             )
@@ -115,7 +115,7 @@ fun ProductListInfo(
         }
 
         Text(
-            text = "US $${productResponse.currentPrice}",
+            text = "US $${product.currentPrice}",
             style = CustomTheme.typography.nunitoBold14,
             color = CustomTheme.colors.text,
             modifier = Modifier.weight(1f)
@@ -132,7 +132,7 @@ fun ProductListInfo(
                     .weight(1f),
                 onClick = {
                     isDeactivate = !isDeactivate
-                    viewModel.deactivateProduct(productResponse, isDeactivate)
+                    viewModel.deactivateProduct(product, isDeactivate)
                 },
                 border = BorderStroke(1.dp, CustomTheme.colors.cardBorder),
                 colors = ButtonDefaults.buttonColors(backgroundColor = CustomTheme.colors.background),

@@ -39,7 +39,7 @@ data class ProductDetailsState(
     }
 }
 
-data class SimilarProduct(
+data class ProductModel(
     var id: String,
     var categories: String,
     var color: String?,
@@ -57,7 +57,7 @@ data class SimilarProduct(
     val discount: Int = 0
 ) {
     companion object {
-        val NULL = SimilarProduct(
+        val NULL = ProductModel(
             "", "", "", 0.0, "",
             "", true, "", emptyList(), "", "", 0.0, 0, "", 0
         )

@@ -126,7 +126,7 @@ class CreateProductViewModel(
                                         description = description,
                                         currentPrice = currentPrice,
                                         name = name,
-                                        quantity = 0,
+                                        quantity = 1000,//so that we can place an order on this product
                                         enabled = true,
                                         date = Calendar.getInstance().time,
                                         userId = sessionManager.fetchUserId()
@@ -142,7 +142,6 @@ class CreateProductViewModel(
             }.addOnProgressListener {
                 _state.value = _state.value.copy(isLoading = true)
             }
-
         }
     }
 }
