@@ -1,8 +1,10 @@
 package az.red.e_commerce_admin_android.ui.screens.fill_profile
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import az.red.e_commerce_admin_android.base.BaseViewModel
+import az.red.e_commerce_admin_android.data.remote.product.dto.request.CreateProductRequest
 import az.red.e_commerce_admin_android.data.remote.user.UserRepository
 import az.red.e_commerce_admin_android.data.remote.user.dto.request.FillProfileRequest
 import az.red.e_commerce_admin_android.data.remote.user.dto.response.UserResponse
@@ -15,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.*
 
 class FillProfileViewModel(private val repository: UserRepository) : BaseViewModel() {
 

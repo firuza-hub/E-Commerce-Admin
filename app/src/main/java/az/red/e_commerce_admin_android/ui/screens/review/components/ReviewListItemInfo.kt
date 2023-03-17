@@ -34,7 +34,7 @@ fun ReviewListItemInfo(
 
             Spacer(modifier = Modifier.width(CustomTheme.spaces.large))
 
-            if (state.previousPrice != state.currentPrice) {
+            if (state.previousPrice != state.currentPrice && state.previousPrice != null) {
                 Text(
                     text = "US $${state.previousPrice}",
                     style = CustomTheme.typography.nunitoNormal14StrikeThrough,
