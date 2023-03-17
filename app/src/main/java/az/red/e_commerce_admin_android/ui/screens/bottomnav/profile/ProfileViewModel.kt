@@ -23,7 +23,6 @@ class ProfileViewModel(private val repository: UserRepository) : BaseViewModel()
 
     init {
         getCurrentUser()
-        currentLanguageCheck()
         appThemeModeCheck()
     }
 
@@ -67,15 +66,6 @@ class ProfileViewModel(private val repository: UserRepository) : BaseViewModel()
 
     fun saveAppThemeMode(isDarkMode: Boolean) {
         sessionManager.saveDarkMode(isDarkMode)
-    }
-    private fun currentLanguageCheck() {
-        sessionManager.fetchCurrentLanguage().let { language ->
-            if (!language.isNullOrEmpty()) {
-                currentLanguage.value = language.toString()
-            } else {
-                currentLanguage.value = "US"
-            }
-        }
     }
     private fun appThemeModeCheck() {
         sessionManager.fetchDarkMode().let { _isDarkMode ->
