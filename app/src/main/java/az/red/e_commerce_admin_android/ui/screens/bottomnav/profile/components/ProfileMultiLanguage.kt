@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -17,24 +18,16 @@ import az.red.e_commerce_admin_android.ui.main.MainActivity
 import az.red.e_commerce_admin_android.ui.screens.bottomnav.profile.ProfileViewModel
 import az.red.e_commerce_admin_android.ui.themes.AccentCarrot
 import az.red.e_commerce_admin_android.ui.themes.CustomTheme
-import kotlinx.coroutines.launch
+import az.red.e_commerce_admin_android.utils.SessionManager
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProfileMultiLanguage(profileViewModel: ProfileViewModel, context: Context) {
-    val coroutineScope = rememberCoroutineScope()
+    val sessionManager = SessionManager(context)
     val languageList = arrayOf("US", "AZ")
 
-    var selectedItem by remember {
-        mutableStateOf(languageList[0])
-    }
-
-    LaunchedEffect(key1 = true) {
-        coroutineScope.launch {
-            profileViewModel.currentLanguage.collect { currentLanguage ->
-                selectedItem = currentLanguage
-            }
-        }
+    var selectedItem by rememberSaveable {
+        mutableStateOf(sessionManager.getCurrentLanguage())
     }
 
     var expanded by remember {
@@ -64,7 +57,7 @@ fun ProfileMultiLanguage(profileViewModel: ProfileViewModel, context: Context) {
             ) {
 
                 Text(
-                    text = selectedItem,
+                    text = if(selectedItem == "us") "US" else "AZ",
                     style = CustomTheme.typography.montSerratSemiBold,
                     color = AccentCarrot
                 )
@@ -91,8 +84,8 @@ fun ProfileMultiLanguage(profileViewModel: ProfileViewModel, context: Context) {
                     selectedItem = selectedOption.lowercase()
                     //Save Current Language
                     profileViewModel.saveCurrentLanguage(selectedOption)
-                    expanded = false
                     (context as MainActivity).recreate()
+                    expanded = false
                 }) {
                     Text(text = selectedOption)
                 }

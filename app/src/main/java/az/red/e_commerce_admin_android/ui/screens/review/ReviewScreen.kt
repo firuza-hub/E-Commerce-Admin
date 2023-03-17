@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import az.red.e_commerce_admin_android.ui.screens.bottomnav.home.components.ProductListImage
 import az.red.e_commerce_admin_android.ui.screens.product_details.ProductDetailsState
 import az.red.e_commerce_admin_android.ui.screens.review.components.ReviewListItemImage
 import az.red.e_commerce_admin_android.ui.screens.review.components.ReviewListItemInfo
@@ -122,7 +123,7 @@ fun ReviewListItem(state: ProductDetailsState) {
                 .height(97.dp)
         ) {
 
-            state.imageUrls.let { if (it.any()) ReviewListItemImage(it.first()) }
+            ProductListImage(imageUrls = state.imageUrls)
             ReviewListItemInfo(state)
         }
     }
