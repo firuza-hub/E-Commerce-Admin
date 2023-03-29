@@ -53,7 +53,9 @@ class SessionManager(context: Context) {
     }
 
     fun fetchAuthToken(): String? {
-        return prefs.getString(USER_TOKEN, null)
+        val token = prefs.getString(USER_TOKEN, null)
+        println(token)
+        return token
     }
 
     fun fetchUserId(): String? {

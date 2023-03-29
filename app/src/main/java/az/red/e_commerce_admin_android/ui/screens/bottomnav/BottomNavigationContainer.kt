@@ -74,7 +74,6 @@ fun BottomNavigationContainer(navController: NavController) {
                             navController.backQueue.forEach { i -> println(i.destination.route) }
 
                             launchSingleTop = true
-                            restoreState = true
                         }
                     }
                 )
